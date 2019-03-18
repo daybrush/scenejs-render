@@ -1,0 +1,5 @@
+node_modules/
+.scene_cache/
+*.mp3
+*.mp4
+*.DS_Store
