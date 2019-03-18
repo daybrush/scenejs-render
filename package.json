@@ -1,0 +1,25 @@
+{
+  "name": "scenejs-recorder",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "fluent-ffmpeg": "^2.1.2",
+    "puppeteer": "^1.13.0",
+    "scenejs": "^1.0.0-beta12"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daybrush/scenejs-recorder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daybrush/scenejs-recorder/issues"
+  },
+  "homepage": "https://github.com/daybrush/scenejs-recorder#readme"
+}
