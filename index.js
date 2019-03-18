@@ -101,6 +101,9 @@ async function recordVideo({
                 console.log('An error occurred: ' + err.message);
                 reject();
             })
+            .on('progress', function(progress) {
+                console.log('Processing: ' + progress.percent + '% done');
+            })
             .on('end', function() {
                 console.log('Processing finished !');
                 resolve();
@@ -168,6 +171,10 @@ async function mergeAudios(count) {
     ];
     let duration;
 
+
+    console.log("Start Rendering")
+    const startProcessingTime = Date.now();
+
     const {
         duration: sceneDuration,
     } = await caputreScene({
@@ -188,4 +195,7 @@ async function mergeAudios(count) {
         audios,
     });
    rmdir("./.scene_cache");
+   const endProcessingTime = Date.now();
+
+   console.log(`End Rendering(Rendering Time: ${(endProcessingTime - startProcessingTime) / 1000}s)`);
 })();
