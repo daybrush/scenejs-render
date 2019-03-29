@@ -1,3 +1,38 @@
+scenejs-render  [![npm version](https://badge.fury.io/js/scenejs-render.svg)](https://badge.fury.io/js/scenejs)
+============ 
+
+Make a movie of CSS animation through [scenejs](https://github.com/daybrush/scenejs).
+## Installation
+```bash
+$ npm install scenejs-render
+```
+
+## Usage
+```js
+$ render -i index.html --name scene
+```
+
+```
+  Usage: render [options] [command]
+  
+  Commands:
+    help     Display help
+    version  Display version
+  
+  Options:
+    -f, --fps <n>         fps (defaults to 60)
+    -h, --height <n>      렌더링할 화면 높이 (defaults to 400)
+    -H, --help            Output usage information
+    -i, --input [value]   렌더링할 파일 주소 (defaults to "index.html")
+    -m, --media [value]   렌더링할 media의 이름 (defaults to "media")
+    -n, --name [value]    렌더링할 scene의 이름 (defaults to "scene")
+    -o, --output [value]  출력물 이름 (defaults to "output.mp4")
+    -p, --port <n>        렌더링할 포트 (defaults to 3033)
+    -s, --startTime <n>   시작할 시간 (defaults to 0)
+    -v, --version         Output the version number
+    -w, --width <n>       렌더링 화면 가로 (defaults to 600)
+```
+## Result
 ```
 Start Rendering
 Start Capture (startTime: 0, endTime: 2, fps: 60, startFrame: 0, endFrame: 171.42857142857144)
@@ -8,71 +43,8 @@ Capture frame: 3, time: 0.034999999999999996
 Capture frame: 4, time: 0.04666666666666666
 Capture frame: 5, time: 0.058333333333333334
 Capture frame: 6, time: 0.06999999999999999
-Capture frame: 7, time: 0.08166666666666665
-Capture frame: 8, time: 0.09333333333333332
-Capture frame: 9, time: 0.105
-Capture frame: 10, time: 0.11666666666666667
-Capture frame: 11, time: 0.12833333333333333
-Capture frame: 12, time: 0.13999999999999999
-Capture frame: 13, time: 0.15166666666666667
-Capture frame: 14, time: 0.1633333333333333
-Capture frame: 15, time: 0.175
-Capture frame: 16, time: 0.18666666666666665
-Capture frame: 17, time: 0.1983333333333333
-Capture frame: 18, time: 0.21
-Capture frame: 19, time: 0.22166666666666665
-Capture frame: 20, time: 0.23333333333333334
-Capture frame: 21, time: 0.245
-Capture frame: 22, time: 0.25666666666666665
-Capture frame: 23, time: 0.2683333333333333
-Capture frame: 24, time: 0.27999999999999997
-Capture frame: 25, time: 0.2916666666666667
-Capture frame: 26, time: 0.30333333333333334
-Capture frame: 27, time: 0.315
-Capture frame: 28, time: 0.3266666666666666
-Capture frame: 29, time: 0.33833333333333326
-Capture frame: 30, time: 0.35
-Capture frame: 31, time: 0.36166666666666664
-Capture frame: 32, time: 0.3733333333333333
-Capture frame: 33, time: 0.38499999999999995
-Capture frame: 34, time: 0.3966666666666666
-Capture frame: 35, time: 0.4083333333333333
-Capture frame: 36, time: 0.42
-Capture frame: 37, time: 0.43166666666666664
-Capture frame: 38, time: 0.4433333333333333
-Capture frame: 39, time: 0.45499999999999996
-Capture frame: 40, time: 0.4666666666666667
-Capture frame: 41, time: 0.47833333333333333
-Capture frame: 42, time: 0.49
-Capture frame: 43, time: 0.5016666666666666
-Capture frame: 44, time: 0.5133333333333333
-Capture frame: 45, time: 0.5249999999999999
-Capture frame: 46, time: 0.5366666666666666
-Capture frame: 47, time: 0.5483333333333333
-Capture frame: 48, time: 0.5599999999999999
-Capture frame: 49, time: 0.5716666666666667
-Capture frame: 50, time: 0.5833333333333334
-Capture frame: 51, time: 0.595
-Capture frame: 52, time: 0.6066666666666667
-Capture frame: 53, time: 0.6183333333333333
-Capture frame: 54, time: 0.63
-Capture frame: 55, time: 0.6416666666666667
-Capture frame: 56, time: 0.6533333333333332
-Capture frame: 57, time: 0.6649999999999999
-Capture frame: 58, time: 0.6766666666666665
-Capture frame: 59, time: 0.6883333333333332
-Capture frame: 60, time: 0.7
-Capture frame: 61, time: 0.7116666666666666
-Capture frame: 62, time: 0.7233333333333333
-Capture frame: 63, time: 0.7349999999999999
-Capture frame: 64, time: 0.7466666666666666
-Capture frame: 65, time: 0.7583333333333333
-Capture frame: 66, time: 0.7699999999999999
-Capture frame: 67, time: 0.7816666666666666
-Capture frame: 68, time: 0.7933333333333332
-Capture frame: 69, time: 0.8049999999999999
-Capture frame: 70, time: 0.8166666666666667
-Capture frame: 71, time: 0.8283333333333333
+...
+frame: 71, time: 0.8283333333333333
 Capture frame: 72, time: 0.84
 Capture frame: 73, time: 0.8516666666666666
 Capture frame: 74, time: 0.8633333333333333
@@ -82,95 +54,12 @@ Capture frame: 77, time: 0.8983333333333333
 Capture frame: 78, time: 0.9099999999999999
 Capture frame: 79, time: 0.9216666666666666
 Capture frame: 80, time: 0.9333333333333333
-Capture frame: 81, time: 0.945
-Capture frame: 82, time: 0.9566666666666667
-Capture frame: 83, time: 0.9683333333333333
-Capture frame: 84, time: 0.98
-Capture frame: 85, time: 0.9916666666666666
-Capture frame: 86, time: 1.0033333333333332
-Capture frame: 87, time: 1.015
-Capture frame: 88, time: 1.0266666666666666
-Capture frame: 89, time: 1.0383333333333333
-Capture frame: 90, time: 1.0499999999999998
-Capture frame: 91, time: 1.0616666666666665
-Capture frame: 92, time: 1.0733333333333333
-Capture frame: 93, time: 1.085
-Capture frame: 94, time: 1.0966666666666667
-Capture frame: 95, time: 1.1083333333333334
-Capture frame: 96, time: 1.1199999999999999
-Capture frame: 97, time: 1.1316666666666666
-Capture frame: 98, time: 1.1433333333333333
-Capture frame: 99, time: 1.155
-Capture frame: 100, time: 1.1666666666666667
+...
 Capture frame: 101, time: 1.1783333333333332
 Capture frame: 102, time: 1.19
 Capture frame: 103, time: 1.2016666666666667
 Capture frame: 104, time: 1.2133333333333334
-Capture frame: 105, time: 1.225
-Capture frame: 106, time: 1.2366666666666666
-Capture frame: 107, time: 1.2483333333333333
-Capture frame: 108, time: 1.26
-Capture frame: 109, time: 1.2716666666666667
-Capture frame: 110, time: 1.2833333333333334
-Capture frame: 111, time: 1.2949999999999997
-Capture frame: 112, time: 1.3066666666666664
-Capture frame: 113, time: 1.3183333333333331
-Capture frame: 114, time: 1.3299999999999998
-Capture frame: 115, time: 1.3416666666666666
-Capture frame: 116, time: 1.353333333333333
-Capture frame: 117, time: 1.3649999999999998
-Capture frame: 118, time: 1.3766666666666665
-Capture frame: 119, time: 1.3883333333333332
-Capture frame: 120, time: 1.4
-Capture frame: 121, time: 1.4116666666666664
-Capture frame: 122, time: 1.4233333333333331
-Capture frame: 123, time: 1.4349999999999998
-Capture frame: 124, time: 1.4466666666666665
-Capture frame: 125, time: 1.4583333333333333
-Capture frame: 126, time: 1.4699999999999998
-Capture frame: 127, time: 1.4816666666666665
-Capture frame: 128, time: 1.4933333333333332
-Capture frame: 129, time: 1.505
-Capture frame: 130, time: 1.5166666666666666
-Capture frame: 131, time: 1.528333333333333
-Capture frame: 132, time: 1.5399999999999998
-Capture frame: 133, time: 1.5516666666666665
-Capture frame: 134, time: 1.5633333333333332
-Capture frame: 135, time: 1.575
-Capture frame: 136, time: 1.5866666666666664
-Capture frame: 137, time: 1.5983333333333332
-Capture frame: 138, time: 1.6099999999999999
-Capture frame: 139, time: 1.6216666666666666
-Capture frame: 140, time: 1.6333333333333333
-Capture frame: 141, time: 1.6449999999999998
-Capture frame: 142, time: 1.6566666666666665
-Capture frame: 143, time: 1.6683333333333332
-Capture frame: 144, time: 1.68
-Capture frame: 145, time: 1.6916666666666667
-Capture frame: 146, time: 1.7033333333333331
-Capture frame: 147, time: 1.7149999999999999
-Capture frame: 148, time: 1.7266666666666666
-Capture frame: 149, time: 1.7383333333333333
-Capture frame: 150, time: 1.75
-Capture frame: 151, time: 1.7616666666666665
-Capture frame: 152, time: 1.7733333333333332
-Capture frame: 153, time: 1.785
-Capture frame: 154, time: 1.7966666666666666
-Capture frame: 155, time: 1.8083333333333333
-Capture frame: 156, time: 1.8199999999999998
-Capture frame: 157, time: 1.8316666666666666
-Capture frame: 158, time: 1.8433333333333333
-Capture frame: 159, time: 1.855
-Capture frame: 160, time: 1.8666666666666667
-Capture frame: 161, time: 1.8783333333333332
-Capture frame: 162, time: 1.89
-Capture frame: 163, time: 1.9016666666666666
-Capture frame: 164, time: 1.9133333333333333
-Capture frame: 165, time: 1.9249999999999998
-Capture frame: 166, time: 1.9366666666666665
-Capture frame: 167, time: 1.9483333333333333
-Capture frame: 168, time: 1.96
-Capture frame: 169, time: 1.9716666666666667
+...
 Capture frame: 170, time: 1.9833333333333332
 Capture frame: 171, time: 1.9949999999999999
 Capture frame: 172, time: 2

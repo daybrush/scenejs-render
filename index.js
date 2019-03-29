@@ -1,7 +1,23 @@
+#!/usr/bin/env node
+
 const puppeteer = require('puppeteer');
 const ffmpeg = require('fluent-ffmpeg');
-const fs = require("fs");
-const scene = require("scenejs");
+const fs = require('fs');
+const args = require('args');
+const createServer = require('http-server').createServer;
+
+
+args
+    .option('input', '렌더링할 파일 주소', 'index.html')
+    .option('port', '렌더링할 포트', 3033)
+    .option('name', '렌더링할 scene의 이름', 'scene')
+    .option('media', '렌더링할 media의 이름', 'media')
+    .option('fps', 'fps', 60)
+    .option('width', '렌더링 화면 가로', 600)
+    .option('height', '렌더링할 화면 높이', 400)
+    .option('output', '출력물 이름', 'output.mp4')
+    .option('startTime', '시작할 시간', 0);
+    
 
 async function caputreScene({
     name,
@@ -89,7 +105,8 @@ async function recordVideo({
         await Promise.all(audios.map(([path, delay, startTime, endTime], i) => {
             return convertAudio(i, path, delay, startTime, endTime);
         }));
-        await mergeAudios(audios.length);
+        const length = audios.length;
+        await mergeAudios(length);
 
         console.log(`Processing start (totalframe: ${frames.length}, duration: ${duration}, fps: ${fps})`);
         const converter = ffmpeg()
@@ -113,12 +130,14 @@ async function recordVideo({
             .outputOption('-pix_fmt yuv420p')
             .size(`${width}x${height}`)
             .format('mp4')
-            .addInput("./.scene_cache/merge.mp3")
-            .audioCodec('aac')
-            .audioBitrate('128k')
-            // .audioFrequency(22050)
-            .audioChannels(4)
-            .save(output);
+            if (length) {
+                converter.addInput("./.scene_cache/merge.mp3")
+                .audioCodec('aac')
+                .audioBitrate('128k')
+                // .audioFrequency(22050)
+                .audioChannels(4)
+            }
+            converter.save(output);
     });
 }
 async function convertAudio(i, path, delay, startTime, endTime) {
@@ -139,6 +158,9 @@ async function convertAudio(i, path, delay, startTime, endTime) {
     });
 }
 async function mergeAudios(count) {
+    if (count === 0) {
+        return;
+    }
     console.log("Merge Audios");
     return new Promise((resolve, reject) => {
         const converter = ffmpeg();
@@ -157,21 +179,33 @@ async function mergeAudios(count) {
         .save("./.scene_cache/merge.mp3");
     });
 }
+function openServer(port) {
+    const server = createServer({
+        cache: -1,
+    });
+
+    server.listen(port, '0.0.0.0', function () {
+        console.log("Open Server", port);
+    });
+
+    return server;
+}
 (async () => {
-    const name = "scene";
-    const path = "http://127.0.0.1:8080/test.html";
-    const fps = 60;
-    const width = 1920;
-    const height = 1080;
-    const output = "output.mp4";
-    const startTime = 0;
-    const audios = [
-        ["./test.mp3", 0, 20, 25],
-        ["./test2.mp3", 1, 40, 45],
-    ];
+    const flags = args.parse(process.argv);
+    const {
+        name,
+        media,
+        port,
+        fps,
+        width,
+        height,
+        output,
+        startTime,
+     } = flags;
+    const path = `http://0.0.0.0:${port}/${flags.input}`;
     let duration;
 
-
+    const server = openServer(port);
     console.log("Start Rendering")
     const startProcessingTime = Date.now();
 
@@ -192,10 +226,12 @@ async function mergeAudios(count) {
         output,
         width,
         height,
-        audios,
+        audios: [],
     });
    rmdir("./.scene_cache");
    const endProcessingTime = Date.now();
 
    console.log(`End Rendering(Rendering Time: ${(endProcessingTime - startProcessingTime) / 1000}s)`);
+
+   server.close();
 })();
