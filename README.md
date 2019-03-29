@@ -1,4 +1,4 @@
-scenejs-render  [![npm version](https://badge.fury.io/js/scenejs-render.svg)](https://badge.fury.io/js/scenejs)
+scenejs-render  [![npm version](https://badge.fury.io/js/scenejs-render.svg)](https://badge.fury.io/js/scenejs-render)
 ============ 
 
 Make a movie of CSS animation through [scenejs](https://github.com/daybrush/scenejs).
