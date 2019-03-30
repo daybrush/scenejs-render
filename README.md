@@ -21,20 +21,21 @@ $ render -i index.html --name scene
     version  Display version
   
   Options:
-    -c, --cache <n>       you can pass Capture. (0: false, 1: true) (defaults to 0)
-    -d, --duration        how many seconds to play
-    -f, --fps <n>         fps (defaults to 60)
-    -h, --height <n>      Video height to render (defaults to 400)
-    -H, --help            Output usage information
-    -i, --input [value]   File URL to Rendering (defaults to "index.html")
-    -m, --media [value]   Name of mediaScene to render (defaults to "mediaScene")
-    -n, --name [value]    Name of scene to render (defaults to "scene")
-    -o, --output [value]  Output file name (defaults to "output.mp4")
-    -p, --port <n>        Port to Rendering (defaults to 3033)
-    -s, --scale <n>       Scale of screen size (defaults to 1)
-    -s, --startTime <n>   Time to start (defaults to 0)
-    -v, --version         Output the version number
-    -w, --width <n>       Video width to render (defaults to 600)
+    -c, --cache <n>         you can pass Capture. (0: false, 1: true) (defaults to 0)
+    -d, --duration          how many seconds to play
+    -f, --fps <n>           fps (defaults to 60)
+    -h, --height <n>        Video height to render (defaults to 400)
+    -H, --help              Output usage information
+    -i, --input [value]     File URL to Rendering (defaults to "index.html")
+    -m, --media [value]     Name of mediaScene to render (defaults to "mediaScene")
+    -M, --multiprocess <n>  Number of processes to create. (defaults to 1)
+    -n, --name [value]      Name of scene to render (defaults to "scene")
+    -o, --output [value]    Output file name (defaults to "output.mp4")
+    -p, --port <n>          Port to Rendering (defaults to 3033)
+    -s, --scale <n>         Scale of screen size (defaults to 1)
+    -S, --startTime <n>     Time to start (defaults to 0)
+    -v, --version           Output the version number
+    -w, --width <n>         Video width to render (defaults to 600)
 ```
 ## Result
 ```

@@ -5,7 +5,8 @@ const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs');
 const args = require('args');
 const createServer = require('http-server').createServer;
-
+const {fork} = require('child_process');
+const {openPage, caputreLoop} = require('./utils');
 
 args
     .option('input', 'File URL to Rendering', 'index.html')
@@ -19,9 +20,32 @@ args
     .option('output', 'Output file name', 'output.mp4')
     .option('startTime', 'Time to start', 0)
     .option('duration', 'how many seconds to play')
-    .option('cache', 'you can pass Capture. (0: false, 1: true)', 0);
-    
+    .option('cache', 'you can pass Capture. (0: false, 1: true)', 0)
+    .option('multiprocess', 'Number of processes to create.', 1);
 
+async function hasMedia(page, media) {
+    let isMedia = true;
+    try {
+        if (!media || !await page.evaluate(`${media}.finish()`)) {
+            isMedia = false;
+        }
+    } catch (e) {
+        isMedia = false;
+    }
+
+    return isMedia;
+}
+async function forkCapture(datas) {
+    const compute = fork('./subcapture.js');
+
+    return new Promise(resolve => {
+        compute.on('message', result => {
+            resolve();
+            compute.kill();
+        });
+        compute.send(datas);
+    });
+}
 async function captureScene({
     name,
     media,
@@ -33,37 +57,26 @@ async function captureScene({
     height,
     cache,
     scale,
+    multiprocess,
 }) {
     const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-
-    page.setViewport({
-        width: width / scale,
-        height: height / scale,
-        deviceScaleFactor: scale,
+    const page = await openPage({
+        browser,
+        width,
+        height,
+        path,
+        scale,
     });
-    await page.goto(path);
-
-    let isMedia = true;
-    try {
-        if (!media || !await page.evaluate(`${media}.finish()`)) {
-            isMedia = false;
-        }
-    } catch (e) {
-        isMedia = false;
-    }
-    const playSpeed = await page.evaluate(`${name}.finish().getPlaySpeed()`);
     const iterationCount = await page.evaluate(`${name}.getIterationCount()`);
     const delay = await page.evaluate(`${name}.getDelay()`);
+    const playSpeed = await page.evaluate(`${name}.getPlaySpeed()`);
     const sceneDuration = iterationCount === "infinite" ? delay + await page.evaluate(`${name}.getDuration()`) : await page.evaluate(`${name}.getTotalDuration()`);
     const endTime = typeof duration === "undefined" ? sceneDuration : Math.min(startTime + duration, sceneDuration);
-
-    const startFrame = startTime  * fps / playSpeed;
-    const endFrame = endTime * fps / playSpeed;
-
-
-    
+    const startFrame = Math.floor(startTime  * fps / playSpeed);
+    const endFrame = Math.ceil(endTime * fps / playSpeed);
+    const isMedia = await hasMedia(media);
     let isCache = false;
+
     if (cache) {
         try {
             const cacheInfo = fs.readFileSync("./.scene_cache/cache.txt", "utf8");
@@ -75,33 +88,50 @@ async function captureScene({
             isCache = false;
         }
     }
-    if (!isCache) {
-        rmdir("./.scene_cache");
-    }
-    if (!fs.existsSync("./.scene_cache")) {
-        fs.mkdirSync("./.scene_cache");
-    }
+    !isCache && rmdir("./.scene_cache");
+    !fs.existsSync("./.scene_cache") && fs.mkdirSync("./.scene_cache");
+
     if (isCache) {
         console.log(`Use Cache (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);;
     } else {
         console.log(`Start Capture (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);;
-        async function loop(frame) {
-            const time = Math.min(frame * playSpeed / fps, endTime);
+        const dist = Math.ceil((endFrame - startFrame) / multiprocess);
 
-            console.log(`Capture frame: ${frame}, time: ${time}`);
-            await page.evaluate(`${name}.setTime(${time - delay}, true)`);
+        caputreLoop({
+            page,
+            name,
+            fps,
+            delay,
+            media,
+            isMedia,
+            playSpeed,
+            startFrame,
+            endFrame: startFrame + dist,
+            endTime,
+        });
+        let forks = [];
 
-            isMedia && await page.evaluate(`${media}.setTime(${time})`);
-            if (media) {}
-            await page.screenshot({ path: `./.scene_cache/frame${frame}.png` });
+        for (let i = 1; i < multiprocess; ++i) {
+            const processStartFrame = startFrame + dist * i + 1;
+            const processEndFrame = startFrame + dist * (i + 1);
 
-            if (time === endTime) {
-                return;
-            }
-            await loop(frame + 1);
+            forks.push(forkCapture({
+                name,
+                media,
+                path,
+                endTime,
+                fps,
+                width,
+                height,
+                scale,
+                delay,
+                playSpeed,
+                startFrame: processStartFrame,
+                endFrame: processEndFrame,
+                isMedia,
+            }));
         }
-
-        await loop(startFrame);
+        await Promise.all(forks);
     }
     fs.writeFileSync("./.scene_cache/cache.txt", JSON.stringify({startTime, endTime, fps, startFrame, endFrame}));
     const mediaInfo = isMedia ? await page.evaluate(`${media}.getInfo()`) : {};
@@ -113,6 +143,7 @@ async function captureScene({
         duration: (endTime - startTime) / playSpeed,
     }
 }
+
 function rmdir(path) {
     if (fs.existsSync(path)) {
       fs.readdirSync(path).forEach(function(file) {
@@ -141,7 +172,7 @@ async function recordVideo({
             frames[i] = `./.scene_cache/frame${i}.png`;
         }
 
-       
+
         const isMedia = await recordMedia(mediaInfo);
 
         console.log(`Processing start (totalframe: ${frames.length}, duration: ${duration}, fps: ${fps}, media: ${isMedia})`);
@@ -233,7 +264,7 @@ async function recordMedia(mediaInfo) {
         for (let i = 0; i < length; ++i) {
             converter.addInput(`./.scene_cache/audio${i}.mp3`);
         }
-        
+
         converter.inputOptions(`-filter_complex amix=inputs=${length}:duration=longest`)
         .on('error', function(err) {
             console.log('An error occurred: ' + err.message);
@@ -269,6 +300,7 @@ function openServer(port) {
         startTime,
         cache,
         scale,
+        multiprocess,
      } = flags;
     const path = `http://0.0.0.0:${port}/${flags.input}`;
     let duration;
@@ -289,6 +321,7 @@ function openServer(port) {
         duration,
         cache,
         scale,
+        multiprocess,
     });
     await recordVideo({
         duration: sceneDuration,
