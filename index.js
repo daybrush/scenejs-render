@@ -23,20 +23,20 @@ args
     .option('cache', 'you can pass Capture. (0: false, 1: true)', 0)
     .option('multiprocess', 'Number of processes to create.', 1);
 
-async function hasMedia(page, media) {
-    let isMedia = true;
+async function getMediaInfo(page, media) {
+    if (!media) {
+        return;
+    }
     try {
-        if (!media || !await page.evaluate(`${media}.finish()`)) {
-            isMedia = false;
-        }
+        return await page.evaluate(`${media}.finish().getInfo()`);
     } catch (e) {
         isMedia = false;
     }
 
-    return isMedia;
+    return;
 }
 async function forkCapture(datas) {
-    const compute = fork('./subcapture.js');
+    const compute = fork(__dirname + '/subcapture.js');
 
     return new Promise(resolve => {
         compute.on('message', result => {
@@ -74,7 +74,8 @@ async function captureScene({
     const endTime = typeof duration === "undefined" ? sceneDuration : Math.min(startTime + duration, sceneDuration);
     const startFrame = Math.floor(startTime  * fps / playSpeed);
     const endFrame = Math.ceil(endTime * fps / playSpeed);
-    const isMedia = await hasMedia(media);
+    const mediaInfo = await getMediaInfo(page, media);
+    const isMedia = !!mediaInfo;
     let isCache = false;
 
     if (cache) {
@@ -96,26 +97,13 @@ async function captureScene({
     } else {
         console.log(`Start Capture (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);;
         const dist = Math.ceil((endFrame - startFrame) / multiprocess);
-
-        caputreLoop({
-            page,
-            name,
-            fps,
-            delay,
-            media,
-            isMedia,
-            playSpeed,
-            startFrame,
-            endFrame: startFrame + dist,
-            endTime,
-        });
-        let forks = [];
+        let loops = [];
 
         for (let i = 1; i < multiprocess; ++i) {
             const processStartFrame = startFrame + dist * i + 1;
             const processEndFrame = startFrame + dist * (i + 1);
 
-            forks.push(forkCapture({
+            loops.push(forkCapture({
                 name,
                 media,
                 path,
@@ -131,15 +119,25 @@ async function captureScene({
                 isMedia,
             }));
         }
-        await Promise.all(forks);
+        const mainLoop = caputreLoop({
+            page,
+            name,
+            fps,
+            delay,
+            media,
+            isMedia,
+            playSpeed,
+            startFrame,
+            endFrame: startFrame + dist,
+            endTime,
+        });
+        loops.push(mainLoop);
+        await Promise.all(loops);
     }
     fs.writeFileSync("./.scene_cache/cache.txt", JSON.stringify({startTime, endTime, fps, startFrame, endFrame}));
-    const mediaInfo = isMedia ? await page.evaluate(`${media}.getInfo()`) : {};
-
     await browser.close();
-
     return {
-        mediaInfo,
+        mediaInfo: mediaInfo || {},
         duration: (endTime - startTime) / playSpeed,
     }
 }
@@ -175,7 +173,7 @@ async function recordVideo({
 
         const isMedia = await recordMedia(mediaInfo);
 
-        console.log(`Processing start (totalframe: ${frames.length}, duration: ${duration}, fps: ${fps}, media: ${isMedia})`);
+        console.log(`Processing start (width: ${width}, height: ${height}, totalframe: ${frames.length}, duration: ${duration}, fps: ${fps}, media: ${isMedia})`);
         const converter = ffmpeg()
             .addInput('./.scene_cache/frame%d.png')
             // .addInput('./test.mp3')
