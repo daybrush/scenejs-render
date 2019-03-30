@@ -38,8 +38,8 @@ async function captureScene({
     const page = await browser.newPage();
 
     page.setViewport({
-        width,
-        height,
+        width: width / scale,
+        height: height / scale,
         deviceScaleFactor: scale,
     });
     await page.goto(path);
@@ -62,9 +62,7 @@ async function captureScene({
     const endFrame = endTime * fps / playSpeed;
 
 
-    if (!fs.existsSync("./.scene_cache")) {
-        fs.mkdirSync("./.scene_cache");
-    }
+    
     let isCache = false;
     if (cache) {
         try {
@@ -76,6 +74,12 @@ async function captureScene({
         } catch (e) {
             isCache = false;
         }
+    }
+    if (!isCache) {
+        rmdir("./.scene_cache");
+    }
+    if (!fs.existsSync("./.scene_cache")) {
+        fs.mkdirSync("./.scene_cache");
     }
     if (isCache) {
         console.log(`Use Cache (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);;
