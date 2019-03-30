@@ -1,18 +1,19 @@
 {
   "name": "scenejs-render",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
     "args": "^5.0.1",
     "fluent-ffmpeg": "^2.1.2",
     "http-server": "^0.11.1",
+    "media-scene": "0.0.4",
     "puppeteer": "^1.13.0",
     "scenejs": "^1.0.0-rc4"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node ./index.js -i test.html",
+    "test": "node ./index.js -i test.html --fps 60 --cache 1",
     "help": "node ./index.js --help"
   },
   "bin": {

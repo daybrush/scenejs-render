@@ -1,5 +1,6 @@
-scenejs-render  [![npm version](https://badge.fury.io/js/scenejs-render.svg)](https://badge.fury.io/js/scenejs-render)
-============ 
+# scenejs-render [![npm version](https://badge.fury.io/js/scenejs-render.svg)](https://badge.fury.io/js/scenejs-render)
+
+
 
 Make a movie of CSS animation through [scenejs](https://github.com/daybrush/scenejs).
 ## Installation
@@ -20,17 +21,19 @@ $ render -i index.html --name scene
     version  Display version
   
   Options:
+    -c, --cache <n>       you can pass Capture. (0: false, 1: true) (defaults to 0)
+    -d, --duration        how many seconds to play
     -f, --fps <n>         fps (defaults to 60)
-    -h, --height <n>      렌더링할 화면 높이 (defaults to 400)
+    -h, --height <n>      Video height to render (defaults to 400)
     -H, --help            Output usage information
-    -i, --input [value]   렌더링할 파일 주소 (defaults to "index.html")
-    -m, --media [value]   렌더링할 media의 이름 (defaults to "media")
-    -n, --name [value]    렌더링할 scene의 이름 (defaults to "scene")
-    -o, --output [value]  출력물 이름 (defaults to "output.mp4")
-    -p, --port <n>        렌더링할 포트 (defaults to 3033)
-    -s, --startTime <n>   시작할 시간 (defaults to 0)
+    -i, --input [value]   File URL to Rendering (defaults to "index.html")
+    -m, --media [value]   Name of mediaScene to render (defaults to "mediaScene")
+    -n, --name [value]    Name of scene to render (defaults to "scene")
+    -o, --output [value]  Output file name (defaults to "output.mp4")
+    -p, --port <n>        Port to Rendering (defaults to 3033)
+    -s, --startTime <n>   Time to start (defaults to 0)
     -v, --version         Output the version number
-    -w, --width <n>       렌더링 화면 가로 (defaults to 600)
+    -w, --width <n>       Video width to render (defaults to 600)
 ```
 ## Result
 ```

@@ -8,25 +8,29 @@ const createServer = require('http-server').createServer;
 
 
 args
-    .option('input', '렌더링할 파일 주소', 'index.html')
-    .option('port', '렌더링할 포트', 3033)
-    .option('name', '렌더링할 scene의 이름', 'scene')
-    .option('media', '렌더링할 media의 이름', 'media')
+    .option('input', 'File URL to Rendering', 'index.html')
+    .option('port', 'Port to Rendering', 3033)
+    .option('name', 'Name of scene to render', 'scene')
+    .option('media', 'Name of mediaScene to render', 'mediaScene')
     .option('fps', 'fps', 60)
-    .option('width', '렌더링 화면 가로', 600)
-    .option('height', '렌더링할 화면 높이', 400)
-    .option('output', '출력물 이름', 'output.mp4')
-    .option('startTime', '시작할 시간', 0);
+    .option('width', 'Video width to render', 600)
+    .option('height', 'Video height to render', 400)
+    .option('output', 'Output file name', 'output.mp4')
+    .option('startTime', 'Time to start', 0)
+    .option('duration', 'how many seconds to play')
+    .option('cache', 'you can pass Capture. (0: false, 1: true)', 0);
     
 
-async function caputreScene({
+async function captureScene({
     name,
+    media,
     path,
     startTime = 0,
     duration,
     fps,
     width,
     height,
+    cache,
 }) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -37,7 +41,15 @@ async function caputreScene({
     });
     await page.goto(path);
 
-    const playSpeed = await page.evaluate(`${name}.getPlaySpeed()`);
+    let isMedia = true;
+    try {
+        if (!media || !await page.evaluate(`${media}.finish()`)) {
+            isMedia = false;
+        }
+    } catch (e) {
+        isMedia = false;
+    }
+    const playSpeed = await page.evaluate(`${name}.finish().getPlaySpeed()`);
     const iterationCount = await page.evaluate(`${name}.getIterationCount()`);
     const delay = await page.evaluate(`${name}.getDelay()`);
     const sceneDuration = iterationCount === "infinite" ? delay + await page.evaluate(`${name}.getDuration()`) : await page.evaluate(`${name}.getTotalDuration()`);
@@ -47,30 +59,50 @@ async function caputreScene({
     const endFrame = endTime * fps / playSpeed;
 
 
-    console.log(`Start Capture (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);;
-
-    
     if (!fs.existsSync("./.scene_cache")) {
         fs.mkdirSync("./.scene_cache");
     }
-    async function loop(frame) {
-        const time = Math.min(frame * playSpeed / fps, endTime);
-
-        console.log(`Capture frame: ${frame}, time: ${time}`);
-        await page.evaluate(`${name}.setTime(${time - delay}, true)`);
-        await page.screenshot({ path: `./.scene_cache/frame${frame}.png` });
-
-        if (time === endTime) {
-            return;
+    let isCache = false;
+    if (cache) {
+        try {
+            const cacheInfo = fs.readFileSync("./.scene_cache/cache.txt", "utf8");
+            const temp = JSON.stringify({startTime, endTime, fps, startFrame, endFrame});
+            if (cacheInfo === temp) {
+                isCache = true;
+            }
+        } catch (e) {
+            isCache = false;
         }
-        await loop(frame + 1);
     }
+    if (isCache) {
+        console.log(`Use Cache (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);;
+    } else {
+        console.log(`Start Capture (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);;
+        async function loop(frame) {
+            const time = Math.min(frame * playSpeed / fps, endTime);
 
-    await loop(startFrame);
+            console.log(`Capture frame: ${frame}, time: ${time}`);
+            await page.evaluate(`${name}.setTime(${time - delay}, true)`);
+
+            isMedia && await page.evaluate(`${media}.setTime(${time})`);
+            if (media) {}
+            await page.screenshot({ path: `./.scene_cache/frame${frame}.png` });
+
+            if (time === endTime) {
+                return;
+            }
+            await loop(frame + 1);
+        }
+
+        await loop(startFrame);
+    }
+    fs.writeFileSync("./.scene_cache/cache.txt", JSON.stringify({startTime, endTime, fps, startFrame, endFrame}));
+    const mediaInfo = isMedia ? await page.evaluate(`${media}.getInfo()`) : {};
+
     await browser.close();
 
-
     return {
+        mediaInfo,
         duration: (endTime - startTime) / playSpeed,
     }
 }
@@ -94,7 +126,7 @@ async function recordVideo({
     output,
     width,
     height,
-    audios,
+    mediaInfo,
 }) {
     return new Promise(async (resolve, reject) => {
         const frames = [];
@@ -102,13 +134,10 @@ async function recordVideo({
             frames[i] = `./.scene_cache/frame${i}.png`;
         }
 
-        await Promise.all(audios.map(([path, delay, startTime, endTime], i) => {
-            return convertAudio(i, path, delay, startTime, endTime);
-        }));
-        const length = audios.length;
-        await mergeAudios(length);
+       
+        const isMedia = await recordMedia(mediaInfo);
 
-        console.log(`Processing start (totalframe: ${frames.length}, duration: ${duration}, fps: ${fps})`);
+        console.log(`Processing start (totalframe: ${frames.length}, duration: ${duration}, fps: ${fps}, media: ${isMedia})`);
         const converter = ffmpeg()
             .addInput('./.scene_cache/frame%d.png')
             // .addInput('./test.mp3')
@@ -130,7 +159,7 @@ async function recordVideo({
             .outputOption('-pix_fmt yuv420p')
             .size(`${width}x${height}`)
             .format('mp4')
-            if (length) {
+            if (isMedia) {
                 converter.addInput("./.scene_cache/merge.mp3")
                 .audioCodec('aac')
                 .audioBitrate('128k')
@@ -140,14 +169,22 @@ async function recordVideo({
             converter.save(output);
     });
 }
-async function convertAudio(i, path, delay, startTime, endTime) {
+async function convertAudio({
+    i,
+    path,
+    time,
+    seek,
+    playSpeed,
+    volume,
+}) {
     console.log("Convert Audio", path);
+    const [startTime, endTime] = seek;
     return new Promise((resolve, reject) => {
         ffmpeg(path)
         .seekInput(startTime)
         .inputOptions(`-to ${endTime}`)
-        .audioFilters([`adelay=${delay * 1000}|${delay * 1000}`, `atempo=2`])
-        .on('error', function(err) {
+        .audioFilters([`adelay=${time * playSpeed * 1000}|${time * playSpeed * 1000}`, `atempo=${playSpeed}`, `volume=${volume}`])
+        .on('error', function (err) {
             console.log('An error occurred: ' + err.message);
             reject();
         })
@@ -157,24 +194,46 @@ async function convertAudio(i, path, delay, startTime, endTime) {
         .save(`./.scene_cache/audio${i}.mp3`);
     });
 }
-async function mergeAudios(count) {
-    if (count === 0) {
-        return;
+async function recordMedia(mediaInfo) {
+    console.log("Convert Medias");
+    let length = 0;
+
+    await Promise.all(Object.keys(mediaInfo).map(path => {
+        const info = mediaInfo[path];
+        const times = Object.keys(info);
+
+        return Promise.all(times.map(time => {
+            const {seek, volume, playSpeed} = info[time];
+
+            return convertAudio({
+                i: length++,
+                path,
+                time: parseFloat(time),
+                seek,
+                playSpeed,
+                volume,
+            });
+        }));
+    }));
+
+    if (!length) {
+        return false;
     }
-    console.log("Merge Audios");
+
+    console.log("Merge Medias");
     return new Promise((resolve, reject) => {
         const converter = ffmpeg();
-        for (let i = 0; i < count; ++i) {
+        for (let i = 0; i < length; ++i) {
             converter.addInput(`./.scene_cache/audio${i}.mp3`);
         }
         
-        converter.inputOptions(`-filter_complex amix=inputs=${count}:duration=longest`)
+        converter.inputOptions(`-filter_complex amix=inputs=${length}:duration=longest`)
         .on('error', function(err) {
             console.log('An error occurred: ' + err.message);
-            reject();
+            reject(false);
         })
         .on('end', function() {
-            resolve();
+            resolve(true);
         })
         .save("./.scene_cache/merge.mp3");
     });
@@ -201,24 +260,26 @@ function openServer(port) {
         height,
         output,
         startTime,
+        cache,
      } = flags;
     const path = `http://0.0.0.0:${port}/${flags.input}`;
     let duration;
-
     const server = openServer(port);
     console.log("Start Rendering")
     const startProcessingTime = Date.now();
-
     const {
         duration: sceneDuration,
-    } = await caputreScene({
+        mediaInfo,
+    } = await captureScene({
+        media,
         name,
         path,
         fps,
         width,
         height,
         startTime,
-        duration
+        duration,
+        cache,
     });
     await recordVideo({
         duration: sceneDuration,
@@ -226,9 +287,9 @@ function openServer(port) {
         output,
         width,
         height,
-        audios: [],
+        mediaInfo,
     });
-   rmdir("./.scene_cache");
+   !cache && rmdir("./.scene_cache");
    const endProcessingTime = Date.now();
 
    console.log(`End Rendering(Rendering Time: ${(endProcessingTime - startProcessingTime) / 1000}s)`);
