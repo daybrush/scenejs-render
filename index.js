@@ -12,6 +12,7 @@ args
     .option('port', 'Port to Rendering', 3033)
     .option('name', 'Name of scene to render', 'scene')
     .option('media', 'Name of mediaScene to render', 'mediaScene')
+    .option('scale', 'Scale of screen size', 1)
     .option('fps', 'fps', 60)
     .option('width', 'Video width to render', 600)
     .option('height', 'Video height to render', 400)
@@ -31,6 +32,7 @@ async function captureScene({
     width,
     height,
     cache,
+    scale,
 }) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -38,6 +40,7 @@ async function captureScene({
     page.setViewport({
         width,
         height,
+        deviceScaleFactor: scale,
     });
     await page.goto(path);
 
@@ -261,6 +264,7 @@ function openServer(port) {
         output,
         startTime,
         cache,
+        scale,
      } = flags;
     const path = `http://0.0.0.0:${port}/${flags.input}`;
     let duration;
@@ -280,6 +284,7 @@ function openServer(port) {
         startTime,
         duration,
         cache,
+        scale,
     });
     await recordVideo({
         duration: sceneDuration,

@@ -31,6 +31,7 @@ $ render -i index.html --name scene
     -n, --name [value]    Name of scene to render (defaults to "scene")
     -o, --output [value]  Output file name (defaults to "output.mp4")
     -p, --port <n>        Port to Rendering (defaults to 3033)
+    -s, --scale <n>       Scale of screen size (defaults to 1)
     -s, --startTime <n>   Time to start (defaults to 0)
     -v, --version         Output the version number
     -w, --width <n>       Video width to render (defaults to 600)
