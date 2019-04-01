@@ -21,7 +21,7 @@ args
     .option('startTime', 'Time to start', 0)
     .option('duration', 'how many seconds to play')
     .option('cache', 'you can pass Capture. (0: false, 1: true)', 0)
-    .option('multiprocess', 'Number of processes to create.', 1);
+    .option('multi', 'Number of processes to create.', 1);
 
 async function getMediaInfo(page, media) {
     if (!media) {
@@ -57,7 +57,7 @@ async function captureScene({
     height,
     cache,
     scale,
-    multiprocess,
+    multi,
 }) {
     const browser = await puppeteer.launch();
     const page = await openPage({
@@ -96,10 +96,10 @@ async function captureScene({
         console.log(`Use Cache (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);;
     } else {
         console.log(`Start Capture (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);;
-        const dist = Math.ceil((endFrame - startFrame) / multiprocess);
+        const dist = Math.ceil((endFrame - startFrame) / multi);
         let loops = [];
 
-        for (let i = 1; i < multiprocess; ++i) {
+        for (let i = 1; i < multi; ++i) {
             const processStartFrame = startFrame + dist * i + 1;
             const processEndFrame = startFrame + dist * (i + 1);
 
@@ -298,7 +298,7 @@ function openServer(port) {
         startTime,
         cache,
         scale,
-        multiprocess,
+        multi,
      } = flags;
     const path = `http://0.0.0.0:${port}/${flags.input}`;
     let duration;
@@ -319,7 +319,7 @@ function openServer(port) {
         duration,
         cache,
         scale,
-        multiprocess,
+        multi,
     });
     await recordVideo({
         duration: sceneDuration,
