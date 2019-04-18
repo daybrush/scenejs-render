@@ -299,10 +299,20 @@ function openServer(port) {
         cache,
         scale,
         multi,
-     } = flags;
-    const path = `http://0.0.0.0:${port}/${flags.input}`;
+        input,
+    } = flags;
+
+    let server;
+    let path;
     let duration;
-    const server = openServer(port);
+
+    if (input.match(/https*:\/\//g)) {
+        server = openServer(port);
+        path = `http://0.0.0.0:${port}/${input}`;
+    } else {
+        path = input;
+    }
+
     console.log("Start Rendering")
     const startProcessingTime = Date.now();
     const {

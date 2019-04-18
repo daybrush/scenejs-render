@@ -1,5 +1,5 @@
 {
-  "name": "scenejs-render",
+  "name": "@scenejs/render",
   "version": "0.4.0",
   "description": "  Make a movie of CSS animation through scenejs",
   "main": "index.js",
