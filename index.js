@@ -67,6 +67,8 @@ async function captureScene({
     const browser = await puppeteer.launch();
     const page = await openPage({
         browser,
+        name,
+        media,
         width,
         height,
         path,
@@ -176,11 +178,13 @@ async function recordVideo({
         for (let i = 0; i <= duration * fps; ++i) {
             frames[i] = `./.scene_cache/frame${i}.png`;
         }
-
-
         const isMedia = await recordMedia(mediaInfo);
 
         console.log(`Processing start (width: ${width}, height: ${height}, totalframe: ${frames.length}, duration: ${duration}, fps: ${fps}, media: ${isMedia})`);
+
+        sendMessage({
+            processing: 0,
+        });
         const converter = ffmpeg()
             .addInput('./.scene_cache/frame%d.png')
             // .addInput('./test.mp3')
@@ -357,6 +361,8 @@ function openServer(port) {
         server && server.close();
     } catch (e) {
         console.error(e);
-        process.exit();
+        process.exit(200);
+        return;
     }
+    process.exit(200);
 })();
