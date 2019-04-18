@@ -1,4 +1,6 @@
-
+function sendMessage(message) {
+    process.send && process.send(message);
+}
 exports.caputreLoop = async function caputreLoop({
     page,
     name,
@@ -10,10 +12,12 @@ exports.caputreLoop = async function caputreLoop({
     startFrame,
     endFrame,
     endTime,
+    totalFrame,
 }) {
     async function loop(frame) {
         const time = Math.min(frame * playSpeed / fps, endTime);
 
+        sendMessage({frame: frame, totalFrame: totalFrame});
         console.log(`Capture frame: ${frame}, time: ${time}`);
         await page.evaluate(`${name}.setTime(${time - delay}, true)`);
 
@@ -59,3 +63,4 @@ exports.openPage = async function openPage({
     }
     return page;
 }
+exports.sendMessage = sendMessage;

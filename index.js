@@ -5,8 +5,8 @@ const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs');
 const args = require('args');
 const createServer = require('http-server').createServer;
-const {fork} = require('child_process');
-const {openPage, caputreLoop} = require('./utils');
+const { fork } = require('child_process');
+const { openPage, caputreLoop, sendMessage } = require('./utils');
 
 args
     .option('input', 'File URL to Rendering', 'index.html')
@@ -40,9 +40,14 @@ async function forkCapture(datas) {
 
     return new Promise(resolve => {
         compute.on('message', result => {
-            resolve();
-            compute.kill();
+            sendMessage(result);
         });
+        compute.on("close", () => {
+            resolve();
+        })
+        compute.on("exit", () => {
+            resolve();
+        })
         compute.send(datas);
     });
 }
@@ -72,7 +77,7 @@ async function captureScene({
     const playSpeed = await page.evaluate(`${name}.getPlaySpeed()`);
     const sceneDuration = iterationCount === "infinite" ? delay + await page.evaluate(`${name}.getDuration()`) : await page.evaluate(`${name}.getTotalDuration()`);
     const endTime = typeof duration === "undefined" ? sceneDuration : Math.min(startTime + duration, sceneDuration);
-    const startFrame = Math.floor(startTime  * fps / playSpeed);
+    const startFrame = Math.floor(startTime * fps / playSpeed);
     const endFrame = Math.ceil(endTime * fps / playSpeed);
     const mediaInfo = await getMediaInfo(page, media);
     const isMedia = !!mediaInfo;
@@ -81,7 +86,7 @@ async function captureScene({
     if (cache) {
         try {
             const cacheInfo = fs.readFileSync("./.scene_cache/cache.txt", "utf8");
-            const temp = JSON.stringify({startTime, endTime, fps, startFrame, endFrame});
+            const temp = JSON.stringify({ startTime, endTime, fps, startFrame, endFrame });
             if (cacheInfo === temp) {
                 isCache = true;
             }
@@ -117,6 +122,7 @@ async function captureScene({
                 startFrame: processStartFrame,
                 endFrame: processEndFrame,
                 isMedia,
+                totalFrame: endFrame,
             }));
         }
         const mainLoop = caputreLoop({
@@ -130,11 +136,12 @@ async function captureScene({
             startFrame,
             endFrame: startFrame + dist,
             endTime,
+            totalFrame: endFrame,
         });
         loops.push(mainLoop);
         await Promise.all(loops);
     }
-    fs.writeFileSync("./.scene_cache/cache.txt", JSON.stringify({startTime, endTime, fps, startFrame, endFrame}));
+    fs.writeFileSync("./.scene_cache/cache.txt", JSON.stringify({ startTime, endTime, fps, startFrame, endFrame }));
     await browser.close();
     return {
         mediaInfo: mediaInfo || {},
@@ -144,15 +151,15 @@ async function captureScene({
 
 function rmdir(path) {
     if (fs.existsSync(path)) {
-      fs.readdirSync(path).forEach(function(file) {
-        var curPath = path + "/" + file;
-        if (fs.lstatSync(curPath).isDirectory()) { // recurse
-            rmdir(curPath);
-        } else { // delete file
-          fs.unlinkSync(curPath);
-        }
-      });
-      fs.rmdirSync(path);
+        fs.readdirSync(path).forEach(function (file) {
+            var curPath = path + "/" + file;
+            if (fs.lstatSync(curPath).isDirectory()) { // recurse
+                rmdir(curPath);
+            } else { // delete file
+                fs.unlinkSync(curPath);
+            }
+        });
+        fs.rmdirSync(path);
     }
 };
 
@@ -179,14 +186,17 @@ async function recordVideo({
             // .addInput('./test.mp3')
             .inputFPS(fps)
             .loop(duration)
-            .on('error', function(err) {
+            .on('error', function (err) {
                 console.log('An error occurred: ' + err.message);
                 reject();
             })
-            .on('progress', function(progress) {
+            .on('progress', function (progress) {
+                sendMessage({
+                    processing: progress.percent,
+                });
                 console.log('Processing: ' + progress.percent + '% done');
             })
-            .on('end', function() {
+            .on('end', function () {
                 console.log('Processing finished !');
                 resolve();
             })
@@ -195,14 +205,14 @@ async function recordVideo({
             .outputOption('-pix_fmt yuv420p')
             .size(`${width}x${height}`)
             .format('mp4')
-            if (isMedia) {
-                converter.addInput("./.scene_cache/merge.mp3")
+        if (isMedia) {
+            converter.addInput("./.scene_cache/merge.mp3")
                 .audioCodec('aac')
                 .audioBitrate('128k')
                 // .audioFrequency(22050)
                 .audioChannels(4)
-            }
-            converter.save(output);
+        }
+        converter.save(output);
     });
 }
 async function convertAudio({
@@ -217,17 +227,17 @@ async function convertAudio({
     const [startTime, endTime] = seek;
     return new Promise((resolve, reject) => {
         ffmpeg(path)
-        .seekInput(startTime)
-        .inputOptions(`-to ${endTime}`)
-        .audioFilters([`adelay=${time * playSpeed * 1000}|${time * playSpeed * 1000}`, `atempo=${playSpeed}`, `volume=${volume}`])
-        .on('error', function (err) {
-            console.log('An error occurred: ' + err.message);
-            reject();
-        })
-        .on('end', function() {
-            resolve();
-        })
-        .save(`./.scene_cache/audio${i}.mp3`);
+            .seekInput(startTime)
+            .inputOptions(`-to ${endTime}`)
+            .audioFilters([`adelay=${time * playSpeed * 1000}|${time * playSpeed * 1000}`, `atempo=${playSpeed}`, `volume=${volume}`])
+            .on('error', function (err) {
+                console.log('An error occurred: ' + err.message);
+                reject();
+            })
+            .on('end', function () {
+                resolve();
+            })
+            .save(`./.scene_cache/audio${i}.mp3`);
     });
 }
 async function recordMedia(mediaInfo) {
@@ -239,7 +249,7 @@ async function recordMedia(mediaInfo) {
         const times = Object.keys(info);
 
         return Promise.all(times.map(time => {
-            const {seek, volume, playSpeed} = info[time];
+            const { seek, volume, playSpeed } = info[time];
 
             return convertAudio({
                 i: length++,
@@ -264,14 +274,14 @@ async function recordMedia(mediaInfo) {
         }
 
         converter.inputOptions(`-filter_complex amix=inputs=${length}:duration=longest`)
-        .on('error', function(err) {
-            console.log('An error occurred: ' + err.message);
-            reject(false);
-        })
-        .on('end', function() {
-            resolve(true);
-        })
-        .save("./.scene_cache/merge.mp3");
+            .on('error', function (err) {
+                console.log('An error occurred: ' + err.message);
+                reject(false);
+            })
+            .on('end', function () {
+                resolve(true);
+            })
+            .save("./.scene_cache/merge.mp3");
     });
 }
 function openServer(port) {
@@ -307,42 +317,46 @@ function openServer(port) {
     let duration;
 
     if (input.match(/https*:\/\//g)) {
+        path = input;
+    } else {
         server = openServer(port);
         path = `http://0.0.0.0:${port}/${input}`;
-    } else {
-        path = input;
     }
+    try {
+        console.log("Start Rendering")
+        const startProcessingTime = Date.now();
+        const {
+            duration: sceneDuration,
+            mediaInfo,
+        } = await captureScene({
+            media,
+            name,
+            path,
+            fps,
+            width,
+            height,
+            startTime,
+            duration,
+            cache,
+            scale,
+            multi,
+        });
+        await recordVideo({
+            duration: sceneDuration,
+            fps,
+            output,
+            width,
+            height,
+            mediaInfo,
+        });
+        !cache && rmdir("./.scene_cache");
+        const endProcessingTime = Date.now();
 
-    console.log("Start Rendering")
-    const startProcessingTime = Date.now();
-    const {
-        duration: sceneDuration,
-        mediaInfo,
-    } = await captureScene({
-        media,
-        name,
-        path,
-        fps,
-        width,
-        height,
-        startTime,
-        duration,
-        cache,
-        scale,
-        multi,
-    });
-    await recordVideo({
-        duration: sceneDuration,
-        fps,
-        output,
-        width,
-        height,
-        mediaInfo,
-    });
-   !cache && rmdir("./.scene_cache");
-   const endProcessingTime = Date.now();
+        console.log(`End Rendering(Rendering Time: ${(endProcessingTime - startProcessingTime) / 1000}s)`);
 
-   console.log(`End Rendering(Rendering Time: ${(endProcessingTime - startProcessingTime) / 1000}s)`);
-
-   server.close();
+        server && server.close();
+    } catch (e) {
+        console.error(e);
+        process.exit();
+    }
 })();

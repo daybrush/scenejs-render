@@ -15,6 +15,7 @@ async function capture({
     playSpeed,
     startFrame,
     endFrame,
+    totalFrame,
     isMedia,
 }) {
     const browser = await puppeteer.launch();
@@ -40,6 +41,7 @@ async function capture({
         startFrame,
         endFrame,
         endTime,
+        totalFrame,
     });
 
 
@@ -51,5 +53,5 @@ async function capture({
 process.on('message', async (data) => {
     await capture(data);
 
-    process.send(true);
+    process.exit();
 });
