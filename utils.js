@@ -44,6 +44,7 @@ exports.openPage = async function openPage({
 }) {
     const page = await browser.newPage();
 
+    page.setUserAgent(browser.userAgent() + " Scene.js");
     page.setViewport({
         width: width / scale,
         height: height / scale,
