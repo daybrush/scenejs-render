@@ -1,11 +1,11 @@
-# scenejs-render [![npm version](https://badge.fury.io/js/scenejs-render.svg)](https://badge.fury.io/js/scenejs-render)
+# @scenejs/render [![npm version](https://badge.fury.io/js/%40scenejs%2Frender.svg)](https://badge.fury.io/js/%40scenejs%2Frender)
 
 
 
 Make a movie of CSS animation through [scenejs](https://github.com/daybrush/scenejs).
 ## Installation
 ```bash
-$ npm install scenejs-render
+$ npm install @scenejs/render
 ```
 
 ## Usage
