@@ -1,8 +1,8 @@
 {
   "name": "@scenejs/render",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "  Make a movie of CSS animation through scenejs",
-  "main": "index.js",
+  "main": "./render.js",
   "dependencies": {
     "args": "^5.0.1",
     "fluent-ffmpeg": "^2.1.2",
