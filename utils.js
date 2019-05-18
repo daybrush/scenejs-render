@@ -2,6 +2,7 @@ function sendMessage(message) {
     process.send && process.send(message);
 }
 exports.caputreLoop = async function caputreLoop({
+    isOnlyMedia,
     page,
     name,
     delay,
@@ -19,8 +20,7 @@ exports.caputreLoop = async function caputreLoop({
 
         sendMessage({frame: frame, totalFrame: totalFrame});
         console.log(`Capture frame: ${frame}, time: ${time}`);
-        await page.evaluate(`${name}.setTime(${time - delay}, true)`);
-
+        !isOnlyMedia && await page.evaluate(`${name}.setTime(${time - delay}, true)`);
         isMedia && await page.evaluate(`${media}.setTime(${time})`);
         await page.screenshot({ path: `./.scene_cache/frame${frame}.png` });
 

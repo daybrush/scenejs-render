@@ -4,6 +4,7 @@ const fs = require('fs');
 const createServer = require('http-server').createServer;
 const { fork } = require('child_process');
 const { openPage, caputreLoop, sendMessage } = require('./utils');
+const { isUndefined } = require("@daybrush/utils");
 
 
 async function getMediaInfo(page, media) {
@@ -13,7 +14,6 @@ async function getMediaInfo(page, media) {
     try {
         return await page.evaluate(`${media}.finish().getInfo()`);
     } catch (e) {
-        isMedia = false;
     }
 
     return;
@@ -46,6 +46,7 @@ async function captureScene({
     cache,
     scale,
     multi,
+    isVideo,
 }) {
     const browser = await puppeteer.launch();
     const page = await openPage({
@@ -57,15 +58,51 @@ async function captureScene({
         path,
         scale,
     });
-    const iterationCount = await page.evaluate(`${name}.getIterationCount()`);
-    const delay = await page.evaluate(`${name}.getDelay()`);
-    const playSpeed = await page.evaluate(`${name}.getPlaySpeed()`);
-    const sceneDuration = iterationCount === "infinite" ? delay + await page.evaluate(`${name}.getDuration()`) : await page.evaluate(`${name}.getTotalDuration()`);
-    const endTime = typeof duration === "undefined" ? sceneDuration : Math.min(startTime + duration, sceneDuration);
-    const startFrame = Math.floor(startTime * fps / playSpeed);
-    const endFrame = Math.ceil(endTime * fps / playSpeed);
+
     const mediaInfo = await getMediaInfo(page, media);
     const isMedia = !!mediaInfo;
+
+    if (!isVideo) {
+        console.log ("No Video");
+        return {
+            mediaInfo,
+            duration: isMedia ? mediaInfo.duration : 0,
+        }
+    }
+
+
+    let isOnlyMedia = false;
+    let iterationCount;
+    let delay;
+    let playSpeed;
+    let sceneDuration;
+    let endTime;
+    let startFrame;
+    let endFrame;
+
+    try {
+        iterationCount = await page.evaluate(`${name}.getIterationCount()`);
+        delay = await page.evaluate(`${name}.getDelay()`);
+        playSpeed = await page.evaluate(`${name}.getPlaySpeed()`);
+        sceneDuration = iterationCount === "infinite" ? delay + await page.evaluate(`${name}.getDuration()`) : await page.evaluate(`${name}.getTotalDuration()`);
+        endTime = isUndefined(duration) ? sceneDuration : Math.min(startTime + duration, sceneDuration);
+        startFrame = Math.floor(startTime * fps / playSpeed);
+        endFrame = Math.ceil(endTime * fps / playSpeed);
+    } catch (e) {
+        if (isMedia) {
+            console.log ("Only Media Scene");
+            isOnlyMedia = true;
+            iterationCount = 1;
+            delay = 0;
+            playSpeed = 1;
+            sceneDuration = mediaInfo.duration;
+            endTime = isUndefined(duration) ? sceneDuration : Math.min(startTime + duration, sceneDuration);
+            startFrame = Math.floor(startTime * fps / playSpeed);
+            endFrame = Math.ceil(endTime * fps / playSpeed);
+        } else {
+            throw new Error("invalid scene");
+        }
+    }
     let isCache = false;
 
     if (cache) {
@@ -94,6 +131,7 @@ async function captureScene({
             const processEndFrame = startFrame + dist * (i + 1);
 
             loops.push(forkCapture({
+                isOnlyMedia,
                 name,
                 media,
                 path,
@@ -111,6 +149,7 @@ async function captureScene({
             }));
         }
         const mainLoop = caputreLoop({
+            isOnlyMedia,
             page,
             name,
             fps,
@@ -154,14 +193,13 @@ async function recordVideo({
     output,
     width,
     height,
-    mediaInfo,
+    isMedia,
 }) {
     return new Promise(async (resolve, reject) => {
         const frames = [];
         for (let i = 0; i <= duration * fps; ++i) {
             frames[i] = `./.scene_cache/frame${i}.png`;
         }
-        const isMedia = await recordMedia(mediaInfo);
 
         console.log(`Processing start (width: ${width}, height: ${height}, totalframe: ${frames.length}, duration: ${duration}, fps: ${fps}, media: ${isMedia})`);
 
@@ -227,7 +265,7 @@ async function convertAudio({
             .save(`./.scene_cache/audio${i}.mp3`);
     });
 }
-async function recordMedia(mediaInfo) {
+async function recordMedia(mediaInfo, output) {
     console.log("Convert Medias");
     let length = 0;
 
@@ -254,7 +292,7 @@ async function recordMedia(mediaInfo) {
     }
 
     console.log("Merge Medias");
-    return new Promise((resolve, reject) => {
+    const result = await new Promise((resolve, reject) => {
         const converter = ffmpeg();
         for (let i = 0; i < length; ++i) {
             converter.addInput(`./.scene_cache/audio${i}.mp3`);
@@ -270,6 +308,11 @@ async function recordMedia(mediaInfo) {
             })
             .save("./.scene_cache/merge.mp3");
     });
+
+    if (result && output) {
+        fs.copyFileSync("./.scene_cache/merge.mp3", output)
+    }
+    return result;
 }
 function openServer(port) {
     const server = createServer({
@@ -307,7 +350,8 @@ exports.render = async function render({
         path = `http://0.0.0.0:${port}/${input}`;
     }
     try {
-        console.log("Start Rendering")
+        console.log("Start Rendering");
+        const isVideo = !!output.match(/\.mp4$/g);
         const startProcessingTime = Date.now();
         const {
             duration: sceneDuration,
@@ -324,15 +368,20 @@ exports.render = async function render({
             cache,
             scale,
             multi,
+            isVideo,
         });
-        await recordVideo({
-            duration: sceneDuration,
-            fps,
-            output,
-            width,
-            height,
-            mediaInfo,
-        });
+        const isMedia = await recordMedia(mediaInfo, isVideo ? "" : output);
+
+        if (isVideo) {
+            await recordVideo({
+                duration: sceneDuration,
+                fps,
+                output,
+                width,
+                height,
+                isMedia,
+            });
+        }
         !cache && rmdir("./.scene_cache");
         const endProcessingTime = Date.now();
 
