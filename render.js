@@ -63,7 +63,7 @@ async function captureScene({
     const isMedia = !!mediaInfo;
 
     if (!isVideo) {
-        console.log ("No Video");
+        console.log("No Video");
         return {
             mediaInfo,
             duration: isMedia ? mediaInfo.duration : 0,
@@ -84,13 +84,15 @@ async function captureScene({
         iterationCount = await page.evaluate(`${name}.getIterationCount()`);
         delay = await page.evaluate(`${name}.getDelay()`);
         playSpeed = await page.evaluate(`${name}.getPlaySpeed()`);
-        sceneDuration = iterationCount === "infinite" ? delay + await page.evaluate(`${name}.getDuration()`) : await page.evaluate(`${name}.getTotalDuration()`);
+        sceneDuration = iterationCount === "infinite"
+            ? delay + await page.evaluate(`${name}.getDuration()`)
+            : await page.evaluate(`${name}.getTotalDuration()`);
         endTime = isUndefined(duration) ? sceneDuration : Math.min(startTime + duration, sceneDuration);
         startFrame = Math.floor(startTime * fps / playSpeed);
         endFrame = Math.ceil(endTime * fps / playSpeed);
     } catch (e) {
         if (isMedia) {
-            console.log ("Only Media Scene");
+            console.log("Only Media Scene");
             isOnlyMedia = true;
             iterationCount = 1;
             delay = 0;
@@ -100,7 +102,7 @@ async function captureScene({
             startFrame = Math.floor(startTime * fps / playSpeed);
             endFrame = Math.ceil(endTime * fps / playSpeed);
         } else {
-            throw new Error("invalid scene");
+            throw e;
         }
     }
     let isCache = false;
@@ -122,7 +124,7 @@ async function captureScene({
     if (isCache) {
         console.log(`Use Cache (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);;
     } else {
-        console.log(`Start Capture (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);;
+        console.log(`Start Capture (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame}, multi-process: ${multi})`);;
         const dist = Math.ceil((endFrame - startFrame) / multi);
         let loops = [];
 
@@ -243,7 +245,7 @@ async function recordVideo({
 async function convertAudio({
     i,
     path,
-    time,
+    delay,
     seek,
     playSpeed,
     volume,
@@ -254,9 +256,9 @@ async function convertAudio({
         ffmpeg(path)
             .seekInput(startTime)
             .inputOptions(`-to ${endTime}`)
-            .audioFilters([`adelay=${time * playSpeed * 1000}|${time * playSpeed * 1000}`, `atempo=${playSpeed}`, `volume=${volume}`])
+            .audioFilters([`adelay=${delay * playSpeed * 1000}|${delay * playSpeed * 1000}`, `atempo=${playSpeed}`, `volume=${volume}`])
             .on('error', function (err) {
-                console.log('An error occurred: ' + err.message);
+                console.log('An audio error occurred: ' + err.message);
                 reject();
             })
             .on('end', function () {
@@ -265,26 +267,46 @@ async function convertAudio({
             .save(`./.scene_cache/audio${i}.mp3`);
     });
 }
-async function recordMedia(mediaInfo, output) {
+
+function resolvePath(path1, path2) {
+    var paths = path1.split("/").slice(0, -1).concat(path2.split("/"));
+
+    paths = paths.filter(function (directory, i) {
+        return i === 0 || directory !== ".";
+    });
+
+    var index = -1
+
+    while ((index = paths.indexOf("..")) > 0) {
+        paths.splice(index - 1, 2);
+    }
+    return paths.join("/");
+}
+
+
+async function recordMedia(mediaInfo, input, output) {
     console.log("Convert Medias");
     let length = 0;
+    const medias = mediaInfo.medias;
 
-    await Promise.all(Object.keys(mediaInfo).map(path => {
-        const info = mediaInfo[path];
-        const times = Object.keys(info);
+    !fs.existsSync("./.scene_cache") && fs.mkdirSync("./.scene_cache");
 
-        return Promise.all(times.map(time => {
-            const { seek, volume, playSpeed } = info[time];
+    await Promise.all(medias.map(media => {
+        const url = media.url;
+        const seek = media.seek;
+        const delay = media.delay;
+        const playSpeed = media.playSpeed;
+        const volume = media.volume;
+        const path = resolvePath(input, url);
 
-            return convertAudio({
-                i: length++,
-                path,
-                time: parseFloat(time),
-                seek,
-                playSpeed,
-                volume,
-            });
-        }));
+        return convertAudio({
+            i: length++,
+            path,
+            delay,
+            seek,
+            playSpeed,
+            volume,
+        });
     }));
 
     if (!length) {
@@ -337,7 +359,7 @@ exports.render = async function render({
     cache,
     scale,
     multi,
-    input,
+    input = "./index.html",
 }) {
     let server;
     let path;
@@ -348,7 +370,9 @@ exports.render = async function render({
     } else {
         server = openServer(port);
         path = `http://0.0.0.0:${port}/${input}`;
+
     }
+    console.log("Open Page: ", path);
     try {
         console.log("Start Rendering");
         const isVideo = !!output.match(/\.mp4$/g);
@@ -370,7 +394,7 @@ exports.render = async function render({
             multi,
             isVideo,
         });
-        const isMedia = await recordMedia(mediaInfo, isVideo ? "" : output);
+        const isMedia = await recordMedia(mediaInfo, input, isVideo ? "" : output);
 
         if (isVideo) {
             await recordVideo({
