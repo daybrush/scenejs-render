@@ -1,0 +1,157 @@
+<style>
+    .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid black;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+    }
+
+    video {
+        width: 1920px;
+        position: absolute;
+    }
+
+    .transition {
+        position: absolute;
+        z-index: 10;
+        width: 100%;
+        height: 1200px;
+        font-size: 0;
+        transform: scale(1);
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .squares {
+        position: relative;
+        white-space: nowrap;
+    }
+    .square {
+        display: inline-block;
+        width: 400px;
+        height: 400px;
+        background: #333;
+        transform: rotate(45deg);
+    }
+    .squares:nth-child(2n + 1) {
+        left: -200px;
+    }
+</style>
+<div class="container">
+    <div class="transition">
+        <div class="squares">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+        </div>
+        <div class="squares">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+        </div>
+        <div class="squares">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+        </div>
+    </div>
+    <video id="clapper" src="./clapper.mp4"></video>
+    <video id="snow" src="./snow.mp4"></video>
+    <video id="motion" src="./motion.mp4"></video>
+    <video id="circleburst" src="./circleburst.mp4"></video>
+</div>
+
+<script src="https://daybrush.com/scenejs/release/latest/dist/scene.js"></script>
+<script src="https://daybrush.com/scenejs-media/release/latest/dist/media.js"></script>
+<script src="https://daybrush.com/scenejs-timeline/release/latest/dist/timeline.pkgd.js"></script>
+
+<script>
+    const mediaScene = new MediaScene();
+
+
+    mediaScene
+        .addMedia("background", "./background.mp3")
+        .seek(0, 24)
+
+    mediaScene
+        .addMedia("clapper", document.querySelector("#clapper"))
+        .seek(0, 8.1)
+        .setDelay(1.15)
+    mediaScene
+        .addMedia("snow", document.querySelector("#snow"))
+        .seek(0, 10)
+        .setDelay(11.5)
+
+    const scene = new Scene({
+        "#clapper": {},
+        ".square": i => ({
+            0: {
+                transform: {
+                    rotate: "45deg",
+                    scale: 0,
+                },
+            },
+            1: {
+                transform: {
+                    scale: 1.2,
+                }
+            },
+            2: {
+                transform: {
+                    scale: 1.2,
+                },
+            },
+            3: {
+                transform: {
+                    scale: 0,
+                },
+            },
+            options: {
+                easing: "ease-in-out",
+                delay: (i % 7) * 0.1 + Math.floor(i / 7) * 0.2,
+            },
+        }),
+        "#snow": {
+            0: {
+                opacity: 0,
+            },
+            0.1: {
+                opacity: 1,
+            },
+            options: {
+                delay: 11,
+            },
+        },
+        "#motion": {
+            0: {
+                opacity: 0,
+            },
+        },
+        "#circleburst": {
+            0: {
+                opacity: 0,
+            },
+        },
+        "media": mediaScene,
+    }, {
+        selector: true,
+    });
+    
+    scene.getItem(".square").setDelay(9);
+
+    new Timeline(scene, document.body);
+</script>

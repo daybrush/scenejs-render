@@ -1,16 +1,16 @@
 {
   "name": "@scenejs/render",
-  "version": "0.6.0",
+  "version": "0.6.2",
   "description": "  Make a movie of CSS animation through scenejs",
   "main": "./render.js",
   "dependencies": {
     "@daybrush/utils": "^0.8.0",
+    "@scenejs/media": "^0.1.4",
     "args": "^5.0.1",
     "fluent-ffmpeg": "^2.1.2",
     "http-server": "^0.11.1",
-    "media-scene": "0.0.4",
     "puppeteer": "^1.13.0",
-    "scenejs": "^1.0.0-rc8"
+    "scenejs": "^1.0.0-rc10"
   },
   "keywords": [
     "scene",
@@ -25,7 +25,9 @@
     "fps",
     "puppeteer"
   ],
-  "devDependencies": {},
+  "devDependencies": {
+    "@scenejs/timeline": "0.0.12"
+  },
   "scripts": {
     "test": "node ./index.js -i test.html --fps 60 --cache 1",
     "test2": "node ./index.js -i test2.html --fps 30",

@@ -4,6 +4,7 @@ node_modules/
 doc/
 template/
 example/
+examples/
 karma.conf.js
 test/
 mocha.opts
