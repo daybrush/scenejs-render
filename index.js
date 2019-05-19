@@ -14,7 +14,8 @@ args
     .option('height', 'Video height to render', 400)
     .option('output', 'Output file name', 'output.mp4')
     .option('startTime', 'Time to start', 0)
-    .option('duration', 'how many seconds to play')
+    .option('duration', 'how many seconds to play', 0)
+    .option('iteration', 'iterationCount of the Scene set by the user himself.', 0)
     .option('cache', 'you can pass Capture. (0: false, 1: true)', 0)
     .option('multi', 'Number of processes to create.', 1);
 

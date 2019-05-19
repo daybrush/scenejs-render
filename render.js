@@ -40,6 +40,7 @@ async function captureScene({
     path,
     startTime = 0,
     duration,
+    iteration,
     fps,
     width,
     height,
@@ -65,7 +66,7 @@ async function captureScene({
     if (!isVideo) {
         console.log("No Video");
         return {
-            mediaInfo,
+            mediaInfo: mediaInfo || {},
             duration: isMedia ? mediaInfo.duration : 0,
         }
     }
@@ -76,6 +77,7 @@ async function captureScene({
     let delay;
     let playSpeed;
     let sceneDuration;
+    let totalDuration;
     let endTime;
     let startFrame;
     let endFrame;
@@ -84,10 +86,15 @@ async function captureScene({
         iterationCount = await page.evaluate(`${name}.getIterationCount()`);
         delay = await page.evaluate(`${name}.getDelay()`);
         playSpeed = await page.evaluate(`${name}.getPlaySpeed()`);
-        sceneDuration = iterationCount === "infinite"
-            ? delay + await page.evaluate(`${name}.getDuration()`)
-            : await page.evaluate(`${name}.getTotalDuration()`);
-        endTime = isUndefined(duration) ? sceneDuration : Math.min(startTime + duration, sceneDuration);
+        sceneDuration = await page.evaluate(`${name}.getDuration()`);
+
+        if (iterationCount === "infinite") {
+            iterationCount =  iteration || 1;
+        }
+        totalDuration = delay + sceneDuration * iterationCount;
+        endTime = duration > 0
+            ? Math.min(startTime + duration, totalDuration)
+            : totalDuration;
         startFrame = Math.floor(startTime * fps / playSpeed);
         endFrame = Math.ceil(endTime * fps / playSpeed);
     } catch (e) {
@@ -288,6 +295,11 @@ async function recordMedia(mediaInfo, input, output) {
     console.log("Convert Medias");
     let length = 0;
     const medias = mediaInfo.medias;
+    const duration = mediaInfo.duration;
+
+    if (!duration || !medias) {
+        return false;
+    }
 
     !fs.existsSync("./.scene_cache") && fs.mkdirSync("./.scene_cache");
 
@@ -360,10 +372,11 @@ exports.render = async function render({
     scale,
     multi,
     input = "./index.html",
+    duration = 0,
+    iteration = 0,
 }) {
     let server;
     let path;
-    let duration;
 
     if (input.match(/https*:\/\//g)) {
         path = input;
@@ -389,6 +402,7 @@ exports.render = async function render({
             height,
             startTime,
             duration,
+            iteration,
             cache,
             scale,
             multi,
