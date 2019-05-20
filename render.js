@@ -5,7 +5,7 @@ const createServer = require('http-server').createServer;
 const { fork } = require('child_process');
 const { openPage, caputreLoop, sendMessage } = require('./utils');
 const { isUndefined } = require("@daybrush/utils");
-const codecs = {
+const DEFAULT_CODECS = {
     "mp4": "libx264",
     "webm": "libvpx-vp9",
 };
@@ -203,15 +203,17 @@ function rmdir(path) {
 
 async function recordVideo({
     duration,
+    codec,
     fps,
     output,
     width,
     height,
     isMedia,
     bitrate,
+    multi,
 }) {
     const result = output.match(/(?<=\.)[^.]+$/g);
-    const codec = result ? codecs[result[0]] || codecs["mp4"] : codecs["mp4"];
+    codec = codec || result && DEFAULT_CODECS[result[0]] || codecs["mp4"];
 
     return new Promise(async (resolve, reject) => {
         const frames = [];
@@ -245,7 +247,10 @@ async function recordVideo({
             })
             .videoBitrate(bitrate)
             .videoCodec(codec)
-            .outputOption('-pix_fmt yuv420p')
+            .outputOption([
+                `-cpu-used ${multi}`,
+                "-pix_fmt yuv420p",
+            ])
             .size(`${width}x${height}`)
             .format('mp4')
         if (isMedia) {
@@ -389,6 +394,7 @@ exports.render = async function render({
     duration = 0,
     iteration = 0,
     bitrate = "4096k",
+    codec,
 }) {
     let server;
     let path;
@@ -436,10 +442,12 @@ exports.render = async function render({
                 return recordVideo({
                     duration: sceneDuration,
                     bitrate,
+                    codec,
                     fps,
                     output: file,
                     width,
                     height,
+                    multi,
                     isMedia,
                 });
             }));

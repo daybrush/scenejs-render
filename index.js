@@ -18,6 +18,7 @@ args
     .option('iteration', 'iterationCount of the Scene set by the user himself.', 0)
     .option('cache', 'you can pass Capture. (0: false, 1: true)', 0)
     .option('multi', 'Number of processes to create.', 1)
+    .option("codec", "Codec to encode video If you don't set it up, it's the default(mp4: libx264, webm:libvpx-vp9)", "")
     .option("bitrate", "Bitrate of video (the higher the bit rate, the clearer the video quality)", "4096k");
 
 (async () => {

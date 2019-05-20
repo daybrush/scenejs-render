@@ -10,7 +10,7 @@ $ npm install @scenejs/render
 
 ## Usage
 ```bash
-# export mp4 file
+# export mp4
 $ render -i index.html --name scene
 # export only mp3
 $ render -i index.html --name scene -o output.mp3
@@ -28,6 +28,7 @@ $ render -i index.html --name scene -o output.mp3,output.mp4
   Options:
     -b, --bitrate [value]  Bitrate of video (the higher the bit rate, the clearer the video quality) (defaults to "4096k")
     -c, --cache <n>        you can pass Capture. (0: false, 1: true) (defaults to 0)
+    -C, --codec            Codec to encode video If you don't set it up, it's the default(mp4: libx264, webm:libvpx-vp9) (defaults to "")
     -d, --duration <n>     how many seconds to play (defaults to 0)
     -f, --fps <n>          fps (defaults to 60)
     -h, --height <n>       Video height to render (defaults to 400)
