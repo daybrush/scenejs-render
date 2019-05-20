@@ -5,7 +5,10 @@ const createServer = require('http-server').createServer;
 const { fork } = require('child_process');
 const { openPage, caputreLoop, sendMessage } = require('./utils');
 const { isUndefined } = require("@daybrush/utils");
-
+const codecs = {
+    "mp4": "libx264",
+    "webm": "libvpx-vp9",
+};
 
 async function getMediaInfo(page, media) {
     if (!media) {
@@ -49,7 +52,9 @@ async function captureScene({
     multi,
     isVideo,
 }) {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        headless: true,
+    });
     const page = await openPage({
         browser,
         name,
@@ -203,7 +208,11 @@ async function recordVideo({
     width,
     height,
     isMedia,
+    bitrate,
 }) {
+    const result = output.match(/(?<=\.)[^.]+$/g);
+    const codec = result ? codecs[result[0]] || codecs["mp4"] : codecs["mp4"];
+
     return new Promise(async (resolve, reject) => {
         const frames = [];
         for (let i = 0; i <= duration * fps; ++i) {
@@ -234,8 +243,8 @@ async function recordVideo({
                 console.log('Processing finished !');
                 resolve();
             })
-            .videoBitrate(1024)
-            .videoCodec('libx264')
+            .videoBitrate(bitrate)
+            .videoCodec(codec)
             .outputOption('-pix_fmt yuv420p')
             .size(`${width}x${height}`)
             .format('mp4')
@@ -266,7 +275,7 @@ async function convertAudio({
             .audioFilters([`adelay=${delay * playSpeed * 1000}|${delay * playSpeed * 1000}`, `atempo=${playSpeed}`, `volume=${volume}`])
             .on('error', function (err) {
                 console.log('An audio error occurred: ' + err.message);
-                reject();
+                resolve();
             })
             .on('end', function () {
                 resolve();
@@ -328,13 +337,17 @@ async function recordMedia(mediaInfo, input, output) {
     console.log("Merge Medias");
     const result = await new Promise((resolve, reject) => {
         const converter = ffmpeg();
+        let inputLengths = 0;
         for (let i = 0; i < length; ++i) {
-            converter.addInput(`./.scene_cache/audio${i}.mp3`);
+            if (fs.existsSync(`./.scene_cache/audio${i}.mp3`)) {
+                converter.addInput(`./.scene_cache/audio${i}.mp3`);
+                ++inputLengths;
+            }
         }
 
-        converter.inputOptions(`-filter_complex amix=inputs=${length}:duration=longest`)
+        converter.inputOptions(`-filter_complex amix=inputs=${inputLengths}:duration=longest`)
             .on('error', function (err) {
-                console.log('An error occurred: ' + err.message);
+                console.log('An merge error occurred: ' + err.message);
                 reject(false);
             })
             .on('end', function () {
@@ -359,6 +372,7 @@ function openServer(port) {
 
     return server;
 }
+
 exports.render = async function render({
     name = "scene",
     media = "mediaScene",
@@ -374,6 +388,7 @@ exports.render = async function render({
     input = "./index.html",
     duration = 0,
     iteration = 0,
+    bitrate = "4096k",
 }) {
     let server;
     let path;
@@ -388,7 +403,12 @@ exports.render = async function render({
     console.log("Open Page: ", path);
     try {
         console.log("Start Rendering");
-        const isVideo = !!output.match(/\.mp4$/g);
+
+        const outputs = output.split(",");
+        const videoOutputs = outputs.filter(file => file.match(/\.(mp4|webm)$/g));
+        const isVideo = videoOutputs.length;
+        const audioPath = outputs.find(file => file.match(/\.mp3$/g));
+
         const startProcessingTime = Date.now();
         const {
             duration: sceneDuration,
@@ -408,24 +428,26 @@ exports.render = async function render({
             multi,
             isVideo,
         });
-        const isMedia = await recordMedia(mediaInfo, input, isVideo ? "" : output);
+        const isMedia = await recordMedia(mediaInfo, input, audioPath);
 
+        server && server.close();
         if (isVideo) {
-            await recordVideo({
-                duration: sceneDuration,
-                fps,
-                output,
-                width,
-                height,
-                isMedia,
-            });
+            await Promise.all(videoOutputs.map(file => {
+                return recordVideo({
+                    duration: sceneDuration,
+                    bitrate,
+                    fps,
+                    output: file,
+                    width,
+                    height,
+                    isMedia,
+                });
+            }));
         }
         !cache && rmdir("./.scene_cache");
         const endProcessingTime = Date.now();
 
         console.log(`End Rendering(Rendering Time: ${(endProcessingTime - startProcessingTime) / 1000}s)`);
-
-        server && server.close();
     } catch (e) {
         console.error(e);
         process.exit(200);

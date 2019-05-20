@@ -17,7 +17,8 @@ args
     .option('duration', 'how many seconds to play', 0)
     .option('iteration', 'iterationCount of the Scene set by the user himself.', 0)
     .option('cache', 'you can pass Capture. (0: false, 1: true)', 0)
-    .option('multi', 'Number of processes to create.', 1);
+    .option('multi', 'Number of processes to create.', 1)
+    .option("bitrate", "Bitrate of video (the higher the bit rate, the clearer the video quality)", "4096k");
 
 (async () => {
     const flags = args.parse(process.argv);

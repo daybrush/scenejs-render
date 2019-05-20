@@ -1,4 +1,8 @@
+<!DOCTYPE html>
 <style>
+    body {
+        font-family: sans-serif;
+    }
     .container {
         position: absolute;
         top: 50%;
@@ -69,13 +73,26 @@
             <div class="square"></div>
         </div>
     </div>
-    <video id="clapper" src="./clapper.mp4"></video>
-    <video id="snow" src="./snow.mp4"></video>
-    <video id="motion" src="./motion.mp4"></video>
-    <video id="circleburst" src="./circleburst.mp4"></video>
+    <video id="clapper">
+        <source src="./clapper.mp4" type="video/mp4"/>
+        <source src="./clapper.webm" type="video/webm"/>
+    </video>
+    <video id="snow">
+        <source src="./snow.webm" type="video/webm"/>
+        <source src="./snow.mp4" type="video/mp4"/>
+    </video>
+    <video id="motion">
+        <source src="./motion.webm" type="video/webm"/>
+        <source src="./motion.mp4" type="video/mp4"/>
+    </video>
+    <video id="circleburst">
+        <source src="./circleburst.webm" type="video/webm"/>
+        <source src="./circleburst.mp4" type="video/mp4"/>
+    </video>
 </div>
 
 <script src="https://daybrush.com/scenejs/release/latest/dist/scene.js"></script>
+<script src="https://daybrush.com/scenejs-effects/release/latest/dist/effects.js"></script>
 <script src="https://daybrush.com/scenejs-media/release/latest/dist/media.js"></script>
 <script src="https://daybrush.com/scenejs-timeline/release/latest/dist/timeline.pkgd.js"></script>
 
@@ -85,7 +102,7 @@
 
     mediaScene
         .addMedia("background", "./background.mp3")
-        .seek(0, 24)
+        .seek(0, 40.79)
 
     mediaScene
         .addMedia("clapper", document.querySelector("#clapper"))
@@ -94,10 +111,28 @@
     mediaScene
         .addMedia("snow", document.querySelector("#snow"))
         .seek(0, 10)
-        .setDelay(11.5)
+        .setDelay(11.1)
+    mediaScene
+        .addMedia("motion", document.querySelector("#motion"))
+        .seek(0, 6)
+        .setDelay(20.8)
+    mediaScene
+        .addMedia("circleburst", document.querySelector("#circleburst"))
+        .seek(0, 14)
+        .setDelay(26.8)
 
     const scene = new Scene({
-        "#clapper": {},
+        "#clapper": {
+            0: {
+                opacity: 1,
+            },
+            0.1: {
+                opacity: 0,
+            },
+            options: {
+                delay: 11,
+            },
+        },
         ".square": i => ({
             0: {
                 transform: {
@@ -132,7 +167,9 @@
             0.1: {
                 opacity: 1,
             },
+            10: {},
             options: {
+                easing: "ease-in-out",
                 delay: 11,
             },
         },
@@ -140,16 +177,47 @@
             0: {
                 opacity: 0,
             },
+            6: {},
+            options: {
+                easing: "ease-in-out",
+                delay: 20.8,
+            },
         },
         "#circleburst": {
             0: {
                 opacity: 0,
             },
+            options: {
+                easing: "ease-in-out",
+                delay: 26.6,
+            }
         },
         "media": mediaScene,
     }, {
         selector: true,
     });
+
+    // snow => motion
+    Scene.transition(
+        scene.getItem("#snow"),
+        scene.getItem("#motion"),
+        {
+            0: "transform: translateZ(0px) scale(1.2) rotate(0deg);",
+            0.8: "opacity: 1;",
+            1: "transform: scale(2) rotate(40deg);opacity: 0;",
+        },
+    )
+
+    // motion => circleburst
+    Scene.transition(
+        scene.getItem("#motion"),
+        scene.getItem("#circleburst"),
+        {
+            0: "transform: translateZ(0px) scale(1.2) rotate(0deg);",
+            0.8: "opacity: 1;",
+            1: "transform: scale(2) rotate(40deg);opacity: 0;",
+        },
+    )
     
     scene.getItem(".square").setDelay(9);
 

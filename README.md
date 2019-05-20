@@ -9,8 +9,13 @@ $ npm install @scenejs/render
 ```
 
 ## Usage
-```js
+```bash
+# export mp4 file
 $ render -i index.html --name scene
+# export only mp3
+$ render -i index.html --name scene -o output.mp3
+# export mp3 file and mp4 file
+$ render -i index.html --name scene -o output.mp3,output.mp4
 ```
 
 ```
@@ -21,22 +26,23 @@ $ render -i index.html --name scene
     version  Display version
   
   Options:
-    -c, --cache <n>       you can pass Capture. (0: false, 1: true) (defaults to 0)
-    -d, --duration <n>    how many seconds to play (defaults to 0)
-    -f, --fps <n>         fps (defaults to 60)
-    -h, --height <n>      Video height to render (defaults to 400)
-    -H, --help            Output usage information
-    -i, --input [value]   File URL to Rendering (defaults to "index.html")
-    -I, --iteration <n>   iterationCount of the Scene set by the user himself. (defaults to 0)
-    -m, --media [value]   Name of mediaScene to render (defaults to "mediaScene")
-    -M, --multi <n>       Number of processes to create. (defaults to 1)
-    -n, --name [value]    Name of scene to render (defaults to "scene")
-    -o, --output [value]  Output file name (defaults to "output.mp4")
-    -p, --port <n>        Port to Rendering (defaults to 3033)
-    -s, --scale <n>       Scale of screen size (defaults to 1)
-    -S, --startTime <n>   Time to start (defaults to 0)
-    -v, --version         Output the version number
-    -w, --width <n>       Video width to render (defaults to 600)
+    -b, --bitrate [value]  Bitrate of video (the higher the bit rate, the clearer the video quality) (defaults to "4096k")
+    -c, --cache <n>        you can pass Capture. (0: false, 1: true) (defaults to 0)
+    -d, --duration <n>     how many seconds to play (defaults to 0)
+    -f, --fps <n>          fps (defaults to 60)
+    -h, --height <n>       Video height to render (defaults to 400)
+    -H, --help             Output usage information
+    -i, --input [value]    File URL to Rendering (defaults to "index.html")
+    -I, --iteration <n>    iterationCount of the Scene set by the user himself. (defaults to 0)
+    -m, --media [value]    Name of mediaScene to render (defaults to "mediaScene")
+    -M, --multi <n>        Number of processes to create. (defaults to 1)
+    -n, --name [value]     Name of scene to render (defaults to "scene")
+    -o, --output [value]   Output file name (defaults to "output.mp4")
+    -p, --port <n>         Port to Rendering (defaults to 3033)
+    -s, --scale <n>        Scale of screen size (defaults to 1)
+    -S, --startTime <n>    Time to start (defaults to 0)
+    -v, --version          Output the version number
+    -w, --width <n>        Video width to render (defaults to 600)
 ```
 ## Result
 ```
