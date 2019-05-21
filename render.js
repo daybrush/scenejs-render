@@ -212,8 +212,8 @@ async function recordVideo({
     bitrate,
     multi,
 }) {
-    const result = output.match(/(?<=\.)[^.]+$/g);
-    codec = codec || result && DEFAULT_CODECS[result[0]] || codecs["mp4"];
+    const ext = output.match(/(?<=\.)[^.]+$/g);
+    codec = codec || ext && DEFAULT_CODECS[ext[0]] || codecs["mp4"];
 
     return new Promise(async (resolve, reject) => {
         const frames = [];
@@ -252,13 +252,13 @@ async function recordVideo({
                 "-pix_fmt yuv420p",
             ])
             .size(`${width}x${height}`)
-            .format('mp4')
+            .format("mp4")
         if (isMedia) {
             converter.addInput("./.scene_cache/merge.mp3")
                 .audioCodec('aac')
                 .audioBitrate('128k')
                 // .audioFrequency(22050)
-                .audioChannels(4)
+                .audioChannels(2)
         }
         converter.save(output);
     });

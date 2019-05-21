@@ -1,6 +1,6 @@
 {
   "name": "@scenejs/render",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "  Make a movie of CSS animation through scenejs",
   "main": "./render.js",
   "dependencies": {
