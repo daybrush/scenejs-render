@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width"/>
 <style>
     body {
         font-family: sans-serif;
     }
+
     .container {
         position: absolute;
         top: 50%;
@@ -14,9 +16,15 @@
         overflow: hidden;
     }
 
+    @media screen and (max-width: 1920px) {
+        .container {
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+    } 
     video {
-        width: 1920px;
+        width: 100%;
         position: absolute;
+        background: #f55;
     }
 
     .transition {
@@ -28,6 +36,7 @@
         transform: scale(1);
         top: 50%;
         transform: translateY(-50%);
+
     }
 
     .squares {
@@ -73,19 +82,19 @@
             <div class="square"></div>
         </div>
     </div>
-    <video id="clapper">
-        <source src="./clapper.mp4" type="video/mp4"/>
+    <video id="clapper" playsinline>
         <source src="./clapper.webm" type="video/webm"/>
+        <source src="./clapper.mp4" type="video/mp4"/>
     </video>
-    <video id="snow">
+    <video id="snow" playsinline>
         <source src="./snow.webm" type="video/webm"/>
         <source src="./snow.mp4" type="video/mp4"/>
     </video>
-    <video id="motion">
+    <video id="motion" playsinline>
         <source src="./motion.webm" type="video/webm"/>
         <source src="./motion.mp4" type="video/mp4"/>
     </video>
-    <video id="circleburst">
+    <video id="circleburst" playsinline>
         <source src="./circleburst.webm" type="video/webm"/>
         <source src="./circleburst.mp4" type="video/mp4"/>
     </video>
