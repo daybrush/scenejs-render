@@ -31,7 +31,7 @@ $ render -i index.html --name scene -o output.mp3,output.mp4
     -C, --codec            Codec to encode video If you don't set it up, it's the default(mp4: libx264, webm:libvpx-vp9) (defaults to "")
     -d, --duration <n>     how many seconds to play (defaults to 0)
     -f, --fps <n>          fps (defaults to 60)
-    -h, --height <n>       Video height to render (defaults to 400)
+    -h, --height <n>       Video height to render (defaults to 1080)
     -H, --help             Output usage information
     -i, --input [value]    File URL to Rendering (defaults to "index.html")
     -I, --iteration <n>    iterationCount of the Scene set by the user himself. (defaults to 0)
@@ -43,7 +43,7 @@ $ render -i index.html --name scene -o output.mp3,output.mp4
     -s, --scale <n>        Scale of screen size (defaults to 1)
     -S, --startTime <n>    Time to start (defaults to 0)
     -v, --version          Output the version number
-    -w, --width <n>        Video width to render (defaults to 600)
+    -w, --width <n>        Video width to render (defaults to 1920)
 ```
 ## Result
 ```
