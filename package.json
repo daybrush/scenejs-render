@@ -1,16 +1,16 @@
 {
   "name": "@scenejs/render",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "  Make a movie of CSS animation through scenejs",
   "main": "./render.js",
   "dependencies": {
-    "@daybrush/utils": "^0.8.0",
-    "@scenejs/media": "^0.1.4",
+    "@daybrush/utils": "^0.10.0",
+    "@scenejs/media": "^0.1.6",
     "args": "^5.0.1",
     "fluent-ffmpeg": "^2.1.2",
     "http-server": "^0.11.1",
     "puppeteer": "^1.13.0",
-    "scenejs": "^1.0.0-rc10"
+    "scenejs": "^1.0.0"
   },
   "keywords": [
     "scene",
