@@ -17,6 +17,7 @@ async function capture({
     endFrame,
     totalFrame,
     isMedia,
+    referer,
 }) {
     const browser = await puppeteer.launch();
     const page = await openPage({
@@ -27,6 +28,7 @@ async function capture({
         scale,
         name,
         media,
+        referer,
     });
 
     console.log(`Start SubCapture (startFrame: ${startFrame}, endFrame: ${endFrame})`)

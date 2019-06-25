@@ -51,6 +51,7 @@ async function captureScene({
     scale,
     multi,
     isVideo,
+    referer,
 }) {
     const browser = await puppeteer.launch({
         headless: true,
@@ -63,6 +64,7 @@ async function captureScene({
         height,
         path,
         scale,
+        referer,
     });
 
     const mediaInfo = await getMediaInfo(page, media);
@@ -160,6 +162,7 @@ async function captureScene({
                 endFrame: processEndFrame,
                 isMedia,
                 totalFrame: endFrame,
+                referer,
             }));
         }
         const mainLoop = caputreLoop({
@@ -395,6 +398,7 @@ exports.render = async function render({
     iteration = 0,
     bitrate = "4096k",
     codec,
+    referer,
 }) {
     let server;
     let path;
@@ -433,6 +437,7 @@ exports.render = async function render({
             scale,
             multi,
             isVideo,
+            referer,
         });
         const isMedia = await recordMedia(mediaInfo, input, audioPath);
 

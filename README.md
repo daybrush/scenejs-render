@@ -40,6 +40,7 @@ $ render -i index.html --name scene -o output.mp3,output.mp4
     -n, --name [value]     Name of scene to render (defaults to "scene")
     -o, --output [value]   Output file name (defaults to "output.mp4")
     -p, --port <n>         Port to Rendering (defaults to 3033)
+    -r, --referer          The Referer request header contains the address of the previous web page from which a link to the currently requested page was followed. (defaults to "")
     -s, --scale <n>        Scale of screen size (defaults to 1)
     -S, --startTime <n>    Time to start (defaults to 0)
     -v, --version          Output the version number

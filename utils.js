@@ -40,7 +40,8 @@ exports.openPage = async function openPage({
     path,
     scale,
     name,
-    media
+    media,
+    referer,
 }) {
     const page = await browser.newPage();
 
@@ -50,7 +51,9 @@ exports.openPage = async function openPage({
         height: height / scale,
         deviceScaleFactor: scale,
     });
-    await page.goto(path);
+    await page.goto(path, {
+        referer,
+    });
 
     try {
         await page.evaluate(`${name}.finish()`);
