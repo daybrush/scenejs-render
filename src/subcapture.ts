@@ -1,6 +1,5 @@
-const puppeteer = require('puppeteer');
-const {openPage, caputreLoop} = require('./utils');
-
+import puppeteer from "puppeteer";
+import { openPage, caputreLoop } from "./utils";
 
 async function capture({
     name,
@@ -31,7 +30,7 @@ async function capture({
         referer,
     });
 
-    console.log(`Start SubCapture (startFrame: ${startFrame}, endFrame: ${endFrame})`)
+    console.log(`Start SubCapture (startFrame: ${startFrame}, endFrame: ${endFrame})`);
     await caputreLoop({
         page,
         name,
@@ -44,15 +43,13 @@ async function capture({
         endFrame,
         endTime,
         totalFrame,
+        isOnlyMedia: false,
     });
-
 
     await browser.close();
 }
 
-
-
-process.on('message', async (data) => {
+process.on("message", async data => {
     await capture(data);
 
     process.exit();

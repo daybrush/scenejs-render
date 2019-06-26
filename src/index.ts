@@ -1,14 +1,11 @@
-const puppeteer = require('puppeteer');
-const ffmpeg = require('fluent-ffmpeg');
-const fs = require('fs');
-const createServer = require('http-server').createServer;
-const { fork } = require('child_process');
-const { openPage, caputreLoop, sendMessage } = require('./utils');
-const { isUndefined } = require("@daybrush/utils");
-const DEFAULT_CODECS = {
-    "mp4": "libx264",
-    "webm": "libvpx-vp9",
-};
+import puppeteer from "puppeteer";
+import ffmpeg from "fluent-ffmpeg";
+import * as fs from "fs";
+import { createServer } from "http-server";
+import { fork } from "child_process";
+import { isUndefined } from "@daybrush/utils";
+import { openPage, caputreLoop, sendMessage } from "./utils";
+import { DEFAULT_CODECS } from "./consts";
 
 async function getMediaInfo(page, media) {
     if (!media) {
@@ -17,23 +14,24 @@ async function getMediaInfo(page, media) {
     try {
         return await page.evaluate(`${media}.finish().getInfo()`);
     } catch (e) {
+        //
     }
 
     return;
 }
 async function forkCapture(datas) {
-    const compute = fork(__dirname + '/subcapture.js');
+    const compute = fork(__dirname + "/subcapture.js");
 
     return new Promise(resolve => {
-        compute.on('message', result => {
+        compute.on("message", result => {
             sendMessage(result);
         });
         compute.on("close", () => {
             resolve();
-        })
+        });
         compute.on("exit", () => {
             resolve();
-        })
+        });
         compute.send(datas);
     });
 }
@@ -75,9 +73,8 @@ async function captureScene({
         return {
             mediaInfo: mediaInfo || {},
             duration: isMedia ? mediaInfo.duration : 0,
-        }
+        };
     }
-
 
     let isOnlyMedia = false;
     let iterationCount;
@@ -136,11 +133,11 @@ async function captureScene({
     !fs.existsSync("./.scene_cache") && fs.mkdirSync("./.scene_cache");
 
     if (isCache) {
-        console.log(`Use Cache (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);;
+        console.log(`Use Cache (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);
     } else {
-        console.log(`Start Capture (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame}, multi-process: ${multi})`);;
+        console.log(`Start Capture (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame}, multi-process: ${multi})`);
         const dist = Math.ceil((endFrame - startFrame) / multi);
-        let loops = [];
+        const loops = [];
 
         for (let i = 1; i < multi; ++i) {
             const processStartFrame = startFrame + dist * i + 1;
@@ -187,22 +184,23 @@ async function captureScene({
     return {
         mediaInfo: mediaInfo || {},
         duration: (endTime - startTime) / playSpeed,
-    }
+    };
 }
 
 function rmdir(path) {
     if (fs.existsSync(path)) {
-        fs.readdirSync(path).forEach(function (file) {
-            var curPath = path + "/" + file;
-            if (fs.lstatSync(curPath).isDirectory()) { // recurse
-                rmdir(curPath);
+        fs.readdirSync(path).forEach(file => {
+            const currentPath = path + "/" + file;
+
+            if (fs.lstatSync(currentPath).isDirectory()) { // recurse
+                rmdir(currentPath);
             } else { // delete file
-                fs.unlinkSync(curPath);
+                fs.unlinkSync(currentPath);
             }
         });
         fs.rmdirSync(path);
     }
-};
+}
 
 async function recordVideo({
     duration,
@@ -216,7 +214,7 @@ async function recordVideo({
     multi,
 }) {
     const ext = output.match(/(?<=\.)[^.]+$/g);
-    codec = codec || ext && DEFAULT_CODECS[ext[0]] || codecs["mp4"];
+    codec = codec || ext && DEFAULT_CODECS[ext[0]] || DEFAULT_CODECS.mp4;
 
     return new Promise(async (resolve, reject) => {
         const frames = [];
@@ -230,22 +228,22 @@ async function recordVideo({
             processing: 0,
         });
         const converter = ffmpeg()
-            .addInput('./.scene_cache/frame%d.png')
+            .addInput("./.scene_cache/frame%d.png")
             // .addInput('./test.mp3')
             .inputFPS(fps)
             .loop(duration)
-            .on('error', function (err) {
-                console.log('An error occurred: ' + err.message);
+            .on("error", err => {
+                console.log("An error occurred: " + err.message);
                 reject();
             })
-            .on('progress', function (progress) {
+            .on("progress", progress => {
                 sendMessage({
                     processing: progress.percent,
                 });
-                console.log('Processing: ' + progress.percent + '% done');
+                console.log("Processing: " + progress.percent + "% done");
             })
-            .on('end', function () {
-                console.log('Processing finished !');
+            .on("end", () => {
+                console.log("Processing finished !");
                 resolve();
             })
             .videoBitrate(bitrate)
@@ -255,13 +253,13 @@ async function recordVideo({
                 "-pix_fmt yuv420p",
             ])
             .size(`${width}x${height}`)
-            .format("mp4")
+            .format("mp4");
         if (isMedia) {
             converter.addInput("./.scene_cache/merge.mp3")
-                .audioCodec('aac')
-                .audioBitrate('128k')
+                .audioCodec("aac")
+                .audioBitrate("128k")
                 // .audioFrequency(22050)
-                .audioChannels(2)
+                .audioChannels(2);
         }
         converter.save(output);
     });
@@ -276,16 +274,16 @@ async function convertAudio({
 }) {
     console.log("Convert Audio", path);
     const [startTime, endTime] = seek;
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
         ffmpeg(path)
             .seekInput(startTime)
             .inputOptions(`-to ${endTime}`)
             .audioFilters([`adelay=${delay * playSpeed * 1000}|${delay * playSpeed * 1000}`, `atempo=${playSpeed}`, `volume=${volume}`])
-            .on('error', function (err) {
-                console.log('An audio error occurred: ' + err.message);
+            .on("error", err => {
+                console.log("An audio error occurred: " + err.message);
                 resolve();
             })
-            .on('end', function () {
+            .on("end", () => {
                 resolve();
             })
             .save(`./.scene_cache/audio${i}.mp3`);
@@ -293,20 +291,20 @@ async function convertAudio({
 }
 
 function resolvePath(path1, path2) {
-    var paths = path1.split("/").slice(0, -1).concat(path2.split("/"));
+    let paths = path1.split("/").slice(0, -1).concat(path2.split("/"));
 
-    paths = paths.filter(function (directory, i) {
+    paths = paths.filter((directory, i) => {
         return i === 0 || directory !== ".";
     });
 
-    var index = -1
+    let index = -1;
 
+// tslint:disable-next-line: no-conditional-assignment
     while ((index = paths.indexOf("..")) > 0) {
         paths.splice(index - 1, 2);
     }
     return paths.join("/");
 }
-
 
 async function recordMedia(mediaInfo, input, output) {
     console.log("Convert Medias");
@@ -354,18 +352,18 @@ async function recordMedia(mediaInfo, input, output) {
         }
 
         converter.inputOptions(`-filter_complex amix=inputs=${inputLengths}:duration=longest`)
-            .on('error', function (err) {
-                console.log('An merge error occurred: ' + err.message);
+            .on("error", err => {
+                console.log("An merge error occurred: " + err.message);
                 reject(false);
             })
-            .on('end', function () {
+            .on("end", () => {
                 resolve(true);
             })
             .save("./.scene_cache/merge.mp3");
     });
 
     if (result && output) {
-        fs.copyFileSync("./.scene_cache/merge.mp3", output)
+        fs.copyFileSync("./.scene_cache/merge.mp3", output);
     }
     return result;
 }
@@ -374,7 +372,7 @@ function openServer(port) {
         cache: -1,
     });
 
-    server.listen(port, '0.0.0.0', function () {
+    server.listen(port, "0.0.0.0", () => {
         console.log("Open Server", port);
     });
 
@@ -467,4 +465,4 @@ exports.render = async function render({
         return;
     }
     process.exit(0);
-}
+};

@@ -1,7 +1,7 @@
-function sendMessage(message) {
+export function sendMessage(message) {
     process.send && process.send(message);
 }
-exports.caputreLoop = async function caputreLoop({
+export async function caputreLoop({
     isOnlyMedia,
     page,
     name,
@@ -18,7 +18,7 @@ exports.caputreLoop = async function caputreLoop({
     async function loop(frame) {
         const time = Math.min(frame * playSpeed / fps, endTime);
 
-        sendMessage({frame: frame, totalFrame: totalFrame});
+        sendMessage({ frame, totalFrame });
         console.log(`Capture frame: ${frame}, time: ${time}`);
         !isOnlyMedia && await page.evaluate(`${name}.setTime(${time - delay}, true)`);
         isMedia && await page.evaluate(`${media}.setTime(${time})`);
@@ -33,7 +33,7 @@ exports.caputreLoop = async function caputreLoop({
     await loop(startFrame);
 }
 
-exports.openPage = async function openPage({
+export async function openPage({
     browser,
     width,
     height,
@@ -58,13 +58,12 @@ exports.openPage = async function openPage({
     try {
         await page.evaluate(`${name}.finish()`);
     } catch (e) {
-
+        //
     }
     try {
         await page.evaluate(`${media}.finish()`);
     } catch (e) {
-
+        //
     }
     return page;
 }
-exports.sendMessage = sendMessage;
