@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer";
+import * as puppeteer from "puppeteer";
 import { openPage, caputreLoop, sendMessage, rmdir } from "./utils";
 import * as fs from "fs";
 import { isUndefined } from "@daybrush/utils";

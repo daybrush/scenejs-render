@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const args = require('args');
-const render = require("./render").render;
+const render = require("./dist/render.cjs").render;
 
 args
     .option('input', 'File URL to Rendering', 'index.html')

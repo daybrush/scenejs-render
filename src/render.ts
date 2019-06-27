@@ -3,6 +3,7 @@ import captureScene from "./capture";
 import processMedia from "./processMedia";
 import processVideo from "./processVideo";
 import { rmdir } from "./utils";
+import { RenderOptions } from "./types";
 
 function openServer(port) {
     const server = createServer({
@@ -34,7 +35,7 @@ export default async function render({
     bitrate = "4096k",
     codec,
     referer,
-}) {
+}: RenderOptions = {}) {
     let server;
     let path;
 
