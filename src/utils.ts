@@ -1,3 +1,35 @@
+import * as fs from "fs";
+
+export function resolvePath(path1, path2) {
+    let paths = path1.split("/").slice(0, -1).concat(path2.split("/"));
+
+    paths = paths.filter((directory, i) => {
+        return i === 0 || directory !== ".";
+    });
+
+    let index = -1;
+
+// tslint:disable-next-line: no-conditional-assignment
+    while ((index = paths.indexOf("..")) > 0) {
+        paths.splice(index - 1, 2);
+    }
+    return paths.join("/");
+}
+
+export function rmdir(path) {
+    if (fs.existsSync(path)) {
+        fs.readdirSync(path).forEach(file => {
+            const currentPath = path + "/" + file;
+
+            if (fs.lstatSync(currentPath).isDirectory()) { // recurse
+                rmdir(currentPath);
+            } else { // delete file
+                fs.unlinkSync(currentPath);
+            }
+        });
+        fs.rmdirSync(path);
+    }
+}
 export function sendMessage(message) {
     process.send && process.send(message);
 }
