@@ -3,6 +3,9 @@
 
 
 Make a movie of CSS animation through [scenejs](https://github.com/daybrush/scenejs).
+
+In order to be able to use this module, make sure you have [ffmpeg](https://ffmpeg.org/) installed on your system (including all necessary encoding libraries like libmp3lame or libx264).
+
 ## Installation
 ```bash
 $ npm install @scenejs/render
