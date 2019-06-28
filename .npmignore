@@ -4,7 +4,6 @@ node_modules/
 doc/
 template/
 example/
-examples/
 karma.conf.js
 test/
 mocha.opts
@@ -18,5 +17,7 @@ coverage/
 dist/report.html
 rollup-plugin-visualizer/
 outjs/
+statistics/
+.scene_cache
 *.mp3
 *.mp4

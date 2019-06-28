@@ -1,50 +1,61 @@
 {
-  "name": "@scenejs/render",
-  "version": "0.8.3",
-  "description": "  Make a movie of CSS animation through scenejs",
-  "main": "./render.js",
-  "dependencies": {
-    "@daybrush/utils": "^0.10.0",
-    "@scenejs/media": "^0.1.6",
-    "args": "^5.0.1",
-    "fluent-ffmpeg": "^2.1.2",
-    "http-server": "^0.11.1",
-    "puppeteer": "^1.13.0",
-    "scenejs": "^1.0.0"
-  },
-  "keywords": [
-    "scene",
-    "scenejs",
-    "animate",
-    "animation",
-    "css",
-    "requestAnimationFrame",
-    "motion",
-    "media",
-    "render",
-    "fps",
-    "puppeteer"
-  ],
-  "devDependencies": {
-    "@scenejs/timeline": "^0.2.1"
-  },
-  "scripts": {
-    "test": "node ./index.js -i test.html --fps 60 --cache 1",
-    "test2": "node ./index.js -i test2.html --fps 30",
-    "test:multi": "node ./index.js -i test.html --fps 60 --multi 4",
-    "help": "node ./index.js --help"
-  },
-  "bin": {
-    "render": "./index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/daybrush/scenejs-render.git"
-  },
-  "author": "Daybrush",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/daybrush/scenejs-render/issues"
-  },
-  "homepage": "https://github.com/daybrush/scenejs-render#readme"
+    "name": "@scenejs/render",
+    "version": "0.9.0",
+    "description": "Make a movie of CSS animation through Scene.js",
+    "main": "./dist/render.cjs.js",
+    "module": "./dist/render.esm.js",
+    "types": "declaration/index.d.ts",
+    "dependencies": {
+        "@daybrush/utils": "^0.10.0",
+        "@egjs/component": "^2.1.2",
+        "@scenejs/media": "^0.1.6",
+        "@types/fluent-ffmpeg": "^2.1.10",
+        "@types/puppeteer": "^1.12.4",
+        "args": "^5.0.1",
+        "fluent-ffmpeg": "^2.1.2",
+        "http-server": "^0.11.1",
+        "puppeteer": "^1.13.0",
+        "scenejs": "^1.0.0"
+    },
+    "keywords": [
+        "scene",
+        "scenejs",
+        "scene.js",
+        "animate",
+        "animation",
+        "css",
+        "requestAnimationFrame",
+        "motion",
+        "media",
+        "render",
+        "fps",
+        "puppeteer",
+        "ffmpeg"
+    ],
+    "devDependencies": {
+        "@daybrush/builder": "^0.1.1",
+        "@scenejs/timeline": "^0.2.1",
+        "tslint": "^5.18.0",
+        "typescript": "^3.5.2"
+    },
+    "scripts": {
+        "build": "rollup -c && rm -rf declaration && tsc -p tsconfig.declaration.json",
+        "test": "node ./index.js -i test.html --fps 60 --cache 1",
+        "test2": "node ./index.js -i test2.html --fps 30",
+        "test:multi": "node ./index.js -i test.html --fps 60 --multi 4",
+        "help": "node ./index.js --help"
+    },
+    "bin": {
+        "render": "./index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/daybrush/scenejs-render.git"
+    },
+    "author": "Daybrush",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/daybrush/scenejs-render/issues"
+    },
+    "homepage": "https://github.com/daybrush/scenejs-render#readme"
 }
