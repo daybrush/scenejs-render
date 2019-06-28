@@ -1,48 +1,57 @@
 import Component from "@egjs/component";
-import { fork } from "child_process";
+import { fork, ChildProcess } from "child_process";
 import { IObject } from "@daybrush/utils";
-import { RendererStatus } from "./types";
-import { IDLE, START, CAPTURING, PROCESSING, FINISH } from "./consts";
+import { RendererStatus, RenderOptions } from "./types";
+import { IDLE, START, CAPTURING, PROCESSING, FINISH, ERROR } from "./consts";
+import * as path from "path";
 
 export default class Renderer extends Component {
-    public startTime = 0;
-    public endTime = 0;
-    public captureFrames = 0;
-    public progress = 0;
+    public startTime: number = 0;
+    public endTime: number = 0;
+    public captureFrames: number = 0;
+    public progress: number = 0;
     public status: RendererStatus = IDLE;
-    public process = null;
+    public process: ChildProcess = null;
     public pathname = "";
     public isEnd = false;
-    public start(options = {}) {
+    public start(options: RenderOptions = {}) {
         this.startTime = Date.now();
         this.endTime = 0;
         this.captureFrames = 0;
         this.progress = 0;
         this.status = START;
         this.isEnd = false;
-        this.trigger("start");
+        this.trigger("start", options);
 
         this.process = fork(
-            __dirname + "/index.js",
+            path.resolve(__dirname, "../index.js"),
             Object.keys(options).map(key => `--${key}=${options[key]}`),
         );
         this.process.on("message", message => {
-            if ("frame" in message) {
-                // capturing 90%
-                this.status = CAPTURING;
-                ++this.captureFrames;
-                this.progress = (this.captureFrames / message.totalFrame) * 90;
+            const type = message.type;
 
-                this.trigger("render");
-                this.trigger("capture", {
-                    frame: message.frame,
-                    frameCount: this.captureFrames,
-                    totalFrame: message.totalFrame,
+            if (type === "captureStart") {
+                this.status = CAPTURING;
+                this.trigger("captureStart", {
+                    isCache: message.isCache,
+                    duration: message.duration,
                 });
-            } else if ("processing" in message) {
+            } else if (type === "capture") {
+               // capturing 90%
+               this.status = CAPTURING;
+               ++this.captureFrames;
+               this.progress = (this.captureFrames / message.totalFrame) * 90;
+
+               this.trigger("render");
+               this.trigger("capture", {
+                   frame: message.frame,
+                   frameCount: this.captureFrames,
+                   totalFrame: message.totalFrame,
+               });
+            } else if (type === "process") {
                 // processing 10%
                 this.status = PROCESSING;
-                this.progress = Math.min(100, 80 + (message.processing / 100 * 20));
+                this.progress = Math.min(100, 90 + (message.processing / 100 * 10));
 
                 if (this.progress >= 100) {
                     this.isEnd = true;
@@ -67,7 +76,7 @@ export default class Renderer extends Component {
         this.process.on("exit", exitCode => {
             console.log("EXIT", exitCode);
             if (exitCode === 200) {
-                this.cancel();
+                this.cancel(true);
             } else {
                 this.finish();
             }
@@ -91,18 +100,21 @@ export default class Renderer extends Component {
 
         this.trigger("finish");
     }
-    public cancel() {
+    public cancel(isError?: boolean) {
         if (!this.process) {
             return;
         }
-
-        this.trigger("cancel");
+        this.status = isError ? ERROR : IDLE;
+        if (isError) {
+            this.trigger("error");
+        } else {
+            this.trigger("cancel");
+        }
         this.process.kill();
         this.process = null;
         this.startTime = 0;
         this.endTime = 0;
         this.progress = 0;
-        this.status = IDLE;
         this.captureFrames = 0;
 
     }

@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import { IObject } from "@daybrush/utils";
 
 export function resolvePath(path1, path2) {
     let paths = path1.split("/").slice(0, -1).concat(path2.split("/"));
@@ -30,7 +31,7 @@ export function rmdir(path) {
         fs.rmdirSync(path);
     }
 }
-export function sendMessage(message) {
+export function sendMessage(message: IObject<any>) {
     process.send && process.send(message);
 }
 export async function caputreLoop({
@@ -50,12 +51,12 @@ export async function caputreLoop({
     async function loop(frame) {
         const time = Math.min(frame * playSpeed / fps, endTime);
 
-        sendMessage({ frame, totalFrame });
         console.log(`Capture frame: ${frame}, time: ${time}`);
         !isOnlyMedia && await page.evaluate(`${name}.setTime(${time - delay}, true)`);
         isMedia && await page.evaluate(`${media}.setTime(${time})`);
         await page.screenshot({ path: `./.scene_cache/frame${frame}.png` });
 
+        sendMessage({ type: "capture", frame, totalFrame });
         if (time === endTime || frame >= endFrame) {
             return;
         }

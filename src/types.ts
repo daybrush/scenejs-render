@@ -1,5 +1,5 @@
 
-export type RendererStatus = "idle" | "start" | "finish" | "capturing" | "processing";
+export type RendererStatus = "idle" | "start" | "finish" | "capturing" | "processing" | "error";
 export interface RenderOptions {
     name?: string;
     media?: string;

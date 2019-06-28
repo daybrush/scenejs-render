@@ -3,6 +3,7 @@ export const DEFAULT_CODECS = {
     webm: "libvpx-vp9",
 };
 
+export const ERROR = "error";
 export const IDLE = "idle";
 export const START = "start";
 export const FINISH = "finish";

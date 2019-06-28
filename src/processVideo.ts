@@ -18,13 +18,16 @@ export default async function processVideo({
 
     return new Promise(async (resolve, reject) => {
         const frames = [];
-        for (let i = 0; i <= duration * fps; ++i) {
+        const totalFrame = duration * fps;
+
+        for (let i = 0; i <= totalFrame; ++i) {
             frames[i] = `./.scene_cache/frame${i}.png`;
         }
 
-        console.log(`Processing start (width: ${width}, height: ${height}, totalframe: ${frames.length}, duration: ${duration}, fps: ${fps}, media: ${isMedia})`);
+        console.log(`Processing start (width: ${width}, height: ${height}, totalframe: ${totalFrame + 1}, duration: ${duration}, fps: ${fps}, media: ${isMedia})`);
 
         sendMessage({
+            type: "process",
             processing: 0,
         });
         const converter = ffmpeg()
@@ -37,10 +40,12 @@ export default async function processVideo({
                 reject();
             })
             .on("progress", progress => {
+                const percent = (progress.frames || 0) / (totalFrame + 1) * 100;
                 sendMessage({
-                    processing: progress.percent,
+                    type: "process",
+                    processing: percent,
                 });
-                console.log("Processing: " + progress.percent + "% done");
+                console.log("Processing: " + percent  + "% done");
             })
             .on("end", () => {
                 console.log("Processing finished !");

@@ -131,6 +131,11 @@ export default async function captureScene({
     !isCache && rmdir("./.scene_cache");
     !fs.existsSync("./.scene_cache") && fs.mkdirSync("./.scene_cache");
 
+    sendMessage({
+        type: "captureStart",
+        isCache,
+        duration: (endTime - startTime) / playSpeed,
+    })
     if (isCache) {
         console.log(`Use Cache (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);
     } else {
