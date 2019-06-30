@@ -3,6 +3,7 @@ import { openPage, caputreLoop, sendMessage, rmdir } from "./utils";
 import * as fs from "fs";
 import { isUndefined } from "@daybrush/utils";
 import { fork } from "child_process";
+import { IterationCountType } from "scenejs";
 
 async function forkCapture(datas) {
     const compute = fork(__dirname + "/subcapture.js");
@@ -76,25 +77,25 @@ export default async function captureScene({
     }
 
     let isOnlyMedia = false;
-    let iterationCount;
-    let delay;
-    let playSpeed;
-    let sceneDuration;
-    let totalDuration;
-    let endTime;
-    let startFrame;
-    let endFrame;
+    let iterationCount: IterationCountType;
+    let delay: number;
+    let playSpeed: number;
+    let sceneDuration: number;
+    let totalDuration: number;
+    let endTime: number;
+    let startFrame: number;
+    let endFrame: number;
 
     try {
-        iterationCount = await page.evaluate(`${name}.getIterationCount()`);
+        iterationCount = iteration || await page.evaluate(`${name}.getIterationCount()`);
         delay = await page.evaluate(`${name}.getDelay()`);
         playSpeed = await page.evaluate(`${name}.getPlaySpeed()`);
         sceneDuration = await page.evaluate(`${name}.getDuration()`);
 
         if (iterationCount === "infinite") {
-            iterationCount =  iteration || 1;
+            iterationCount = iteration || 1;
         }
-        totalDuration = delay + sceneDuration * iterationCount;
+        totalDuration = delay + sceneDuration * (iterationCount as number);
         endTime = duration > 0
             ? Math.min(startTime + duration, totalDuration)
             : totalDuration;
@@ -135,7 +136,7 @@ export default async function captureScene({
         type: "captureStart",
         isCache,
         duration: (endTime - startTime) / playSpeed,
-    })
+    });
     if (isCache) {
         console.log(`Use Cache (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);
     } else {
