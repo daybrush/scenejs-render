@@ -46,7 +46,7 @@ export default async function processMedia(mediaInfo, input, output) {
         const delay = media.delay;
         const playSpeed = media.playSpeed;
         const volume = media.volume;
-        const path = resolvePath(input, url);
+        const path = url.match(/https*:\/\//g) ? url : resolvePath(input, url);
 
         return convertAudio({
             i: length++,
