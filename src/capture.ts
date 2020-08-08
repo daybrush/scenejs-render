@@ -4,6 +4,7 @@ import * as fs from "fs";
 import { isUndefined } from "@daybrush/utils";
 import { fork } from "child_process";
 import { IterationCountType } from "scenejs";
+const Xvfb = require('xvfb');
 
 async function forkCapture(datas) {
     const compute = fork(__dirname + "/subcapture.js");
@@ -51,8 +52,14 @@ export default async function captureScene({
     isVideo,
     referer,
 }) {
+    const xvfb = new Xvfb({silent: true, xvfb_args: ["-screen", "0", `${width}x${height}x24`, "-ac"],});
+    xvfb.startSync()
+
     const browser = await puppeteer.launch({
         headless: true,
+        args : [
+            "--no-sandbox"
+        ]
     });
     const page = await openPage({
         browser,
@@ -186,6 +193,8 @@ export default async function captureScene({
     }
     fs.writeFileSync("./.scene_cache/cache.txt", JSON.stringify({ startTime, endTime, fps, startFrame, endFrame }));
     await browser.close();
+    xvfb.stopSync()
+
     return {
         mediaInfo: mediaInfo || {},
         duration: (endTime - startTime) / playSpeed,

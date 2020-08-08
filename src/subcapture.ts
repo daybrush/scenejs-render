@@ -1,5 +1,6 @@
 import puppeteer from "puppeteer";
 import { openPage, caputreLoop } from "./utils";
+const Xvfb = require('xvfb');
 
 async function capture({
     name,
@@ -18,6 +19,10 @@ async function capture({
     isMedia,
     referer,
 }) {
+
+    const xvfb = new Xvfb({silent: true, xvfb_args: ["-screen", "0", `${width}x${height}x24`, "-ac"],});
+    xvfb.startSync()
+
     const browser = await puppeteer.launch();
     const page = await openPage({
         browser,
@@ -47,6 +52,8 @@ async function capture({
     });
 
     await browser.close();
+    xvfb.stopSync()
+
 }
 
 process.on("message", async data => {
