@@ -12,7 +12,7 @@ async function convertAudio({
 }) {
     console.log("Convert Audio", path);
     const [startTime, endTime] = seek;
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
         ffmpeg(path)
             .seekInput(startTime)
             .inputOptions(`-to ${endTime}`)

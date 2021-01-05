@@ -1,21 +1,20 @@
 {
     "name": "@scenejs/render",
-    "version": "0.9.1",
+    "version": "0.10.1",
     "description": "Make a movie of CSS animation through Scene.js",
     "main": "./dist/render.cjs.js",
     "module": "./dist/render.esm.js",
     "types": "declaration/index.d.ts",
     "dependencies": {
-        "@daybrush/utils": "^0.10.0",
-        "@egjs/component": "^2.1.2",
+        "@daybrush/utils": "^1.4.0",
+        "@scena/event-emitter": "^1.0.5",
         "@scenejs/media": "^0.1.6",
         "@types/fluent-ffmpeg": "^2.1.10",
         "@types/puppeteer": "^1.12.4",
         "args": "^5.0.1",
         "fluent-ffmpeg": "^2.1.2",
-        "http-server": "^0.11.1",
         "puppeteer": "^1.13.0",
-        "scenejs": "^1.0.0"
+        "scenejs": "^1.4.3"
     },
     "keywords": [
         "scene",

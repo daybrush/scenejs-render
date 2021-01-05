@@ -1,11 +1,11 @@
-import Component from "@egjs/component";
+import EventEmitter from "@scena/event-emitter";
 import { fork, ChildProcess } from "child_process";
 import { IObject } from "@daybrush/utils";
 import { RendererStatus, RenderOptions } from "./types";
 import { IDLE, START, CAPTURING, PROCESSING, FINISH, ERROR } from "./consts";
 import * as path from "path";
 
-export default class Renderer extends Component {
+export default class Renderer extends EventEmitter {
     public startTime: number = 0;
     public endTime: number = 0;
     public captureFrames: number = 0;

@@ -6,6 +6,10 @@ Make a movie of CSS animation through [scenejs](https://github.com/daybrush/scen
 
 In order to be able to use this module, make sure you have [ffmpeg](https://ffmpeg.org/) installed on your system (including all necessary encoding libraries like libmp3lame or libx264).
 
+  * ffmpeg must be installed and available in PATH.
+  * Or if it's in the local folder, set `ffmpegPath`.
+  `$ render --ffmpegPath ./ffmpeg`
+
 ## Installation
 ```bash
 $ npm install @scenejs/render
@@ -33,6 +37,7 @@ $ render -i index.html --name scene -o output.mp3,output.mp4
     -c, --cache <n>        you can pass Capture. (0: false, 1: true) (defaults to 0)
     -C, --codec            Codec to encode video If you don't set it up, it's the default(mp4: libx264, webm:libvpx-vp9) (defaults to "")
     -d, --duration <n>     how many seconds to play (defaults to 0)
+    -F, --ffmpegPath       If it's in the local folder, set `ffmpegPath` (defaults to "")
     -f, --fps <n>          fps (defaults to 60)
     -h, --height <n>       Video height to render (defaults to 1080)
     -H, --help             Output usage information
@@ -42,7 +47,6 @@ $ render -i index.html --name scene -o output.mp3,output.mp4
     -M, --multi <n>        Number of processes to create. (defaults to 1)
     -n, --name [value]     Name of scene to render (defaults to "scene")
     -o, --output [value]   Output file name (defaults to "output.mp4")
-    -p, --port <n>         Port to Rendering (defaults to 3033)
     -r, --referer          The Referer request header contains the address of the previous web page from which a link to the currently requested page was followed. (defaults to "")
     -s, --scale <n>        Scale of screen size (defaults to 1)
     -S, --startTime <n>    Time to start (defaults to 0)

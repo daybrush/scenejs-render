@@ -18,4 +18,5 @@ export interface RenderOptions {
     bitrate?: string;
     codec?: string;
     referer?: string;
+    ffmpegPath?: string;
 }
