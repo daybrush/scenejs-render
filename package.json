@@ -1,6 +1,6 @@
 {
     "name": "@scenejs/render",
-    "version": "0.10.1",
+    "version": "0.10.2",
     "description": "Make a movie of CSS animation through Scene.js",
     "main": "./dist/render.cjs.js",
     "module": "./dist/render.esm.js",
