@@ -18,7 +18,10 @@ async function capture({
     isMedia,
     referer,
 }) {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        headless: true,
+    });
     const page = await openPage({
         browser,
         width,

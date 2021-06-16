@@ -1,4 +1,4 @@
-import * as puppeteer from "puppeteer";
+import puppeteer from "puppeteer";
 import { openPage, caputreLoop, sendMessage, rmdir } from "./utils";
 import * as fs from "fs";
 import { isUndefined } from "@daybrush/utils";
@@ -8,7 +8,7 @@ import { IterationCountType } from "scenejs";
 async function forkCapture(datas) {
     const compute = fork(__dirname + "/subcapture.js");
 
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
         compute.on("message", result => {
             sendMessage(result);
         });
@@ -52,6 +52,7 @@ export default async function captureScene({
     referer,
 }) {
     const browser = await puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
         headless: true,
     });
     const page = await openPage({
