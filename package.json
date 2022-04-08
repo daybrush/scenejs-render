@@ -1,6 +1,6 @@
 {
     "name": "@scenejs/render",
-    "version": "0.10.4",
+    "version": "0.11.0",
     "description": "Make a movie of CSS animation through Scene.js",
     "main": "./dist/render.cjs.js",
     "module": "./dist/render.esm.js",
@@ -8,12 +8,11 @@
     "dependencies": {
         "@daybrush/utils": "^1.4.0",
         "@scena/event-emitter": "^1.0.5",
-        "@scenejs/media": "^0.1.6",
         "@types/fluent-ffmpeg": "^2.1.10",
-        "@types/puppeteer": "^1.12.4",
+        "@types/puppeteer": "^5.4.5",
         "args": "^5.0.1",
         "fluent-ffmpeg": "^2.1.2",
-        "puppeteer": "^1.13.0",
+        "puppeteer": "^13.5.2",
         "scenejs": "^1.4.3"
     },
     "keywords": [
@@ -35,12 +34,13 @@
         "@daybrush/builder": "^0.1.1",
         "@scenejs/timeline": "^0.2.1",
         "tslint": "^5.18.0",
-        "typescript": "^3.5.2"
+        "typescript": "^4.6.3"
     },
     "scripts": {
         "build": "rollup -c && rm -rf declaration && tsc -p tsconfig.declaration.json",
         "test": "node ./index.js -i test.html --fps 60 --cache 1",
         "test2": "node ./index.js -i test2.html --fps 30",
+        "test3": "node ./index.js --ffmpegPath ./ffmpeg -i ./index/index.html  --fps 30 --duration 12 --width 678 --height 508 --output output.webm ",
         "test:multi": "node ./index.js -i test.html --fps 60 --multi 4",
         "help": "node ./index.js --help"
     },
