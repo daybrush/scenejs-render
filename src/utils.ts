@@ -1,6 +1,18 @@
 import * as fs from "fs";
 import { IObject } from "@daybrush/utils";
+import { Page } from "puppeteer";
 
+export function hasProtocol(url) {
+    try {
+        const protocol = new URL(url).protocol;
+
+        if (protocol) {
+            return true;
+        }
+    } catch(e) {
+    }
+    return false;
+}
 export function resolvePath(path1, path2) {
     let paths = path1.split("/").slice(0, -1).concat(path2.split("/"));
 
@@ -47,6 +59,9 @@ export async function caputreLoop({
     endFrame,
     endTime,
     totalFrame,
+}: {
+    page: Page
+    [key: string]: any,
 }) {
     async function loop(frame) {
         const time = Math.min(frame * playSpeed / fps, endTime);
@@ -54,6 +69,38 @@ export async function caputreLoop({
         console.log(`Capture frame: ${frame}, time: ${time}`);
         !isOnlyMedia && await page.evaluate(`${name}.setTime(${time - delay}, true)`);
         isMedia && await page.evaluate(`${media}.setTime(${time})`);
+        const func = new Function(`
+        var __scenes = [];
+
+        function forEach(item) {
+            if (!item) {
+                return;
+            }
+            // MediaScene
+            if ("getMediaItem" in item) {
+                // Media
+                var element = item.getMediaItem().getElements()[0];
+
+                if (element && element.seeking) {
+                    __scenes.push(new Promise(function (resolve) {
+                        element.addEventListener("seeked", function () {
+                            resolve();
+                        }, {
+                            once: true,
+                        });
+                    }));
+                }
+                return;
+            }
+            // Scene
+            if ("getItem" in item && "forEach" in item) {
+                item.forEach(forEach);
+            }
+        }
+        forEach(${name});
+        return Promise.all(__scenes);`);
+        await page.evaluate(func as any),
+
         await page.screenshot({ path: `./.scene_cache/frame${frame}.png` });
 
         sendMessage({ type: "capture", frame, totalFrame });

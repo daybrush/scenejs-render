@@ -16,7 +16,7 @@ export default async function processVideo({
     const ext = output.match(/(?<=\.)[^.]+$/g);
     codec = codec || ext && DEFAULT_CODECS[ext[0]] || DEFAULT_CODECS.mp4;
 
-    return new Promise(async (resolve, reject) => {
+    return new Promise<void>(async (resolve, reject) => {
         const frames = [];
         const totalFrame = duration * fps;
 

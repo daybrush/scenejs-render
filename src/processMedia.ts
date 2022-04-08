@@ -1,6 +1,6 @@
 import ffmpeg from "fluent-ffmpeg";
 import * as fs from "fs";
-import { resolvePath } from "./utils";
+import { hasProtocol, resolvePath } from "./utils";
 
 async function convertAudio({
     i,
@@ -13,18 +13,20 @@ async function convertAudio({
     console.log("Convert Audio", path);
     const [startTime, endTime] = seek;
     return new Promise<void>(resolve => {
+        const audioPath = `./.scene_cache/audio${i}.mp3`;
+
         ffmpeg(path)
             .seekInput(startTime)
             .inputOptions(`-to ${endTime}`)
             .audioFilters([`adelay=${delay * playSpeed * 1000}|${delay * playSpeed * 1000}`, `atempo=${playSpeed}`, `volume=${volume}`])
             .on("error", err => {
-                console.log("An audio error occurred: " + err.message);
+                console.log(`An audio error path: ${audioPath}, occurred: ${err.message}`);
                 resolve();
             })
             .on("end", () => {
                 resolve();
             })
-            .save(`./.scene_cache/audio${i}.mp3`);
+            .save(audioPath);
     });
 }
 
@@ -46,7 +48,8 @@ export default async function processMedia(mediaInfo, input, output) {
         const delay = media.delay;
         const playSpeed = media.playSpeed;
         const volume = media.volume;
-        const path = url.match(/https*:\/\//g) ? url : resolvePath(input, url);
+
+        const path = hasProtocol(url) ? url : resolvePath(input, url);
 
         return convertAudio({
             i: length++,
