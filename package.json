@@ -1,6 +1,6 @@
 {
     "name": "@scenejs/render",
-    "version": "0.11.0",
+    "version": "0.11.1",
     "description": "Make a movie of CSS animation through Scene.js",
     "main": "./dist/render.cjs.js",
     "module": "./dist/render.esm.js",
@@ -38,9 +38,9 @@
     },
     "scripts": {
         "build": "rollup -c && rm -rf declaration && tsc -p tsconfig.declaration.json",
-        "test": "node ./index.js -i test.html --fps 60 --cache 1",
-        "test2": "node ./index.js -i test2.html --fps 30",
-        "test3": "node ./index.js --ffmpegPath ./ffmpeg -i ./index/index.html  --fps 30 --duration 12 --width 678 --height 508 --output output.webm ",
+        "test": "rollup -c && node ./index.js -i test.html --fps 60 --cache 1 --ffmpegPath ./ffmpeg",
+        "test2": "rollup -c && node ./index.js -i test2.html --fps 30 --ffmpegPath ./ffmpeg",
+        "test3": "rollup -c && node ./index.js --ffmpegPath ./ffmpeg -i ./index/index.html  --fps 30 --duration 12 --width 678 --height 508 --output output.webm ",
         "test:multi": "node ./index.js -i test.html --fps 60 --multi 4",
         "help": "node ./index.js --help"
     },

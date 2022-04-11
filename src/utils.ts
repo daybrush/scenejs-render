@@ -67,10 +67,15 @@ export async function caputreLoop({
         const time = Math.min(frame * playSpeed / fps, endTime);
 
         console.log(`Capture frame: ${frame}, time: ${time}`);
-        !isOnlyMedia && await page.evaluate(`${name}.setTime(${time - delay}, true)`);
-        isMedia && await page.evaluate(`${media}.setTime(${time})`);
+
         const func = new Function(`
-        var __scenes = [];
+        if (${!isOnlyMedia}) {
+            ${name}.setTime(${time - delay}, true);
+        }
+        if (${!!isMedia}) {
+            ${media}.setTime(${time});
+        }
+        var scenes = [];
 
         function forEach(item) {
             if (!item) {
@@ -82,7 +87,7 @@ export async function caputreLoop({
                 var element = item.getMediaItem().getElements()[0];
 
                 if (element && element.seeking) {
-                    __scenes.push(new Promise(function (resolve) {
+                    scenes.push(new Promise(function (resolve) {
                         element.addEventListener("seeked", function () {
                             resolve();
                         }, {
@@ -98,7 +103,7 @@ export async function caputreLoop({
             }
         }
         forEach(${name});
-        return Promise.all(__scenes);`);
+        return Promise.all(scenes);`);
         await page.evaluate(func as any),
 
         await page.screenshot({ path: `./.scene_cache/frame${frame}.png` });
