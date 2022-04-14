@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import { IObject } from "@daybrush/utils";
-import { Page } from "puppeteer";
+import { CaptureLoopOptions } from "./types";
 
 export function hasProtocol(url) {
     try {
@@ -46,33 +46,32 @@ export function rmdir(path) {
 export function sendMessage(message: IObject<any>) {
     process.send && process.send(message);
 }
-export async function caputreLoop({
-    isOnlyMedia,
-    page,
-    name,
-    delay,
-    fps,
-    media,
-    isMedia,
-    playSpeed,
-    startFrame,
-    endFrame,
-    endTime,
-    totalFrame,
-}: {
-    page: Page
-    [key: string]: any,
-}) {
+export async function caputreLoop(options: CaptureLoopOptions) {
+    const {
+        hasOnlyMedia,
+        page,
+        name,
+        delay,
+        fps,
+        media,
+        hasMedia,
+        playSpeed,
+        skipFrame,
+        startFrame,
+        endFrame,
+        endTime,
+        totalFrame,
+    } = options;
     async function loop(frame) {
         const time = Math.min(frame * playSpeed / fps, endTime);
 
         console.log(`Capture frame: ${frame}, time: ${time}`);
 
         const func = new Function(`
-        if (${!isOnlyMedia}) {
+        if (${!hasOnlyMedia}) {
             ${name}.setTime(${time - delay}, true);
         }
-        if (${!!isMedia}) {
+        if (${!!hasMedia}) {
             ${media}.setTime(${time});
         }
         var scenes = [];
@@ -106,7 +105,7 @@ export async function caputreLoop({
         return Promise.all(scenes);`);
         await page.evaluate(func as any),
 
-        await page.screenshot({ path: `./.scene_cache/frame${frame}.png` });
+        await page.screenshot({ path: `./.scene_cache/frame${frame - skipFrame}.png` });
 
         sendMessage({ type: "capture", frame, totalFrame });
         if (time === endTime || frame >= endFrame) {

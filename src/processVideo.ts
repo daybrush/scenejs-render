@@ -9,7 +9,7 @@ export default async function processVideo({
     output,
     width,
     height,
-    isMedia,
+    hasMedia,
     bitrate,
     multi,
 }) {
@@ -24,7 +24,7 @@ export default async function processVideo({
             frames[i] = `./.scene_cache/frame${i}.png`;
         }
 
-        console.log(`Processing start (width: ${width}, height: ${height}, totalframe: ${totalFrame + 1}, duration: ${duration}, fps: ${fps}, media: ${isMedia})`);
+        console.log(`Processing start (width: ${width}, height: ${height}, totalframe: ${totalFrame + 1}, duration: ${duration}, fps: ${fps}, media: ${hasMedia})`);
 
         sendMessage({
             type: "process",
@@ -59,7 +59,7 @@ export default async function processVideo({
             ])
             .size(`${width}x${height}`)
             .format("mp4");
-        if (isMedia) {
+        if (hasMedia) {
             converter.addInput("./.scene_cache/merge.mp3")
                 .audioCodec("aac")
                 .audioBitrate("128k")

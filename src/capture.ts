@@ -4,8 +4,9 @@ import * as fs from "fs";
 import { isUndefined } from "@daybrush/utils";
 import { fork } from "child_process";
 import { IterationCountType } from "scenejs";
+import { SubCaptureOptions } from "./types";
 
-async function forkCapture(datas) {
+async function forkCapture(datas: SubCaptureOptions) {
     const compute = fork(__dirname + "/subcapture.js");
 
     return new Promise<void>(resolve => {
@@ -39,7 +40,7 @@ export default async function captureScene({
     name,
     media,
     path,
-    startTime = 0,
+    startTime: startTimeOption = 0,
     duration,
     iteration,
     fps,
@@ -67,17 +68,17 @@ export default async function captureScene({
     });
 
     const mediaInfo = await getMediaInfo(page, media);
-    const isMedia = !!mediaInfo;
+    const hasMedia = !!mediaInfo;
 
     if (!isVideo) {
         console.log("No Video");
         return {
             mediaInfo: mediaInfo || {},
-            duration: isMedia ? mediaInfo.duration : 0,
+            duration: hasMedia ? mediaInfo.duration : 0,
         };
     }
 
-    let isOnlyMedia = false;
+    let hasOnlyMedia = false;
     let iterationCount: IterationCountType;
     let delay: number;
     let playSpeed: number;
@@ -86,6 +87,7 @@ export default async function captureScene({
     let endTime: number;
     let startFrame: number;
     let endFrame: number;
+    let startTime = startTimeOption;
 
     try {
         iterationCount = iteration || await page.evaluate(`${name}.getIterationCount()`);
@@ -100,17 +102,19 @@ export default async function captureScene({
         endTime = duration > 0
             ? Math.min(startTime + duration, totalDuration)
             : totalDuration;
+        startTime = Math.min(startTime, endTime);
         startFrame = Math.floor(startTime * fps / playSpeed);
         endFrame = Math.ceil(endTime * fps / playSpeed);
     } catch (e) {
-        if (isMedia) {
+        if (hasMedia) {
             console.log("Only Media Scene");
-            isOnlyMedia = true;
+            hasOnlyMedia = true;
             iterationCount = 1;
             delay = 0;
             playSpeed = 1;
             sceneDuration = mediaInfo.duration;
             endTime = isUndefined(duration) ? sceneDuration : Math.min(startTime + duration, sceneDuration);
+            startTime = Math.min(startTime, endTime);
             startFrame = Math.floor(startTime * fps / playSpeed);
             endFrame = Math.ceil(endTime * fps / playSpeed);
         } else {
@@ -150,7 +154,7 @@ export default async function captureScene({
             const processEndFrame = startFrame + dist * (i + 1);
 
             loops.push(forkCapture({
-                isOnlyMedia,
+                hasOnlyMedia,
                 name,
                 media,
                 path,
@@ -161,22 +165,24 @@ export default async function captureScene({
                 scale,
                 delay,
                 playSpeed,
+                skipFrame: startFrame,
                 startFrame: processStartFrame,
                 endFrame: processEndFrame,
-                isMedia,
+                hasMedia,
                 totalFrame: endFrame,
                 referer,
             }));
         }
         const mainLoop = caputreLoop({
-            isOnlyMedia,
+            hasOnlyMedia,
             page,
             name,
             fps,
             delay,
             media,
-            isMedia,
+            hasMedia,
             playSpeed,
+            skipFrame: startFrame,
             startFrame,
             endFrame: startFrame + dist,
             endTime,

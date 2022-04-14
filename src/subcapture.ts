@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import { SubCaptureOptions } from "./types";
 import { openPage, caputreLoop } from "./utils";
 
 async function capture({
@@ -15,9 +16,10 @@ async function capture({
     startFrame,
     endFrame,
     totalFrame,
-    isMedia,
+    hasMedia,
+    skipFrame,
     referer,
-}) {
+}: SubCaptureOptions) {
     const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
         headless: true,
@@ -40,13 +42,14 @@ async function capture({
         fps,
         delay,
         media,
-        isMedia,
+        hasMedia,
         playSpeed,
         startFrame,
         endFrame,
         endTime,
         totalFrame,
-        isOnlyMedia: false,
+        skipFrame,
+        hasOnlyMedia: false,
     });
 
     await browser.close();
