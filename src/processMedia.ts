@@ -5,6 +5,7 @@ import { hasProtocol, resolvePath } from "./utils";
 async function convertAudio({
     i,
     path,
+    skip,
     delay,
     seek,
     playSpeed,
@@ -17,7 +18,7 @@ async function convertAudio({
 
         ffmpeg(path)
             .seekInput(startTime)
-            .inputOptions(`-to ${endTime}`)
+            .inputOptions([`-itsoffset ${-skip * playSpeed}`, `-to ${endTime}`])
             .audioFilters([`adelay=${delay * playSpeed * 1000}|${delay * playSpeed * 1000}`, `atempo=${playSpeed}`, `volume=${volume}`])
             .on("error", err => {
                 console.log(`An audio error path: ${audioPath}, occurred: ${err.message}`);
@@ -30,7 +31,7 @@ async function convertAudio({
     });
 }
 
-export default async function processMedia(mediaInfo, input, output) {
+export default async function processMedia(startTime, mediaInfo, input, output) {
     console.log("Process Media");
     let length = 0;
     const medias = mediaInfo.medias;
@@ -45,7 +46,7 @@ export default async function processMedia(mediaInfo, input, output) {
     await Promise.all(medias.map(media => {
         const url = media.url;
         const seek = media.seek;
-        const delay = media.delay;
+        const delay = media.delay - startTime;
         const playSpeed = media.playSpeed;
         const volume = media.volume;
 
@@ -54,7 +55,8 @@ export default async function processMedia(mediaInfo, input, output) {
         return convertAudio({
             i: length++,
             path,
-            delay,
+            skip: delay < 0 ? -delay : 0,
+            delay: delay > 0 ? delay : 0,
             seek,
             playSpeed,
             volume,

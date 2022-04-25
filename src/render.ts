@@ -66,7 +66,7 @@ export default async function render({
             process.env.PATH = `${pathModule.resolve(process.cwd(), ffmpegPath)}:${process.env.PATH}`;
         }
 
-        const hasMedia = await processMedia(mediaInfo, input, audioPath);
+        const hasMedia = await processMedia(startTime, mediaInfo, input, audioPath);
 
         if (isVideo) {
             await Promise.all(videoOutputs.map(file => {
