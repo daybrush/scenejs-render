@@ -1,4 +1,5 @@
 import { Page } from "puppeteer";
+import { Animator, AnimatorState } from "scenejs";
 
 export type RendererStatus = "idle" | "start" | "finish" | "capturing" | "processing" | "error";
 export interface RenderOptions {
@@ -103,6 +104,20 @@ export interface OpenPageOptions {
     referer: string;
 }
 
+export interface RenderingInfoOptions {
+    iteration: AnimatorState["iteration"];
+    iterationCount: AnimatorState["iterationCount"];
+    delay: AnimatorState["delay"];
+    playSpeed: AnimatorState["playSpeed"];
+    duration: AnimatorState["duration"];
+
+    parentDuration: number;
+    parentStartTime: number;
+    parentFPS: number;
+
+    multi: number;
+}
 export interface SubCaptureOptions extends OpenPageOptions, CaptureCommonOptions {
 
 }
+

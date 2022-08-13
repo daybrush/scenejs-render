@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import { IObject } from "@daybrush/utils";
-import { CaptureLoopOptions } from "./types";
+import { CaptureLoopOptions, RenderingInfoOptions } from "./types";
 
 export function hasProtocol(url) {
     try {
@@ -150,4 +150,50 @@ export async function openPage({
         //
     }
     return page;
+}
+
+export function getRenderingInfo(state: RenderingInfoOptions) {
+    const {
+        parentFPS,
+        parentStartTime,
+        parentDuration,
+        playSpeed,
+        multi,
+    } = state;
+
+    let iterationCount = 0;
+    if (state.iterationCount === "infinite") {
+        iterationCount = state.iteration || 1;
+    } else {
+        iterationCount = state.iterationCount;
+    }
+    const totalDuration = state.delay + state.duration * (iterationCount);
+    const endTime = parentDuration > 0
+        ? Math.min(parentStartTime + parentDuration, totalDuration)
+        : totalDuration;
+    const startTime = Math.min(parentStartTime, endTime);
+    const startFrame = Math.floor(startTime * parentFPS / playSpeed);
+    const endFrame = Math.ceil(endTime * parentFPS / playSpeed);
+
+    const dist = Math.ceil((endFrame - startFrame) / multi);
+    const loops: Array<{
+        startFrame: number;
+        endFrame: number;
+    }> = [];
+
+    for (let i = 0; i < multi; ++i) {
+        loops.push({
+            startFrame: startFrame + dist * i +  (i === 0 ? 0 : 1),
+            endFrame: startFrame + dist * (i + 1),
+        });
+    }
+
+    return {
+        loops,
+        iterationCount,
+        startTime,
+        endTime,
+        startFrame,
+        endFrame,
+    };
 }

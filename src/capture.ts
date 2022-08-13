@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import { openPage, caputreLoop, sendMessage, rmdir } from "./utils";
+import { openPage, caputreLoop, sendMessage, rmdir, getRenderingInfo } from "./utils";
 import * as fs from "fs";
 import { isUndefined } from "@daybrush/utils";
 import { fork } from "child_process";
@@ -83,11 +83,8 @@ export default async function captureScene({
     let delay: number;
     let playSpeed: number;
     let sceneDuration: number;
-    let totalDuration: number;
-    let endTime: number;
-    let startFrame: number;
-    let endFrame: number;
-    let startTime = startTimeOption;
+    let info: ReturnType<typeof getRenderingInfo>;
+
 
     try {
         iterationCount = iteration || await page.evaluate(`${name}.getIterationCount()`);
@@ -95,16 +92,19 @@ export default async function captureScene({
         playSpeed = await page.evaluate(`${name}.getPlaySpeed()`);
         sceneDuration = await page.evaluate(`${name}.getDuration()`);
 
-        if (iterationCount === "infinite") {
-            iterationCount = iteration || 1;
-        }
-        totalDuration = delay + sceneDuration * (iterationCount as number);
-        endTime = duration > 0
-            ? Math.min(startTime + duration, totalDuration)
-            : totalDuration;
-        startTime = Math.min(startTime, endTime);
-        startFrame = Math.floor(startTime * fps / playSpeed);
-        endFrame = Math.ceil(endTime * fps / playSpeed);
+        info = getRenderingInfo({
+            iteration,
+            iterationCount,
+            delay,
+            playSpeed,
+            duration: sceneDuration,
+            parentDuration: duration,
+            parentFPS: fps,
+            parentStartTime: 0,
+            multi,
+        });
+
+        iterationCount = info.iterationCount;
     } catch (e) {
         if (hasMedia) {
             console.log("Only Media Scene");
@@ -113,14 +113,28 @@ export default async function captureScene({
             delay = 0;
             playSpeed = 1;
             sceneDuration = mediaInfo.duration;
-            endTime = isUndefined(duration) ? sceneDuration : Math.min(startTime + duration, sceneDuration);
-            startTime = Math.min(startTime, endTime);
-            startFrame = Math.floor(startTime * fps / playSpeed);
-            endFrame = Math.ceil(endTime * fps / playSpeed);
+
+            info = getRenderingInfo({
+                iteration,
+                iterationCount,
+                delay,
+                playSpeed,
+                duration: sceneDuration,
+                parentDuration: duration,
+                parentFPS: fps,
+                parentStartTime: 0,
+                multi,
+            });
         } else {
             throw e;
         }
     }
+    iterationCount = info.iterationCount;
+    const endTime = info.endTime;
+    const startTime = info.startTime;
+    const startFrame = info.startFrame;
+    const endFrame = info.endFrame;
+    const loops = info.loops;
     let isCache = false;
 
     if (cache) {
@@ -146,50 +160,47 @@ export default async function captureScene({
         console.log(`Use Cache (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);
     } else {
         console.log(`Start Capture (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame}, multi-process: ${multi})`);
-        const dist = Math.ceil((endFrame - startFrame) / multi);
-        const loops = [];
 
-        for (let i = 1; i < multi; ++i) {
-            const processStartFrame = startFrame + dist * i + 1;
-            const processEndFrame = startFrame + dist * (i + 1);
-
-            loops.push(forkCapture({
-                hasOnlyMedia,
-                name,
-                media,
-                path,
-                endTime,
-                fps,
-                width,
-                height,
-                scale,
-                delay,
-                playSpeed,
-                skipFrame: startFrame,
-                startFrame: processStartFrame,
-                endFrame: processEndFrame,
-                hasMedia,
-                totalFrame: endFrame,
-                referer,
-            }));
-        }
-        const mainLoop = caputreLoop({
-            hasOnlyMedia,
-            page,
-            name,
-            fps,
-            delay,
-            media,
-            hasMedia,
-            playSpeed,
-            skipFrame: startFrame,
-            startFrame,
-            endFrame: startFrame + dist,
-            endTime,
-            totalFrame: endFrame,
+        const captures = loops.map((loop, i) => {
+            if (i == 0) {
+                return caputreLoop({
+                    hasOnlyMedia,
+                    page,
+                    name,
+                    fps,
+                    delay,
+                    media,
+                    hasMedia,
+                    playSpeed,
+                    skipFrame: startFrame,
+                    startFrame: loop.startFrame,
+                    endFrame: loop.endFrame,
+                    endTime,
+                    totalFrame: endFrame,
+                });
+            } else {
+                return forkCapture({
+                    hasOnlyMedia,
+                    name,
+                    media,
+                    path,
+                    endTime,
+                    fps,
+                    width,
+                    height,
+                    scale,
+                    delay,
+                    playSpeed,
+                    skipFrame: startFrame,
+                    startFrame: loop.startFrame,
+                    endFrame: loop.endFrame,
+                    hasMedia,
+                    totalFrame: endFrame,
+                    referer,
+                });
+            }
         });
-        loops.push(mainLoop);
-        await Promise.all(loops);
+        await Promise.all(captures);
     }
     fs.writeFileSync("./.scene_cache/cache.txt", JSON.stringify({ startTime, endTime, fps, startFrame, endFrame }));
     await browser.close();

@@ -47,7 +47,7 @@ export default async function processVideo({
                 });
                 console.log("Processing: " + percent  + "% done");
             })
-            .on("end", () => {
+            .on("end", e => {
                 console.log("Processing finished !");
                 resolve();
             })
