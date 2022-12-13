@@ -1,11 +1,11 @@
 
-import builder from "@daybrush/builder";
+const builder = require("@daybrush/builder");
 
 const external = {
     "scenejs": "Scene",
 };
 
-export default builder([
+module.exports = builder([
     {
         input: "src/index.ts",
         output: "./dist/render.esm.js",

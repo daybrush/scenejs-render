@@ -56,7 +56,7 @@ async function capture({
 }
 
 process.on("message", async data => {
-    await capture(data);
+    await capture(data as any);
 
     process.exit();
 });

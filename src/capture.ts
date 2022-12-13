@@ -10,7 +10,7 @@ async function forkCapture(datas: SubCaptureOptions) {
     const compute = fork(__dirname + "/subcapture.js");
 
     return new Promise<void>(resolve => {
-        compute.on("message", result => {
+        compute.on("message", (result: any) => {
             sendMessage(result);
         });
         compute.on("close", () => {

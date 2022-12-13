@@ -1,7 +1,7 @@
 import EventEmitter from "@scena/event-emitter";
 import { fork, ChildProcess } from "child_process";
 import { IObject } from "@daybrush/utils";
-import { RendererStatus, RenderOptions } from "./types";
+import { OnCapture, OnCaptureStart, OnProcess, RendererStatus, RenderOptions } from "./types";
 import { IDLE, START, CAPTURING, PROCESSING, FINISH, ERROR } from "./consts";
 import * as path from "path";
 
@@ -27,7 +27,7 @@ export default class Renderer extends EventEmitter {
             path.resolve(__dirname, "../index.js"),
             Object.keys(options).map(key => `--${key}=${options[key]}`),
         );
-        this.process.on("message", message => {
+        this.process.on("message", (message: OnCaptureStart | OnCapture | OnProcess) => {
             const type = message.type;
 
             if (type === "captureStart") {

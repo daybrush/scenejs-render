@@ -121,3 +121,22 @@ export interface SubCaptureOptions extends OpenPageOptions, CaptureCommonOptions
 
 }
 
+
+export interface OnCaptureStart {
+    type: "captureStart";
+    isCache: boolean;
+    duration: number;
+}
+
+
+export interface OnCapture {
+    type: "capture";
+    frame: number,
+    frameCount?: number;
+    totalFrame: number;
+}
+
+export interface OnProcess {
+    type: "process";
+    processing: number;
+}
