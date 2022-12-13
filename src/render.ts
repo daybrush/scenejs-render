@@ -63,7 +63,10 @@ export default async function render({
         });
 
         if (ffmpegPath) {
-            process.env.PATH = `${pathModule.resolve(process.cwd(), ffmpegPath)}:${process.env.PATH}`;
+            const nextFFmpegPath = pathModule.resolve(process.cwd(), ffmpegPath);
+
+            process.env.FFMPEG_PATH = nextFFmpegPath;
+            process.env.PATH = `${nextFFmpegPath}:${process.env.PATH}`;
         }
 
         const hasMedia = await processMedia(mediaInfo, input, audioPath);
