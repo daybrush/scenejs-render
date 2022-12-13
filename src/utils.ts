@@ -139,6 +139,8 @@ export async function openPage({
         referer,
     });
 
+    await page.waitForNavigation();
+
     try {
         await page.evaluate(`${name}.finish()`);
     } catch (e) {
