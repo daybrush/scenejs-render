@@ -53,6 +53,7 @@ export default async function captureScene({
     referer,
     imageType,
     alpha,
+    cacheFolder,
 }: CaptureSceneOptions) {
     const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -141,7 +142,7 @@ export default async function captureScene({
 
     if (cache) {
         try {
-            const cacheInfo = fs.readFileSync("./.scene_cache/cache.txt", "utf8");
+            const cacheInfo = fs.readFileSync(`./${cacheFolder}/cache.txt`, "utf8");
             const temp = JSON.stringify({ startTime, endTime, fps, startFrame, endFrame });
             if (cacheInfo === temp) {
                 isCache = true;
@@ -150,8 +151,8 @@ export default async function captureScene({
             isCache = false;
         }
     }
-    !isCache && rmdir("./.scene_cache");
-    !fs.existsSync("./.scene_cache") && fs.mkdirSync("./.scene_cache");
+    !isCache && rmdir(`./${cacheFolder}`);
+    !fs.existsSync(`./${cacheFolder}`) && fs.mkdirSync(`./${cacheFolder}`);
 
     sendMessage({
         type: "captureStart",
@@ -181,6 +182,7 @@ export default async function captureScene({
                     totalFrame: endFrame,
                     imageType,
                     alpha: !!alpha,
+                    cacheFolder,
                 });
             } else {
                 return forkCapture({
@@ -203,12 +205,13 @@ export default async function captureScene({
                     referer,
                     imageType,
                     alpha,
+                    cacheFolder,
                 });
             }
         });
         await Promise.all(captures);
     }
-    fs.writeFileSync("./.scene_cache/cache.txt", JSON.stringify({ startTime, endTime, fps, startFrame, endFrame }));
+    fs.writeFileSync(`./${cacheFolder}/cache.txt`, JSON.stringify({ startTime, endTime, fps, startFrame, endFrame }));
     await browser.close();
     return {
         mediaInfo: mediaInfo || {},

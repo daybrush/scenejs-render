@@ -9,11 +9,12 @@ async function convertAudio({
     seek,
     playSpeed,
     volume,
+    cacheFolder,
 }) {
     console.log("Convert Audio", path);
     const [startTime, endTime] = seek;
     return new Promise<void>(resolve => {
-        const audioPath = `./.scene_cache/audio${i}.mp3`;
+        const audioPath = `./${cacheFolder}/audio${i}.mp3`;
 
         ffmpeg(path)
             .seekInput(startTime)
@@ -30,7 +31,12 @@ async function convertAudio({
     });
 }
 
-export default async function processMedia(mediaInfo, input, output) {
+export default async function processMedia({
+    mediaInfo,
+    input,
+    output,
+    cacheFolder,
+}) {
     console.log("Process Media");
     let length = 0;
     const medias = mediaInfo.medias;
@@ -40,7 +46,7 @@ export default async function processMedia(mediaInfo, input, output) {
         return false;
     }
 
-    !fs.existsSync("./.scene_cache") && fs.mkdirSync("./.scene_cache");
+    !fs.existsSync(`./${cacheFolder}`) && fs.mkdirSync(`./${cacheFolder}`);
 
     await Promise.all(medias.map(media => {
         const url = media.url;
@@ -58,6 +64,7 @@ export default async function processMedia(mediaInfo, input, output) {
             seek,
             playSpeed,
             volume,
+            cacheFolder,
         });
     }));
 
@@ -70,8 +77,8 @@ export default async function processMedia(mediaInfo, input, output) {
         const converter = ffmpeg();
         let inputLengths = 0;
         for (let i = 0; i < length; ++i) {
-            if (fs.existsSync(`./.scene_cache/audio${i}.mp3`)) {
-                converter.addInput(`./.scene_cache/audio${i}.mp3`);
+            if (fs.existsSync(`./${cacheFolder}/audio${i}.mp3`)) {
+                converter.addInput(`./${cacheFolder}/audio${i}.mp3`);
                 ++inputLengths;
             }
         }
@@ -84,11 +91,11 @@ export default async function processMedia(mediaInfo, input, output) {
             .on("end", () => {
                 resolve(true);
             })
-            .save("./.scene_cache/merge.mp3");
+            .save(`./${cacheFolder}/merge.mp3`);
     });
 
     if (result && output) {
-        fs.copyFileSync("./.scene_cache/merge.mp3", output);
+        fs.copyFileSync(`./${cacheFolder}/merge.mp3`, output);
     }
     return result;
 }

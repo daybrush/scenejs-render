@@ -26,6 +26,7 @@ export default async function render({
     ffmpegPath,
     imageType = "png",
     alpha = 0,
+    cacheFolder = ".scene_cache",
 }: RenderOptions = {}) {
     let path;
 
@@ -64,6 +65,7 @@ export default async function render({
             referer,
             imageType,
             alpha: !!alpha,
+            cacheFolder,
         });
 
         if (ffmpegPath) {
@@ -73,7 +75,12 @@ export default async function render({
             process.env.PATH = `${nextFFmpegPath}:${process.env.PATH}`;
         }
 
-        const hasMedia = await processMedia(mediaInfo, input, audioPath);
+        const hasMedia = await processMedia({
+            mediaInfo,
+            input,
+            output: audioPath,
+            cacheFolder,
+        });
 
         if (isVideo) {
             await Promise.all(videoOutputs.map(file => {
@@ -87,10 +94,11 @@ export default async function render({
                     height,
                     multi,
                     hasMedia,
+                    cacheFolder,
                 });
             }));
         }
-        !cache && rmdir("./.scene_cache");
+        !cache && rmdir(cacheFolder);
         const endProcessingTime = Date.now();
 
         console.log(`End Rendering (Rendering Time: ${(endProcessingTime - startProcessingTime) / 1000}s)`);

@@ -12,6 +12,7 @@ export interface RenderOptions {
     output?: string;
     startTime?: number;
     cache?: number | undefined | "";
+    cacheFolder?: string;
     scale?: number;
     multi?: number;
     input?: string;
@@ -84,6 +85,11 @@ export interface CaptureCommonOptions {
      * @default "png"
      */
     alpha: boolean;
+    /**
+     * cache folder name
+     * @default ".scene_cache"
+     */
+    cacheFolder: string;
 }
 
 export interface CaptureSceneOptions {
@@ -99,6 +105,7 @@ export interface CaptureSceneOptions {
     scale: number,
     multi: number,
     referer: string;
+    cacheFolder: string;
     isVideo?: boolean;
     /**
      * file path

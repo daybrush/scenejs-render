@@ -64,6 +64,7 @@ export async function caputreLoop(options: CaptureLoopOptions) {
         totalFrame,
         imageType,
         alpha,
+        cacheFolder,
     } = options;
     async function loop(frame) {
         const time = Math.min(frame * playSpeed / fps, endTime);
@@ -110,7 +111,7 @@ export async function caputreLoop(options: CaptureLoopOptions) {
 
         await page.screenshot({
             type: imageType,
-            path: `./.scene_cache/frame${frame - skipFrame}.${imageType}`,
+            path: `./${cacheFolder}/frame${frame - skipFrame}.${imageType}`,
             omitBackground: alpha,
         });
 

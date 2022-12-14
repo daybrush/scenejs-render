@@ -12,6 +12,7 @@ export default async function processVideo({
     hasMedia,
     bitrate,
     multi,
+    cacheFolder,
 }) {
     const ext = output.match(/(?<=\.)[^.]+$/g);
     codec = codec || ext && DEFAULT_CODECS[ext[0]] || DEFAULT_CODECS.mp4;
@@ -26,7 +27,7 @@ export default async function processVideo({
         const totalFrame = duration * fps;
 
         for (let i = 0; i <= totalFrame; ++i) {
-            frames[i] = `./.scene_cache/frame${i}.png`;
+            frames[i] = `./${cacheFolder}/frame${i}.png`;
         }
 
         console.log(`Processing start (output: ${output}, codec: ${codec}, width: ${width}, height: ${height}, totalframe: ${totalFrame + 1}, duration: ${duration}, fps: ${fps}, media: ${hasMedia})`);
@@ -36,7 +37,7 @@ export default async function processVideo({
             processing: 0,
         });
         const converter = ffmpeg()
-            .addInput("./.scene_cache/frame%d.png")
+            .addInput(`./${cacheFolder}/frame%d.png`)
             // .addInput('./test.mp3')
             .inputFPS(fps)
             .loop(duration)
@@ -62,7 +63,7 @@ export default async function processVideo({
             .size(`${width}x${height}`)
             .format(ext);
         if (hasMedia) {
-            converter.addInput("./.scene_cache/merge.mp3")
+            converter.addInput(`./${cacheFolder}/merge.mp3`)
                 .audioCodec("aac")
                 .audioBitrate("128k")
                 // .audioFrequency(22050)

@@ -21,6 +21,7 @@ async function capture({
     referer,
     imageType,
     alpha,
+    cacheFolder,
 }: SubCaptureOptions) {
     const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -54,6 +55,7 @@ async function capture({
         hasOnlyMedia: false,
         imageType,
         alpha: !!alpha,
+        cacheFolder,
     });
 
     await browser.close();
