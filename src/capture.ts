@@ -4,7 +4,7 @@ import * as fs from "fs";
 import { isUndefined } from "@daybrush/utils";
 import { fork } from "child_process";
 import { IterationCountType } from "scenejs";
-import { SubCaptureOptions } from "./types";
+import { CaptureSceneOptions, RenderOptions, SubCaptureOptions } from "./types";
 
 async function forkCapture(datas: SubCaptureOptions) {
     const compute = fork(__dirname + "/subcapture.js");
@@ -51,7 +51,9 @@ export default async function captureScene({
     multi,
     isVideo,
     referer,
-}) {
+    imageType,
+    alpha,
+}: CaptureSceneOptions) {
     const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
         headless: true,
@@ -88,9 +90,9 @@ export default async function captureScene({
 
     try {
         iterationCount = iteration || await page.evaluate(`${name}.getIterationCount()`);
-        delay = await page.evaluate(`${name}.getDelay()`);
-        playSpeed = await page.evaluate(`${name}.getPlaySpeed()`);
-        sceneDuration = await page.evaluate(`${name}.getDuration()`);
+        delay = await page.evaluate(`${name}.getDelay()`) as number;
+        playSpeed = await page.evaluate(`${name}.getPlaySpeed()`) as number;
+        sceneDuration = await page.evaluate(`${name}.getDuration()`) as number;
 
         info = getRenderingInfo({
             iteration,
@@ -98,7 +100,7 @@ export default async function captureScene({
             delay,
             playSpeed,
             duration: sceneDuration,
-            parentDuration: duration,
+            parentDuration: duration || 0,
             parentFPS: fps,
             parentStartTime: 0,
             multi,
@@ -120,7 +122,7 @@ export default async function captureScene({
                 delay,
                 playSpeed,
                 duration: sceneDuration,
-                parentDuration: duration,
+                parentDuration: duration || 0,
                 parentFPS: fps,
                 parentStartTime: 0,
                 multi,
@@ -177,6 +179,8 @@ export default async function captureScene({
                     endFrame: loop.endFrame,
                     endTime,
                     totalFrame: endFrame,
+                    imageType,
+                    alpha: !!alpha,
                 });
             } else {
                 return forkCapture({
@@ -197,6 +201,8 @@ export default async function captureScene({
                     hasMedia,
                     totalFrame: endFrame,
                     referer,
+                    imageType,
+                    alpha,
                 });
             }
         });

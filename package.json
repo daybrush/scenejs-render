@@ -1,6 +1,6 @@
 {
     "name": "@scenejs/render",
-    "version": "0.11.3",
+    "version": "0.12.0",
     "description": "Make a movie of CSS animation through Scene.js",
     "main": "./dist/render.cjs.js",
     "module": "./dist/render.esm.js",
@@ -12,7 +12,7 @@
         "@types/puppeteer": "^5.4.5",
         "args": "^5.0.1",
         "fluent-ffmpeg": "^2.1.2",
-        "puppeteer": "^13.5.2",
+        "puppeteer": "^19.4.0",
         "scenejs": "^1.4.3"
     },
     "keywords": [
@@ -35,6 +35,7 @@
         "@scenejs/timeline": "^0.2.1",
         "@types/jest": "^24.0.13",
         "get-video-duration": "^4.1.0",
+        "gh-pages": "^4.0.0",
         "jest": "^24.8.0",
         "ts-jest": "^24.0.2",
         "tslint": "^5.18.0",
@@ -43,12 +44,14 @@
     "scripts": {
         "build": "rollup -c && rm -rf declaration && tsc -p tsconfig.declaration.json",
         "test": "jest --watchAll",
-        "test1": "rollup -c && node ./index.js -i test.html -S 0 --fps 60 --ffmpegPath ./ffmpeg",
-        "test2": "rollup -c && node ./index.js -i test2.html --fps 30 --ffmpegPath ./ffmpeg",
-        "test3": "rollup -c && node ./index.js --ffmpegPath ./ffmpeg -i ./index/index.html  --fps 30 --duration 12 --width 678 --height 508 --output output.webm ",
-        "test4": "rollup -c && node ./index.js --ffmpegPath ./ffmpeg -i ./test.html -S 0 -d 1 -f 25 -o",
+        "test1": "rollup -c && node ./index.js -i test.html -S 0 --fps 60 --ffmpegPath ./ffmpeg/ffmpeg",
+        "test:alpha": "rollup -c && node ./index.js -i test.html -S 0 --fps 60 --ffmpegPath ./ffmpeg/ffmpeg -c 1 --output output.webm",
+        "test2": "rollup -c && node ./index.js -i test2.html --fps 30 --ffmpegPath ./ffmpeg/ffmpeg",
+        "test3": "rollup -c && node ./index.js --ffmpegPath ./ffmpeg/ffmpeg -i ./index/index.html  --fps 30 --duration 12 --width 678 --height 508 --output output.webm ",
+        "test4": "rollup -c && node ./index.js --ffmpegPath ./ffmpeg/ffmpeg -i ./test.html -S 0 -d 1 -f 25 -o",
         "test:multi": "node ./index.js -i test.html --fps 60 --multi 4",
-        "help": "node ./index.js --help"
+        "help": "node ./index.js --help",
+        "demo:deploy-init": "gh-pages -d demo/ --remote origin"
     },
     "bin": {
         "render": "./index.js"

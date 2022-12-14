@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import { IObject } from "@daybrush/utils";
 import { CaptureLoopOptions, RenderingInfoOptions } from "./types";
+import type { Browser } from "puppeteer";
 
 export function hasProtocol(url) {
     try {
@@ -61,6 +62,8 @@ export async function caputreLoop(options: CaptureLoopOptions) {
         endFrame,
         endTime,
         totalFrame,
+        imageType,
+        alpha,
     } = options;
     async function loop(frame) {
         const time = Math.min(frame * playSpeed / fps, endTime);
@@ -103,9 +106,14 @@ export async function caputreLoop(options: CaptureLoopOptions) {
         }
         forEach(${name});
         return Promise.all(scenes);`);
-        await page.evaluate(func as any),
+        await page.evaluate(func as any);
 
-        await page.screenshot({ path: `./.scene_cache/frame${frame - skipFrame}.png` });
+        await page.screenshot({
+            type: imageType,
+            path: `./.scene_cache/frame${frame - skipFrame}.${imageType}`,
+            omitBackground: alpha,
+        });
+
 
         sendMessage({ type: "capture", frame, totalFrame });
         if (time === endTime || frame >= endFrame) {
@@ -127,7 +135,7 @@ export async function openPage({
     media,
     referer,
 }) {
-    const page = await browser.newPage();
+    const page = await (browser as Browser).newPage();
 
     page.setUserAgent(browser.userAgent() + " Scene.js");
     page.setViewport({
@@ -139,8 +147,29 @@ export async function openPage({
         referer,
     });
 
-    await page.waitForNavigation();
+    const result = await page.evaluate(`(async () => {
+        const timeout = Date.now() + 10000;
 
+        async function retry() {
+            if (Date.now() > timeout) {
+                return false;
+            }
+            if (typeof ${name} !== "undefined") {
+                return true;
+            }
+            return await new Promise(resolve => {
+                setTimeout(async () => {
+                    resolve(retry());
+                }, 500);
+            })
+        }
+
+        return await retry();
+    })()`);
+
+    if (!result) {
+        throw new Error("Timeout: 10000ms");
+    }
     try {
         await page.evaluate(`${name}.finish()`);
     } catch (e) {

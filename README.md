@@ -26,32 +26,33 @@ $ render -i index.html --name scene -o output.mp3,output.mp4
 ```
 
 ```
-  Usage: render [options] [command]
-  
-  Commands:
-    help     Display help
-    version  Display version
-  
-  Options:
-    -b, --bitrate [value]  Bitrate of video (the higher the bit rate, the clearer the video quality) (defaults to "4096k")
-    -c, --cache <n>        you can pass Capture. (0: false, 1: true) (defaults to 0)
-    -C, --codec            Codec to encode video If you don't set it up, it's the default(mp4: libx264, webm:libvpx-vp9) (defaults to "")
-    -d, --duration <n>     how many seconds to play (defaults to 0)
-    -F, --ffmpegPath       If it's in the local folder, set `ffmpegPath` (defaults to "")
-    -f, --fps <n>          fps (defaults to 60)
-    -h, --height <n>       Video height to render (defaults to 1080)
-    -H, --help             Output usage information
-    -i, --input [value]    File URL to Rendering (defaults to "index.html")
-    -I, --iteration <n>    iterationCount of the Scene set by the user himself. (defaults to 0)
-    -m, --media [value]    Name of mediaScene to render (defaults to "mediaScene")
-    -M, --multi <n>        Number of processes to create. (defaults to 1)
-    -n, --name [value]     Name of scene to render (defaults to "scene")
-    -o, --output [value]   Output file name (defaults to "output.mp4")
-    -r, --referer          The Referer request header contains the address of the previous web page from which a link to the currently requested page was followed. (defaults to "")
-    -s, --scale <n>        Scale of screen size (defaults to 1)
-    -S, --startTime <n>    Time to start (defaults to 0)
-    -v, --version          Output the version number
-    -w, --width <n>        Video width to render (defaults to 1920)
+Usage: index.js [options] [command]
+
+Commands:
+  help     Display help
+  version  Display version
+
+Options:
+  -b, --bitrate [value]    Bitrate of video (the higher the bit rate, the clearer the video quality) (defaults to "4096k")
+  -c, --cache <n>          you can pass Capture. (0: false, 1: true) (defaults to 0)
+  -C, --codec              Codec to encode video If you don't set it up, it's the default(mp4: libx264, webm:libvpx-vp9) (defaults to "")
+  -d, --duration <n>       how many seconds to play (defaults to 0)
+  -F, --ffmpegPath         If it's in the local folder, set `ffmpegPath` (defaults to "")
+  -f, --fps <n>            fps (defaults to 60)
+  -h, --height <n>         Video height to render (defaults to 1080)
+  -H, --help               Output usage information
+  -I, --imageType [value]  Image type to record video (png or jpeg) (defaults to "png")
+  -i, --input [value]      File URL to Rendering (defaults to "index.html")
+  -I, --iteration <n>      iterationCount of the Scene set by the user himself. (defaults to 0)
+  -m, --media [value]      Name of mediaScene to render (defaults to "mediaScene")
+  -M, --multi <n>          Number of processes to create. (defaults to 1)
+  -n, --name [value]       the global variable name of the Scene, SceneItem, and Animator instance that will play the animation. (defaults to "scene")
+  -o, --output [value]     Output file name (defaults to "output.mp4")
+  -r, --referer            The Referer request header contains the address of the previous web page from which a link to the currently requested page was followed. (defaults to "")
+  -s, --scale <n>          Scale of screen size (defaults to 1)
+  -S, --startTime <n>      Time to start (defaults to 0)
+  -v, --version            Output the version number
+  -w, --width <n>          Video width to render (defaults to 1920)
 ```
 ## Result
 ```

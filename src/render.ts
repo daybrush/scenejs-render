@@ -24,6 +24,8 @@ export default async function render({
     codec,
     referer,
     ffmpegPath,
+    imageType = "png",
+    alpha = 0,
 }: RenderOptions = {}) {
     let path;
 
@@ -34,11 +36,11 @@ export default async function render({
     }
     console.log("Open Page: ", path);
     try {
-        console.log("Start Rendering");
+        console.log(`Start Rendering`);
 
         const outputs = output.split(",");
         const videoOutputs = outputs.filter(file => file.match(/\.(mp4|webm)$/g));
-        const isVideo = videoOutputs.length;
+        const isVideo = videoOutputs.length > 0;
         const audioPath = outputs.find(file => file.match(/\.mp3$/g));
 
         const startProcessingTime = Date.now();
@@ -60,6 +62,8 @@ export default async function render({
             multi,
             isVideo,
             referer,
+            imageType,
+            alpha: !!alpha,
         });
 
         if (ffmpegPath) {
@@ -89,7 +93,7 @@ export default async function render({
         !cache && rmdir("./.scene_cache");
         const endProcessingTime = Date.now();
 
-        console.log(`End Rendering(Rendering Time: ${(endProcessingTime - startProcessingTime) / 1000}s)`);
+        console.log(`End Rendering (Rendering Time: ${(endProcessingTime - startProcessingTime) / 1000}s)`);
     } catch (e) {
         console.error(e);
         process.exit(200);

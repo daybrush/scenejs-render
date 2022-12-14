@@ -21,6 +21,8 @@ export interface RenderOptions {
     codec?: string;
     referer?: string;
     ffmpegPath?: string;
+    imageType?: "png" | "jpeg";
+    alpha?: number | undefined | "";
 }
 export interface CaptureCommonOptions {
     /**
@@ -67,13 +69,52 @@ export interface CaptureCommonOptions {
      * the time the scene ends
      */
     endTime: number;
-
     /**
      * Total number of frames to capture
      */
     totalFrame: number;
+    /**
+     * Image type for recording
+     * alpha can be used.
+     * @default "png"
+     */
+    imageType: "png" | "jpeg";
+    /**
+     * Image type for recording
+     * @default "png"
+     */
+    alpha: boolean;
 }
 
+export interface CaptureSceneOptions {
+    media: string;
+    name: string;
+    fps: number;
+    width: number;
+    height: number;
+    startTime: number | undefined | "";
+    duration: number | undefined | "";
+    iteration: number | undefined | "";
+    cache?: number | undefined | "";
+    scale: number,
+    multi: number,
+    referer: string;
+    isVideo?: boolean;
+    /**
+     * file path
+     */
+    path: string;
+    /**
+     * Image type for recording
+     * @default "png"
+     */
+    imageType: "png" | "jpeg";
+    /**
+     * Image type for recording
+     * @default "png"
+     */
+    alpha: boolean;
+}
 export interface CaptureLoopOptions extends CaptureCommonOptions {
     /**
      * puppeteer's opend page

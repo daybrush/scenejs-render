@@ -16,6 +16,11 @@ export default async function processVideo({
     const ext = output.match(/(?<=\.)[^.]+$/g);
     codec = codec || ext && DEFAULT_CODECS[ext[0]] || DEFAULT_CODECS.mp4;
 
+    const outputOption = [
+        `-cpu-used ${multi}`,
+        "-pix_fmt yuva420p",
+        // "-pix_fmt yuva444p10le",
+    ];
     return new Promise<void>(async (resolve, reject) => {
         const frames = [];
         const totalFrame = duration * fps;
@@ -24,7 +29,7 @@ export default async function processVideo({
             frames[i] = `./.scene_cache/frame${i}.png`;
         }
 
-        console.log(`Processing start (width: ${width}, height: ${height}, totalframe: ${totalFrame + 1}, duration: ${duration}, fps: ${fps}, media: ${hasMedia})`);
+        console.log(`Processing start (output: ${output}, codec: ${codec}, width: ${width}, height: ${height}, totalframe: ${totalFrame + 1}, duration: ${duration}, fps: ${fps}, media: ${hasMedia})`);
 
         sendMessage({
             type: "process",
@@ -53,12 +58,9 @@ export default async function processVideo({
             })
             .videoBitrate(bitrate)
             .videoCodec(codec)
-            .outputOption([
-                `-cpu-used ${multi}`,
-                "-pix_fmt yuv420p",
-            ])
+            .outputOption(outputOption)
             .size(`${width}x${height}`)
-            .format("mp4");
+            .format(ext);
         if (hasMedia) {
             converter.addInput("./.scene_cache/merge.mp3")
                 .audioCodec("aac")

@@ -21,4 +21,5 @@ statistics/
 .scene_cache
 *.mp3
 *.mp4
+*.webm
 ffmpeg
