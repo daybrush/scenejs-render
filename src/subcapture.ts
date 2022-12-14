@@ -20,6 +20,7 @@ async function capture({
     skipFrame,
     referer,
     imageType,
+    alpha,
 }: SubCaptureOptions) {
     const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -52,6 +53,7 @@ async function capture({
         skipFrame,
         hasOnlyMedia: false,
         imageType,
+        alpha: !!alpha,
     });
 
     await browser.close();
