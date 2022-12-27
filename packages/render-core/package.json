@@ -1,0 +1,57 @@
+{
+    "name": "@scenejs/render-core",
+    "version": "0.1.0",
+    "description": "Make a movie of CSS animation through Scene.js",
+    "main": "./dist/core.cjs.js",
+    "module": "./dist/core.esm.js",
+    "types": "declaration/index.d.ts",
+    "dependencies": {
+        "@ffmpeg/ffmpeg": "^0.11.6",
+        "tslib": "^2.4.1"
+    },
+    "keywords": [
+        "scene",
+        "scenejs",
+        "scene.js",
+        "animate",
+        "animation",
+        "css",
+        "requestAnimationFrame",
+        "motion",
+        "media",
+        "render",
+        "fps",
+        "puppeteer",
+        "ffmpeg"
+    ],
+    "devDependencies": {
+        "@daybrush/builder": "^0.2.0",
+        "@ffmpeg/core": "^0.11.0",
+        "@scenejs/timeline": "^0.2.1",
+        "@types/jest": "^24.0.13",
+        "@types/node": "^18.11.18",
+        "ffprobe": "^1.1.2",
+        "ffprobe-static": "^3.1.0",
+        "get-video-duration": "^4.1.0",
+        "gh-pages": "^4.0.0",
+        "jest": "^24.8.0",
+        "scenejs": "^1.9.1",
+        "ts-jest": "^24.0.2",
+        "tslint": "^5.18.0",
+        "typescript": "^4.9.4"
+    },
+    "scripts": {
+        "build": "rollup -c && rm -rf declaration && tsc -p tsconfig.declaration.json",
+        "test": "npm run build && node ./test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/daybrush/scenejs-render.git"
+    },
+    "author": "Daybrush",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/daybrush/scenejs-render/issues"
+    },
+    "homepage": "https://github.com/daybrush/scenejs-render#readme"
+}
