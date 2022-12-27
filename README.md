@@ -16,39 +16,47 @@
 
 
 
-## ⚙️ Installation
-### Node
+## 🚀 How to use
+#### Node
 
-See Detail: 
+See [**`@scenejs/render` page**](https://github.com/daybrush/scenejs-render/tree/master/packages/render)
+
 ```bash
 $ npm install @scenejs/render
 ```
 
-
-In order to be able to use this module, make sure you have [ffmpeg](https://ffmpeg.org/) installed on your system (including all necessary encoding libraries like libmp3lame or libx264).
-
-  * ffmpeg must be installed and available in PATH.
-  * Or if it's in the local folder, set `ffmpegPath`.
-  `$ render --ffmpegPath ./ffmpeg`
-
-
-
 ```bash
-$ render -i ./index.html
-# npx
-$ npx @scenejs/render -i ./index.html
-# export mp4
-$ render -i index.html --name scene
-# export only mp3
-$ render -i index.html --name scene -o output.mp3
-# export mp3 file and mp4 file
-$ render -i index.html --name scene -o output.mp3,output.mp4
+$ npx @scenejs/render -i index.html
 ```
 
 
-### Browser (Soon)
+#### Browser
+
+See [**`@scenejs/recorder` page**](https://github.com/daybrush/scenejs-render/tree/master/packages/recorder)
+
 ```bash
 $ npm install @scenejs/recorder
+```
+
+
+```js
+import Recorder from "@scenjs/recorder";
+import Scene, { OnAnimate } from "scenejs";
+
+const scene = new Scene();
+const recorder = new Recorder((e: OnAnimate) => {
+  // html to image
+});
+
+const data = await recorder.record({
+  duration: 2,
+  fps: 60,
+});
+
+const video = document.querySelector('video')!;
+const url = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
+
+video.setAttribute("src", url);
 ```
 
 
@@ -59,9 +67,10 @@ Or, using a script tag in the browser (only works in some browsers, see list bel
 > SharedArrayBuffer is only available to pages that are [cross-origin isolated](https://developer.chrome.com/blog/enabling-shared-array-buffer/#cross-origin-isolation). So you need to host [your own server](https://github.com/ffmpegwasm/ffmpegwasm.github.io/blob/main/server/server.js) with `Cross-Origin-Embedder-Policy: require-corp` and `Cross-Origin-Opener-Policy: same-origin` headers to use ffmpeg.wasm.
 
 
-## 📄 Documents
-* [API Documentation](https://daybrush.com/scenejs/release/latest/doc/)
-* [Features Documentation](https://daybrush.com/scenejs/features.html)
+> Only browsers with SharedArrayBuffer support can use ffmpeg.wasm, you can check [HERE](https://caniuse.com/sharedarraybuffer) for the complete list.
+
+
+
 
 
 ## ⭐️ Show Your Support

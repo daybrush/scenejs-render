@@ -17,7 +17,7 @@ Promise.all(results).then(async () => {
         inputs: ["frame%d.png"],
         duration: 2,
         fps: 60,
-        output: "output.mp4",
+        ext: "mp4",
     });
 
     fs.writeFileSync("output.mp4", output);
