@@ -45,7 +45,7 @@
         "build": "rollup -c && rm -rf declaration && tsc -p tsconfig.declaration.json",
         "test": "jest --watchAll",
         "test1": "rollup -c && node ./index.js -i test.html -S 0 --fps 60 --ffmpegPath ./ffmpeg/ffmpeg",
-        "test:cache": "rollup -c && node ./index.js -i test.html -S 0 --fps 60 --ffmpegPath ./ffmpeg/ffmpeg --cacheFolder .scene_ch",
+        "test:cache": "rollup -c && node ./index.js -i test.html -S 0 --fps 60 --ffmpegPath ./ffmpeg/ffmpeg -c 1 --cacheFolder .scene_ch",
         "test:alpha": "rollup -c && node ./index.js -i test.html -S 0 --fps 60 --ffmpegPath ./ffmpeg/ffmpeg -c 1 --output output.webm",
         "test2": "rollup -c && node ./index.js -i test2.html --fps 30 --ffmpegPath ./ffmpeg/ffmpeg",
         "test3": "rollup -c && node ./index.js --ffmpegPath ./ffmpeg/ffmpeg -i ./index/index.html  --fps 30 --duration 12 --width 678 --height 508 --output output.webm ",

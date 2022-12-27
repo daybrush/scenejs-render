@@ -1,8 +1,29 @@
-# @scenejs/render [![npm version](https://badge.fury.io/js/%40scenejs%2Frender.svg)](https://badge.fury.io/js/%40scenejs%2Frender)
+
+<p align="middle"><img src="https://daybrush.com/scenejs/images/clapperboard.png" width="250"/></p>
+<h2 align="middle">Scene.js Render</h2>
+<p align="middle">
+<a href="https://www.npmjs.com/package/@scenejs/render" target="_blank"><img src="https://img.shields.io/npm/v/@scenejs/render.svg?style=flat-square&color=007acc&label=version" alt="npm version" /></a>
+<img src="https://img.shields.io/badge/language-typescript-blue.svg?style=flat-square"/>
+<a href="https://github.com/daybrush/scenejs/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/daybrush/scenejs.svg?style=flat-square&label=license&color=08CE5D"/></a>
+</p>
+
+
+<p align="middle">🎬 Make a movie of CSS animation through <a href="https://github.com/daybrush/scenejs">Scene.js</a></p>
+
+<p align="middle"><a href="https://daybrush.com/scenejs"><strong>Official Site</strong></a> &nbsp;/&nbsp; <a href="https://github.com/daybrush/scenejs"><strong>Scene.js</strong></a> &nbsp;/&nbsp; <a href="https://github.com/daybrush/scena"><strong>Main Project</strong></a></p>
+<br/>
 
 
 
-Make a movie of CSS animation through [scenejs](https://github.com/daybrush/scenejs).
+
+## ⚙️ Installation
+### Node
+
+See Detail: 
+```bash
+$ npm install @scenejs/render
+```
+
 
 In order to be able to use this module, make sure you have [ffmpeg](https://ffmpeg.org/) installed on your system (including all necessary encoding libraries like libmp3lame or libx264).
 
@@ -10,19 +31,12 @@ In order to be able to use this module, make sure you have [ffmpeg](https://ffmp
   * Or if it's in the local folder, set `ffmpegPath`.
   `$ render --ffmpegPath ./ffmpeg`
 
-## Installation
-```bash
-$ npm install @scenejs/render
-```
 
-## Usage
 
 ```bash
-# basic
-$ render -i index.html
-```
-
-```bash
+$ render -i ./index.html
+# npx
+$ npx @scenejs/render -i ./index.html
 # export mp4
 $ render -i index.html --name scene
 # export only mp3
@@ -31,77 +45,81 @@ $ render -i index.html --name scene -o output.mp3
 $ render -i index.html --name scene -o output.mp3,output.mp4
 ```
 
-```
-Usage: render [options] [command]
 
-Commands:
-  help     Display help
-  version  Display version
+### Browser (Soon)
+```bash
+$ npm install @scenejs/recorder
+```
 
-Options:
-  -a, --alpha <n>            If you use the png image type, you can create a video with a transparent background. (The video extension must be webm.) (defaults to 0)
-  -b, --bitrate [value]      Bitrate of video (the higher the bit rate, the clearer the video quality) (defaults to "4096k")
-  -c, --cache <n>            you can pass Capture. (0: false, 1: true) (defaults to 0)
-  -C, --cacheFolder [value]  Cache folder name to save frame image (defaults to ".scene_cache")
-  -C, --codec                Codec to encode video If you don't set it up, it's the default(mp4: libx264, webm:libvpx-vp9) (defaults to "")
-  -d, --duration <n>         how many seconds to play (defaults to 0)
-  -F, --ffmpegPath           If it's in the local ffmpeg binary file, set `ffmpegPath` (defaults to "")
-  -f, --fps <n>              fps (defaults to 60)
-  -h, --height <n>           Video height to render (defaults to 1080)
-  -H, --help                 Output usage information
-  -I, --imageType [value]    Image type to record video (png or jpeg) (defaults to "png")
-  -i, --input [value]        File URL to Rendering (defaults to "index.html")
-  -I, --iteration <n>        iterationCount of the Scene set by the user himself. (defaults to 0)
-  -m, --media [value]        Name of mediaScene to render (defaults to "mediaScene")
-  -M, --multi <n>            Number of processes to create. (defaults to 1)
-  -n, --name [value]         the global variable name of the Scene, SceneItem, and Animator instance that will play the animation. (defaults to "scene")
-  -o, --output [value]       Output file name (defaults to "output.mp4")
-  -r, --referer              The Referer request header contains the address of the previous web page from which a link to the currently requested page was followed. (defaults to "")
-  -s, --scale <n>            Scale of screen size (defaults to 1)
-  -S, --startTime <n>        Time to start (defaults to 0)
-  -v, --version              Output the version number
-  -w, --width <n>            Video width to render (defaults to 1920)
+
+Since `@ffmpeg/wasm` is used, please refer to the document https://github.com/ffmpegwasm/ffmpeg.wasm.
+
+Or, using a script tag in the browser (only works in some browsers, see list below):
+
+> SharedArrayBuffer is only available to pages that are [cross-origin isolated](https://developer.chrome.com/blog/enabling-shared-array-buffer/#cross-origin-isolation). So you need to host [your own server](https://github.com/ffmpegwasm/ffmpegwasm.github.io/blob/main/server/server.js) with `Cross-Origin-Embedder-Policy: require-corp` and `Cross-Origin-Opener-Policy: same-origin` headers to use ffmpeg.wasm.
+
+
+## 📄 Documents
+* [API Documentation](https://daybrush.com/scenejs/release/latest/doc/)
+* [Features Documentation](https://daybrush.com/scenejs/features.html)
+
+
+## ⭐️ Show Your Support
+Please give a ⭐️ if this project helped you!
+
+
+## 👏 Contributing
+
+If you have any questions or requests or want to contribute to `scenejs-render` or other packages, please write the [issue](https://github.com/daybrush/sscenejs-renderenejs/issues) or give me a Pull Request freely.
+
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+
+<a href="https://github.com/daybrush/scenejs-render/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=daybrush/scenejs-render" />
+</a>
+
+
+## Sponsors
+<p align="center">
+	<a href="https://daybrush.com/sponsors/sponsors.svg">
+		<img src="https://daybrush.com/sponsors/sponsors.svg"/>
+	</a>
+</p>
+
+
+## 🐞 Bug Report
+
+If you find a bug, please report to us opening a new [Issue](https://github.com/daybrush/scenejs-render/issues) on GitHub.
+
+
+
+## 📝 License
+
+This project is [MIT](https://github.com/daybrush/scenejs-render/blob/master/LICENSE) licensed.
+
 ```
-## Result
-```
-Start Rendering
-Start Capture (startTime: 0, endTime: 2, fps: 60, startFrame: 0, endFrame: 171.42857142857144)
-Capture frame: 0, time: 0
-Capture frame: 1, time: 0.011666666666666665
-Capture frame: 2, time: 0.02333333333333333
-Capture frame: 3, time: 0.034999999999999996
-Capture frame: 4, time: 0.04666666666666666
-Capture frame: 5, time: 0.058333333333333334
-Capture frame: 6, time: 0.06999999999999999
-...
-frame: 71, time: 0.8283333333333333
-Capture frame: 72, time: 0.84
-Capture frame: 73, time: 0.8516666666666666
-Capture frame: 74, time: 0.8633333333333333
-Capture frame: 75, time: 0.875
-Capture frame: 76, time: 0.8866666666666666
-Capture frame: 77, time: 0.8983333333333333
-Capture frame: 78, time: 0.9099999999999999
-Capture frame: 79, time: 0.9216666666666666
-Capture frame: 80, time: 0.9333333333333333
-...
-Capture frame: 101, time: 1.1783333333333332
-Capture frame: 102, time: 1.19
-Capture frame: 103, time: 1.2016666666666667
-Capture frame: 104, time: 1.2133333333333334
-...
-Capture frame: 170, time: 1.9833333333333332
-Capture frame: 171, time: 1.9949999999999999
-Capture frame: 172, time: 2
-Convert Audio ./test.mp3
-Convert Audio ./test2.mp3
-Merge Audios
-Processing start (totalframe: 172, duration: 2.857142857142857, fps: 60)
-Processing: 0% done
-Processing: 0.5780346820809249% done
-Processing: 9.971098265895954% done
-Processing: 21.38728323699422% done
-Processing: 41.47398843930636% done
-Processing finished !
-End Rendering(Rendering Time: 62.248s)
+MIT License
+
+Copyright (c) 2016 Daybrush
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 ```
