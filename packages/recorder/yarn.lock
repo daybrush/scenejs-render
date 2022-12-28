@@ -247,7 +247,7 @@
   resolved "https://registry.npmjs.org/@daybrush/utils/-/utils-0.7.1.tgz"
   integrity sha512-n4timHtzzOS9w6fQJ0SfynfNFNqqJeSoXoeFw2CS1PPD3GfWJZliSklFWMBJ5taDcNovyCWlZV7D4bdeGY0nPA==
 
-"@daybrush/utils@^1.0.0", "@daybrush/utils@^1.1.1", "@daybrush/utils@^1.10.2":
+"@daybrush/utils@^1.0.0", "@daybrush/utils@^1.1.1", "@daybrush/utils@^1.10.2", "@daybrush/utils@^1.6.0":
   version "1.10.2"
   resolved "https://registry.npmjs.org/@daybrush/utils/-/utils-1.10.2.tgz"
   integrity sha512-fNMWeGUDokdIpebU8oIBUXkyGYITCwwodBfgx277p8d+kvI+k9wdFtKtdY4mvbWxhbAwuWprtVDq8My3KQ24Dg==
@@ -612,6 +612,14 @@
   integrity sha512-AzY4OTb0+7ynefmWFQ6hxDdk0CySAq/D4efljfhtRHCOP7MBF9zUfhKG3TJiroVjASqVgkRJFdenS8ArZo6Olg==
   dependencies:
     "@daybrush/utils" "^1.1.1"
+
+"@scenejs/media@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.npmjs.org/@scenejs/media/-/media-0.2.1.tgz#6b5c8bb5dee2eb9958749437d2d31f6ffc4e9af2"
+  integrity sha512-IpIgCReiaG69YFHuorZWzd0Pt2sPqOJmH+7vvkUPBEEX52fKcPGDSTa1z61yhJEV8RBwFFhhppZctdyFZDTjEQ==
+  dependencies:
+    "@daybrush/utils" "^1.6.0"
+    scenejs "^1.5.0"
 
 "@scenejs/timeline@^0.2.1":
   version "0.2.1"
@@ -3841,7 +3849,7 @@ sax@^1.2.4:
   resolved "https://registry.npmjs.org/sax/-/sax-1.2.4.tgz"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
 
-scenejs@^1.0.0, scenejs@^1.9.1:
+scenejs@^1.0.0, scenejs@^1.5.0, scenejs@^1.9.1:
   version "1.9.1"
   resolved "https://registry.npmjs.org/scenejs/-/scenejs-1.9.1.tgz"
   integrity sha512-aJk6yD++D4BRWyW91BLs5WbjxvuKvx9Ncm//7zcJm2p9wzWibbkKRBKPTJwonG1iE9SlFHV7FoET2zuZmc20dQ==
