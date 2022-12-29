@@ -1,139 +1,85 @@
-import { Page } from "puppeteer";
-import { Animator, AnimatorState } from "scenejs";
+import { IterationCountType } from "scenejs";
 
-export type RendererStatus = "idle" | "start" | "finish" | "capturing" | "processing" | "error";
+/**
+ * @typedef
+ */
 export interface RenderOptions {
-    name?: string;
-    media?: string;
-    port?: string | number;
     fps?: number;
-    width?: number;
-    height?: number;
     output?: string;
     startTime?: number;
     cache?: number | undefined | "";
     cacheFolder?: string;
-    scale?: number;
     multi?: number;
     input?: string;
     duration?: number | undefined | "";
     iteration?: number | undefined | "";
     bitrate?: string;
     codec?: string;
-    referer?: string;
-    ffmpegPath?: string;
-    imageType?: "png" | "jpeg";
-    alpha?: number | undefined | "";
-}
-export interface CaptureCommonOptions {
     /**
-     * Whether only MediaScene exists
+     * Image type to record video (png or jpeg)
+     * If png is selected, webm and alpha are available.
+     * @default "png"
      */
-    hasOnlyMedia: boolean;
+    imageType?: "png" | "jpeg";
+    /**
+     * If you use the png image type, you can create a video with a transparent background. (The video extension must be webm.)
+     * @default false
+     */
+    alpha?: boolean | number | undefined | "";
+    /**
+     * Number of cpus to use for ffmpeg video or audio processing
+     * @default 8
+     */
+    cpuUsed?: number;
+    /**
+     * page width
+     */
+    width?: number;
+    /**
+     * page height
+     */
+    height?: number;
     /**
      * scene's name in window
      */
-    name: string;
-    /**
-     * scene's start delay
-     */
-    delay: number;
-    /**
-     * fps to capture screen
-     */
-    fps: number;
+    name?: string;
     /**
      * scene's media name in window
      */
-    media: string;
+    media?: string;
     /**
-     * Whether MediaScene exists
-     */
-    hasMedia: boolean;
-    /**
-     * scene's play spedd
-     */
-    playSpeed: number;
-    /**
-     * Skip frame number to capture
-     */
-    skipFrame: number;
-    /**
-     * Start frame number to capture
-     */
-    startFrame: number;
-    /**
-     * End frame number to capture
-     */
-    endFrame: number;
-    /**
-     * the time the scene ends
-     */
-    endTime: number;
-    /**
-     * Total number of frames to capture
-     */
-    totalFrame: number;
-    /**
-     * Image type for recording
-     * alpha can be used.
-     * @default "png"
-     */
-    imageType: "png" | "jpeg";
-    /**
-     * Image type for recording
-     * @default "png"
-     */
-    alpha: boolean;
-    /**
-     * cache folder name
-     * @default ".scene_cache"
-     */
-    cacheFolder: string;
-}
-
-export interface CaptureSceneOptions {
-    media: string;
-    name: string;
-    fps: number;
-    width: number;
-    height: number;
-    startTime: number | undefined | "";
-    duration: number | undefined | "";
-    iteration: number | undefined | "";
-    cache?: number | undefined | "";
-    scale: number,
-    multi: number,
-    referer: string;
-    cacheFolder: string;
-    isVideo?: boolean;
-    /**
-     * file path
+     * file path or url
      */
     path: string;
     /**
-     * Image type for recording
-     * @default "png"
+     * page scale
      */
-    imageType: "png" | "jpeg";
+    scale?: number;
     /**
-     * Image type for recording
-     * @default "png"
+     * browser's referer
      */
-    alpha: boolean;
+    referer?: string;
+    /**
+     * Whether to show ffmpeg's logs
+     * @default false
+     */
+    ffmpegLog?: boolean;
 }
-export interface CaptureLoopOptions extends CaptureCommonOptions {
-    /**
-     * puppeteer's opend page
-     */
-    page: Page;
+
+
+export type ChildMessage = {
+    type: "startChild";
+    data: ChildOptions;
+} | {
+    type: "record";
+    data: RecordOptions;
+}
+
+export interface RecordOptions {
+    frame: number;
 }
 
 export interface OpenPageOptions {
-    /**
-     * file path
-     */
-    path: string;
     /**
      * page width
      */
@@ -142,6 +88,18 @@ export interface OpenPageOptions {
      * page height
      */
     height: number;
+    /**
+     * scene's name in window
+     */
+    name: string;
+    /**
+     * scene's media name in window
+     */
+    media: string;
+    /**
+     * file path or url
+     */
+    path: string;
     /**
      * page scale
      */
@@ -152,39 +110,66 @@ export interface OpenPageOptions {
     referer: string;
 }
 
-export interface RenderingInfoOptions {
-    iteration: AnimatorState["iteration"];
-    iterationCount: AnimatorState["iterationCount"];
-    delay: AnimatorState["delay"];
-    playSpeed: AnimatorState["playSpeed"];
-    duration: AnimatorState["duration"];
-
-    parentDuration: number;
-    parentStartTime: number;
-    parentFPS: number;
-
-    multi: number;
+export interface ChildOptions extends OpenPageOptions {
+    /**
+     * whether to apply alpha
+     * @default true
+     */
+    alpha: boolean;
+    /**
+     * Image type for recording
+     * alpha can be used.
+     * @default "png"
+     */
+    imageType: "png" | "jpeg";
+    /**
+     * Whether only MediaScene exists
+     */
+    hasOnlyMedia: boolean;
+    /**
+     * scene's start delay
+     */
+    delay: number;
+    /**
+     * Whether MediaScene exists
+     */
+    hasMedia: boolean;
+    /**
+     * cache folder name
+     * @default ".scene_cache"
+     */
+    cacheFolder: string;
+    /**
+     * scene's play spedd
+     */
+    playSpeed: number;
+    /**
+     * fps to capture screen
+     */
+    fps: number;
+    /**
+     * the time the scene ends
+     */
+    endTime: number;
+    /**
+     * Skip frame number to capture
+     */
+    skipFrame: number;
 }
-export interface SubCaptureOptions extends OpenPageOptions, CaptureCommonOptions {
 
-}
-
-
-export interface OnCaptureStart {
-    type: "captureStart";
-    isCache: boolean;
+export interface SeekOptions {
+    inputStartTime?: number | "";
+    inputDuration?: number | "";
+    inputIteration?: number | "";
+    delay: number;
     duration: number;
+    iterationCount: IterationCountType;
 }
 
 
-export interface OnCapture {
-    type: "capture";
-    frame: number,
-    frameCount?: number;
-    totalFrame: number;
-}
-
-export interface OnProcess {
-    type: "process";
-    processing: number;
+export interface ChildWorker {
+    workerIndex: number;
+    disconnect(): Promise<void>;
+    start(options: ChildOptions): Promise<void>;
+    record(options: RecordOptions): Promise<string>;
 }

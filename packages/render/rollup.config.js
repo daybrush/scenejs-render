@@ -18,10 +18,4 @@ module.exports = builder([
         exports: "named",
         format: "cjs",
     },
-    {
-        input: "src/subcapture.ts",
-        output: "./dist/subcapture.js",
-        exports: "named",
-        format: "cjs",
-    },
 ]);
