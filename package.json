@@ -1,0 +1,46 @@
+{
+    "name": "scenejs-render-root",
+    "version": "0.0.0",
+    "description": "Make a movie of CSS animation through Scene.js",
+    "sideEffects": false,
+    "private": true,
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/daybrush/scenejs-render.git"
+    },
+    "keywords": [
+        "scene",
+        "scene.js",
+        "scenejs",
+        "keyframes",
+        "timeline",
+        "animate",
+        "animation",
+        "css",
+        "requestAnimationFrame",
+        "motion"
+    ],
+    "author": "Daybrush",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/daybrush/scenejs-render/issues"
+    },
+    "homepage": "https://daybrush.com/scenejs-render",
+    "scripts": {
+        "packages:update": "lerna-helper version",
+        "packages:build": "lerna run build",
+        "packages:publish": "lerna-helper publish --commit 'chore: publish packages'",
+        "changelog": "lerna-helper changelog --type all --base @scenejs/render",
+        "release": "lerna-helper release --base @scenejs/render"
+    },
+    "devDependencies": {
+        "@daybrush/release": "^0.7.1",
+        "lerna": "^4.0.0",
+        "typescript": "^4.5.0 <4.6.0"
+    },
+    "workspaces": {
+        "packages": [
+            "packages/*"
+        ]
+    }
+}

@@ -1,7 +1,9 @@
-import Scene, { Animator, OnAnimate, SceneItem } from "scenejs";
+import Scene, { Animator } from "scenejs";
 import { MediaSceneInfo } from "@scenejs/media";
-import { FileType, RecordInfoOptions, RenderVideoOptions } from "./types";
+import { FileType, OnProgress, OnRecord, OnProcess, RecordInfoOptions, RenderVideoOptions, RenderMediaInfoOptions, RecorderOptions } from "./types";
 import { createFFmpeg, fetchFile, FFmpeg } from "@ffmpeg/ffmpeg";
+import EventEmitter from "@scena/event-emitter";
+import { createTimer, hasProtocol, resolvePath } from "./utils";
 
 
 export const DEFAULT_CODECS = {
@@ -9,19 +11,25 @@ export const DEFAULT_CODECS = {
     webm: "libvpx-vp9",
 };
 
-export class Recorder {
+export class Recorder extends EventEmitter<{
+    progress: OnProgress;
+    videoProcess: OnProcess;
+    audioProcess: OnProcess;
+}> {
     private _animator!: Animator;
     private _imageType!: "jpeg" | "png";
     private _ffmpeg!: FFmpeg;
     private _ready!: Promise<void>;
+    private _mediaInfo!: MediaSceneInfo;
+    private _hasMedia!: boolean;
 
-    private _recording!: (e: { frame: number }) => Promise<FileType> | FileType;
-    constructor() {
-
+    private _recording!: (e: OnRecord) => Promise<FileType> | FileType;
+    constructor(private _options: RecorderOptions) {
+        super();
     }
     public setRecording(
         imageType: "jpeg" | "png",
-        recording: (e: { frame: number }) => Promise<FileType> | FileType,
+        recording: (e: OnRecord) => Promise<FileType> | FileType,
     ) {
         this._imageType = imageType;
         this._recording = recording;
@@ -29,41 +37,126 @@ export class Recorder {
     public setAnimator(animator: Animator) {
         this._animator = animator;
     }
-    public setMediaInfo(mediaInfo: MediaSceneInfo) {
+    public getAudioFile() {
+        return this._ffmpeg.FS("readFile", "merge.mp3");
+    }
+    public async recordMedia(mediaInfo: MediaSceneInfo, options?: RenderMediaInfoOptions) {
+        let length = 0;
+        const medias = mediaInfo.medias;
+        const duration = mediaInfo.duration;
 
+        if (!duration || !medias) {
+            return false;
+        }
+        const ffmpeg = await this.init();
+
+        await Promise.all(medias.map(async media => {
+            const url = media.url;
+            const seek = media.seek;
+            const delay = media.delay;
+            const playSpeed = media.playSpeed;
+            const volume = media.volume;
+
+            const path = hasProtocol(url) ? url : resolvePath(options?.inputPath ?? "", url);
+            const [startTime, endTime] = seek;
+            const fileName = path.match(/[^/]+$/g)?.[0] ?? path;
+
+            await this.writeFile(fileName, path);
+            await ffmpeg.run(
+                "-ss", `${startTime}`,
+                "-to", `${endTime}`,
+                "-i", fileName,
+                "-filter:a", `adelay=${delay * playSpeed * 1000}|${delay * playSpeed * 1000},atempo=${playSpeed},volume=${volume}`,
+                `audio${++length}.mp3`,
+            );
+        }));
+
+        if (!length) {
+            return false;
+        }
+
+        const files = ffmpeg.FS("readdir", "");
+        const audioLength = files.filter(fileName => fileName.match(/audio[\d]+.mp3/)).length;
+
+
+        const timer = createTimer();
+
+        ffmpeg.setProgress(e => {
+            const ratio = e.ratio;
+            const {
+                currentTime,
+                expectedTime,
+            } = timer.getCurrentInfo(e.ratio);
+            this.emit("audioProcess", {
+                currentProcessingTime: currentTime,
+                expectedProcessingTime: expectedTime,
+                ratio,
+            });
+        });
+        await ffmpeg.run(
+            "-i", "audio%d.mp3",
+            "-filter_complex", `amix=input=${audioLength}:duration=longest`,
+            "merge.mp3",
+        );
+        this._hasMedia = true;
+
+        return this.getAudioFile();
     }
     public async record(options: RenderVideoOptions & RecordInfoOptions) {
-        const recordInfo = this._getRecordInfo(options);
+        const recordInfo = this.getRecordInfo(options);
 
-        const startFrame = recordInfo.startFrame;
-        const endFrame = recordInfo.endFrame;
+        const rootStartFrame = recordInfo.startFrame;
         const imageType = this._imageType;
-
-        let pipe!: Promise<void>;
-
+        const totalFrame = recordInfo.endFrame - rootStartFrame + 1;
+        const fps = options.fps;
+        let frameCount = 0;
         await this.init();
-        for (let i = startFrame; i <= endFrame; ++i) {
-            const callback = ((currentFrame: number) => {
-                return async () => {
-                    const data = await this._recording({
-                        frame: currentFrame,
-                    });
 
-                    await this.writeFile(`frame${currentFrame - startFrame}.${imageType}`, data);
-                };
-            })(i);
+        const timer = createTimer();
+        await Promise.all(recordInfo.loops.map((loop, workerIndex) => {
+            let pipe = Promise.resolve();
+            const startFrame = loop.startFrame;
+            const endFrame = loop.endFrame;
 
-            if (pipe) {
+            for (let i = startFrame; i <= endFrame; ++i) {
+                const callback = ((currentFrame: number) => {
+                    return async () => {
+                        const data = await this._recording({
+                            workerIndex,
+                            frame: currentFrame,
+                            time: currentFrame * fps,
+                        });
+
+                        await this.writeFile(`frame${currentFrame - rootStartFrame}.${imageType}`, data);
+                        ++frameCount;
+
+                        const {
+                            currentTime: currentRecordingTime,
+                            expectedTime: expectedRecordingTime,
+                        } = timer.getCurrentInfo(frameCount / totalFrame);
+                        this.emit("progress", {
+                            frameCount,
+                            totalFrame,
+                            frameInfo: {
+                                frame: currentFrame,
+                                time: currentFrame * fps,
+                            },
+                            currentRecordingTime,
+                            expectedRecordingTime,
+                        });
+                    };
+                })(i);
                 pipe = pipe.then(callback);
-            } else {
-                pipe = callback();
             }
-        }
-        await pipe;
-        return this.renderVideo(options);
+            return pipe;
+        }));
+        return await this.renderVideo({
+            ...options,
+            duration: recordInfo.duation,
+        });
     }
 
-    protected _getRecordInfo(options: RecordInfoOptions) {
+    public getRecordInfo(options: RecordInfoOptions) {
         const animator = this._animator;
         const inputIteration = options.iteration;
         const inputDuration = options.duration || 0;
@@ -102,6 +195,7 @@ export class Recorder {
         }
 
         return {
+            duation: (endTime - startTime) / playSpeed,
             loops,
             iterationCount,
             startTime,
@@ -111,7 +205,7 @@ export class Recorder {
         }
     }
     public async init() {
-        this._ffmpeg = this._ffmpeg || createFFmpeg({ log: true });
+        this._ffmpeg = this._ffmpeg || createFFmpeg({ log: this._options.log });
 
         const ffmpeg = this._ffmpeg;
 
@@ -134,16 +228,23 @@ export class Recorder {
             fps = 60,
             codec,
             duration,
-            hasMedia,
             bitrate,
+            cpuUsed,
         } = options;
 
+        const hasMedia = this._hasMedia;
         const parsedCodec = codec || DEFAULT_CODECS[ext || "mp4"] || DEFAULT_CODECS.mp4;
         const outputOption = [
-            `-cpu-used`, "1",
+            `-cpu-used`, `${cpuUsed || 8}`,
             "-pix_fmt", "yuva420p",
         ];
 
+
+        if (ext === "webm") {
+            outputOption.push(
+                "-row-mt", "1",
+            );
+        }
         if (hasMedia) {
             outputOption.push(
                 "-acodec", "aac",
@@ -155,8 +256,7 @@ export class Recorder {
         }
 
         const ffmpeg = await this.init();
-        const totalFrame = duration * fps;
-        console.log(`Processing start (ext: ${ext}, codec: ${parsedCodec}, totalframe: ${totalFrame + 1}, duration: ${duration}, fps: ${fps}, media: ${hasMedia})`);
+
 
         // size ${width}x${height}
         //  'scale=w=1920:h=1080',
@@ -164,6 +264,22 @@ export class Recorder {
         const inputOption = [
             "-i", `frame%d.${this._imageType}`,
         ];
+
+
+        const timer = createTimer();
+        ffmpeg.setProgress(e => {
+            const ratio = e.ratio;
+            const {
+                currentTime,
+                expectedTime,
+            } = timer.getCurrentInfo(e.ratio);
+            this.emit("videoProcess", {
+                currentProcessingTime: currentTime,
+                expectedProcessingTime: expectedTime,
+                ratio,
+            });
+        });
+
         await ffmpeg!.run(
             `-r`, `${fps}`,
             ...inputOption,
@@ -179,6 +295,7 @@ export class Recorder {
         return ffmpeg!.FS('readFile', `output.${ext}`);
     }
     public destroy() {
+        this.off();
         try {
             this._ffmpeg?.exit();
         } catch (e) {
