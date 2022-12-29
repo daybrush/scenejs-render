@@ -50,7 +50,7 @@ export interface RenderOptions {
     /**
      * file path or url
      */
-    path: string;
+    path?: string;
     /**
      * page scale
      */

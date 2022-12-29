@@ -1,9 +1,9 @@
-import Scene, { Animator } from "scenejs";
+import Scene, { Animator, AnimatorOptions } from "scenejs";
 import { MediaSceneInfo } from "@scenejs/media";
 import { FileType, OnProgress, OnRecord, OnProcess, RecordInfoOptions, RenderVideoOptions, RenderMediaInfoOptions, RecorderOptions } from "./types";
 import { createFFmpeg, fetchFile, FFmpeg } from "@ffmpeg/ffmpeg";
 import EventEmitter from "@scena/event-emitter";
-import { createTimer, hasProtocol, resolvePath } from "./utils";
+import { createTimer, hasProtocol, isAnimator, resolvePath } from "./utils";
 
 
 export const DEFAULT_CODECS = {
@@ -34,8 +34,11 @@ export class Recorder extends EventEmitter<{
         this._imageType = imageType;
         this._recording = recording;
     }
-    public setAnimator(animator: Animator) {
-        this._animator = animator;
+    public setAnimator(animator: Animator | Partial<AnimatorOptions>) {
+        this._animator
+            = isAnimator(animator)
+                ? animator
+                : new Animator(animator);
     }
     public getAudioFile() {
         return this._ffmpeg.FS("readFile", "merge.mp3");

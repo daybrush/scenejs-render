@@ -1,3 +1,4 @@
+import { Animator } from "scenejs";
 
 export function hasProtocol(url) {
     try {
@@ -41,4 +42,8 @@ export function createTimer() {
             };
         }
     }
+}
+
+export function isAnimator(value: any): value is Animator {
+    return value && !!(value.constructor as typeof Animator).prototype.getActiveDuration;
 }

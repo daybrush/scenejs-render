@@ -125,14 +125,13 @@ export default async function render({
             throw e;
         }
     }
-    const animator = new Animator({
+
+    recorder.setAnimator({
         delay,
         duration,
         iterationCount,
         playSpeed,
     });
-
-    recorder.setAnimator(animator);
 
     const {
         startFrame,
