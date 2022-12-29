@@ -6,8 +6,9 @@
     "module": "./dist/render.esm.js",
     "types": "declaration/index.d.ts",
     "dependencies": {
-        "@daybrush/utils": "^1.4.0",
+        "@daybrush/utils": "^1.10.2",
         "@ffmpeg/core": "^0.11.0",
+        "@ffmpeg/ffmpeg": "^0.11.6",
         "@scena/event-emitter": "^1.0.5",
         "@scenejs/recorder": "0.1.0",
         "@types/fluent-ffmpeg": "^2.1.10",
@@ -55,7 +56,7 @@
         "test4": "rollup -c && node ./index.js -i ./test.html -S 0 -d 1 -f 25 -o",
         "test:multi": "rollup -c && node ./index.js -i test.html --fps 60 --multi 4",
         "test:start": "rollup -c && node ./index.js -i test.html -S 1 --fps 60 --multi 4",
-        "test:examples": "node ./index.js -i ./examples/index.html --fps 60 --multi 4 --c 1",
+        "test:examples": "rollup -c && node ./index.js -i ./examples/index.html --fps 60 --multi 8 --c 1",
         "help": "node ./index.js --help",
         "demo:deploy-init": "gh-pages -d demo/ --remote origin"
     },

@@ -22,10 +22,14 @@ export class Recorder extends EventEmitter<{
     private _ready!: Promise<void>;
     private _mediaInfo!: MediaSceneInfo;
     private _hasMedia!: boolean;
+    private _fetchFile: (data: string | Buffer | Blob | File) => Promise<Uint8Array> = fetchFile;
 
     private _recording!: (e: OnRecord) => Promise<FileType> | FileType;
     constructor(private _options: RecorderOptions) {
         super();
+    }
+    public setFetchFile(fetchFile: (data: string | Buffer | Blob | File) => Promise<Uint8Array>) {
+        this._fetchFile = fetchFile;
     }
     public setRecording(
         imageType: "jpeg" | "png",
@@ -49,11 +53,12 @@ export class Recorder extends EventEmitter<{
         const duration = mediaInfo.duration;
 
         if (!duration || !medias) {
-            return false;
+            return;
         }
         const ffmpeg = await this.init();
 
-        await Promise.all(medias.map(async media => {
+        await medias.reduce(async (pipe, media) => {
+            await pipe;
             const url = media.url;
             const seek = media.seek;
             const delay = media.delay;
@@ -64,26 +69,34 @@ export class Recorder extends EventEmitter<{
             const [startTime, endTime] = seek;
             const fileName = path.match(/[^/]+$/g)?.[0] ?? path;
 
+
             await this.writeFile(fileName, path);
             await ffmpeg.run(
                 "-ss", `${startTime}`,
                 "-to", `${endTime}`,
                 "-i", fileName,
                 "-filter:a", `adelay=${delay * playSpeed * 1000}|${delay * playSpeed * 1000},atempo=${playSpeed},volume=${volume}`,
-                `audio${++length}.mp3`,
+                `audio${length++}.mp3`,
             );
-        }));
+        }, Promise.resolve());
 
         if (!length) {
-            return false;
+            return;
         }
 
-        const files = ffmpeg.FS("readdir", "");
-        const audioLength = files.filter(fileName => fileName.match(/audio[\d]+.mp3/)).length;
+        const files = ffmpeg.FS("readdir", "./");
+        const audios = files.filter(fileName => fileName.match(/audio[\d]+.mp3/));
+        const audiosLength = audios.length;
 
-
+        if (!audiosLength) {
+            return;
+        }
+        const inputOption: string[] = [];
         const timer = createTimer();
 
+        audios.forEach(fileName => {
+            inputOption.push("-i", fileName);
+        });
         ffmpeg.setProgress(e => {
             const ratio = e.ratio;
             const {
@@ -97,13 +110,16 @@ export class Recorder extends EventEmitter<{
             });
         });
         await ffmpeg.run(
-            "-i", "audio%d.mp3",
-            "-filter_complex", `amix=input=${audioLength}:duration=longest`,
+            ...inputOption,
+            "-filter_complex", `amix=inputs=${audiosLength}:duration=longest`,
             "merge.mp3",
         );
-        this._hasMedia = true;
 
-        return this.getAudioFile();
+        if (ffmpeg.FS("readdir", "./").indexOf("merge.mp3") >= 0) {
+            this._hasMedia = true;
+
+            return this.getAudioFile();
+        }
     }
     public async record(options: RenderVideoOptions & RecordInfoOptions) {
         const recordInfo = this.getRecordInfo(options);
@@ -223,7 +239,7 @@ export class Recorder extends EventEmitter<{
     public async writeFile(fileName: string, file: string | Buffer | File | Blob) {
         await this.init();
 
-        this._ffmpeg.FS("writeFile", fileName, await fetchFile(file));
+        this._ffmpeg.FS("writeFile", fileName, await this._fetchFile(file));
     }
     public async renderVideo(options: RenderVideoOptions) {
         const {
@@ -237,6 +253,10 @@ export class Recorder extends EventEmitter<{
 
         const hasMedia = this._hasMedia;
         const parsedCodec = codec || DEFAULT_CODECS[ext || "mp4"] || DEFAULT_CODECS.mp4;
+        const inputOption = [
+            "-i", `frame%d.${this._imageType}`,
+        ];
+        const audioOutputOpion: string[] = [];
         const outputOption = [
             `-cpu-used`, `${cpuUsed || 8}`,
             "-pix_fmt", "yuva420p",
@@ -249,7 +269,10 @@ export class Recorder extends EventEmitter<{
             );
         }
         if (hasMedia) {
-            outputOption.push(
+            inputOption.push(
+                "-i", "merge.mp3",
+            );
+            audioOutputOpion.push(
                 "-acodec", "aac",
                 // audio bitrate
                 '-b:a', "128k",
@@ -259,14 +282,6 @@ export class Recorder extends EventEmitter<{
         }
 
         const ffmpeg = await this.init();
-
-
-        // size ${width}x${height}
-        //  'scale=w=1920:h=1080',
-        // -f mp4
-        const inputOption = [
-            "-i", `frame%d.${this._imageType}`,
-        ];
 
 
         const timer = createTimer();
@@ -286,6 +301,7 @@ export class Recorder extends EventEmitter<{
         await ffmpeg!.run(
             `-r`, `${fps}`,
             ...inputOption,
+            ...audioOutputOpion,
             `-c:v`, parsedCodec,
             `-loop`, `1`,
             `-t`, `${duration}`,

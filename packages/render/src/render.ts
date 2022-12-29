@@ -1,5 +1,5 @@
 import puppeteer, { ConsoleMessage, Page } from "puppeteer";
-import { openPage, rmdir } from "./utils";
+import { hasProtocol, isLocalFile, openPage, rmdir } from "./utils";
 import * as fs from "fs";
 import { Animator, IterationCountType } from "scenejs";
 import { RenderOptions } from "./types";
@@ -11,6 +11,8 @@ import * as pathModule from "path";
 import * as url from "url";
 import { Blob } from "buffer";
 import { RenderRecorder } from "./RenderRecorder";
+import { fetchFile } from "@ffmpeg/ffmpeg";
+import { isString } from "@daybrush/utils";
 
 async function getMediaInfo(page: Page, media: string) {
     if (!media) {
@@ -83,6 +85,20 @@ export default async function render({
     const hasMedia = !!mediaInfo;
 
     if (hasMedia) {
+        recorder.setFetchFile(data => {
+            if (isString(data) && isLocalFile(data)) {
+                let fileName = data;
+                try {
+                    fileName = new URL(data).pathname;
+                } catch (e) { }
+
+                return Promise.resolve().then(() => {
+                    return fs.readFileSync(fileName);
+                });
+            }
+            return fetchFile(data);
+        });
+
         await recorder.recordMedia(mediaInfo, {
             inputPath,
         });
@@ -162,6 +178,9 @@ export default async function render({
     !isCache && rmdir(`./${cacheFolder}`);
     !fs.existsSync(`./${cacheFolder}`) && fs.mkdirSync(`./${cacheFolder}`);
 
+    if (hasMedia) {
+        fs.writeFileSync(`./${cacheFolder}/merge.mp3`, recorder.getAudioFile());
+    }
     const childOptions: ChildOptions = {
         hasOnlyMedia,
         name,

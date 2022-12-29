@@ -60,6 +60,19 @@ export async function openPage(browser: Browser, {
 }
 
 
+export function isLocalFile(url: string) {
+    try {
+        const protocol = new URL(url).protocol;
+
+        if (!protocol || protocol.startsWith("file")) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch(e) {
+    }
+    return true;
+}
 export function hasProtocol(url) {
     try {
         const protocol = new URL(url).protocol;

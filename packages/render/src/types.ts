@@ -171,5 +171,5 @@ export interface ChildWorker {
     workerIndex: number;
     disconnect(): Promise<void>;
     start(options: ChildOptions): Promise<void>;
-    record(options: RecordOptions): Promise<string>;
+    record(options: RecordOptions): Promise<string | Buffer>;
 }
