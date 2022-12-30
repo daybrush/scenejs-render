@@ -1,15 +1,36 @@
-export type FileType = string | Buffer | File | Blob;
 
+/**
+ * @memberof Recorder
+ * @typedef
+ */
+export type FileType = string | Buffer | File | Blob | null;
+
+/**
+ * @memberof Recorder
+ * @typedef
+ */
 export interface RenderMediaInfoOptions {
+    /**
+     *
+     */
     inputPath?: string;
 }
 
+/**
+ * @memberof Recorder
+ * @typedef
+ */
 export interface RecorderOptions {
     /**
      * Whether to show ffmpeg's log
      */
     log?: boolean;
 }
+
+/**
+ * @memberof Recorder
+ * @typedef
+ */
 export interface RenderVideoOptions {
     /**
      * custom scene's duration
@@ -43,6 +64,10 @@ export interface RenderVideoOptions {
     cpuUsed?: number;
 }
 
+/**
+ * @memberof Recorder
+ * @typedef
+ */
 export interface RecordInfoOptions {
     /**
      * Input iterationCount of the Scene set by the user himself
@@ -68,13 +93,17 @@ export interface RecordInfoOptions {
     multi?: number;
 }
 
-export interface OnRecord {
+/**
+ * @memberof Recorder
+ * @typedef
+ */
+export interface OnRequestCapture {
     /**
-     * recording frame
+     * caputring frame
      */
     frame: number;
     /**
-     * recording time
+     * capturing time
      */
     time: number;
     /**
@@ -83,16 +112,102 @@ export interface OnRecord {
     workerIndex: number;
 }
 
-export interface OnProgress {
+/**
+ * @memberof Recorder
+ * @typedef
+ */
+export interface OnProcessAudioStart {
+    /**
+     * Number of audios included in mediaInfo
+     */
+    audiosLength: number;
+}
+
+/**
+ * @memberof Recorder
+ * @typedef
+ */
+export interface OnCaptureStart {
+    /**
+     * The starting frame of the animator to capture.
+     */
+    startFame: number;
+    /**
+     * The end frame of the animator to capture.
+     */
+    endFrame: number;
+    /**
+     * The starting time of the animator to capture.
+     */
+    startTime: number;
+    /**
+     * The end time of the animator to capture.
+     */
+    endTime: number;
+    /**
+     * Length of time of the animator to capture
+     */
+    duration: number;
+    /**
+     * The number of split captures.
+     */
+    multi: number;
+    /**
+     * fps
+     */
+    fps: number;
+    /**
+     * Image type (or extension) to capture
+     */
+    imageType: "png" | "jpeg";
+}
+
+/**
+ * @memberof Recorder
+ * @typedef
+ */
+export interface OnCapture {
+    /**
+     * Progress rate captured
+     */
+    ratio: number;
+    /**
+     * Number of frames captured
+     */
     frameCount: number;
+    /**
+     * Total number of frames to capture
+     */
     totalFrame: number;
-    currentRecordingTime: number;
-    expectedRecordingTime: number;
+    /**
+     * Current capturing progress time
+     */
+    currentCapturingTime: number;
+    /**
+     * Expected time for all capturing.
+     */
+    expectedCapturingTime: number;
+    /**
+     * Frame Information Captured Now
+     */
     frameInfo: { frame: number; time: number; };
 }
 
+/**
+ * @memberof Recorder
+ * @typedef
+ */
 export interface OnProcess {
-    currentProcessingTime: number;
-    expectedProcessingTime: number;
+    /**
+     * Current progress percentage
+     */
     ratio: number;
+    /**
+     * Current processing progress time
+     */
+    currentProcessingTime: number;
+    /**
+     * Expected time for all processing.
+     */
+    expectedProcessingTime: number;
 }

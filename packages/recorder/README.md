@@ -1,6 +1,6 @@
 
 <p align="middle"><img src="https://daybrush.com/scenejs/images/clapperboard.png" width="250"/></p>
-<h2 align="middle">Scene.js Render</h2>
+<h2 align="middle">Scene.js Recorder</h2>
 <p align="middle">
 <a href="https://www.npmjs.com/package/@scenejs/render" target="_blank"><img src="https://img.shields.io/npm/v/@scenejs/render.svg?style=flat-square&color=007acc&label=version" alt="npm version" /></a>
 <img src="https://img.shields.io/badge/language-typescript-blue.svg?style=flat-square"/>
@@ -14,53 +14,22 @@
 <br/>
 
 
-
-
-## 🎬 How to use
-#### Node
-
-See [**`@scenejs/render` page**](https://github.com/daybrush/scenejs-render/tree/master/packages/render)
-
-```bash
-$ npm install @scenejs/render
-```
-
-```bash
-$ npx @scenejs/render -i index.html
-```
-
-
-#### Browser
-
-See [**`@scenejs/recorder` page**](https://github.com/daybrush/scenejs-render/tree/master/packages/recorder)
-
+## ⚙️ Installation
 ```bash
 $ npm install @scenejs/recorder
 ```
+To run it locally, add `@ffmpeg/core` to devDependencies.
 
-
-```js
-import Recorder from "@scenjs/recorder";
-import Scene, { OnAnimate } from "scenejs";
-
-const scene = new Scene();
-const recorder = new Recorder();
-
-recorder.setAnimator(scene);
-recorder.setCapturing("png", (e: OnAnimate) => {
-  // html to image
-});
-
-recorder.record().then(data => {
-  const url = URL.createObjectURL(new Blob(
-    [data.buffer],
-    { type: 'video/mp4' },
-  ));
-
-  video.setAttribute("src", url);
-});
+```bash
+npm install @ffmpeg/core -D
 ```
 
+## 🚀 Examples
+* [Scene.js Recorder Browser Demo](https://scenejs-render-demo.netlify.app)
+* [Scene.js Recorder Browser Source](https://github.com/daybrush/scenejs-render/tree/master/packages/recorder-react-demo)
+
+## 🎬 How to use
+#### Browser
 
 Since `@ffmpeg/ffmpeg` is used, please refer to the document https://github.com/ffmpegwasm/ffmpeg.wasm.
 
@@ -72,7 +41,57 @@ Or, using a script tag in the browser (only works in some browsers, see list bel
 > Only browsers with SharedArrayBuffer support can use ffmpeg.wasm, you can check [HERE](https://caniuse.com/sharedarraybuffer) for the complete list.
 
 
+```ts
+import Recorder, { OnRequestCapture } from "@scenjs/recorder";
+import Scene from "scenejs";
 
+const scene = new Scene();
+const recorder = new Recorder();
+
+recorder.setAnimator(scene);
+recorder.setCapturing("png", (e: OnRequestCapture) => {
+    scene.setTime(e.time, true);
+    // html to image
+    return htmlToImage(element);
+});
+
+recorder.record().then(data => {
+  const url = URL.createObjectURL(new Blob(
+    [data.buffer],
+    { type: 'video/mp4' },
+  ));
+
+  video.setAttribute("src", url);
+  recorder.destroy();
+});
+```
+
+#### Node
+
+> Since `@scenejs/recorder` is a raw version of `@scenejs/render`, capturing and file creation are not performed.
+If you want a completed Recorder, use [`@scenejs/render`](https://github.com/daybrush/scenejs-render/tree/master/packages/render).
+
+
+```js
+const Recorder = require("@scenejs/recorder");
+const fs = require('fs');
+const { Animator } = require("scenejs");
+
+const recorder = new Recorder();
+const animator = new Animator({
+    duration: 2,
+});
+
+
+recorder.setAnimator(animator);
+recorder.setRecording("png", e => {
+    return `./frame${e.frame}.png`;
+});
+recorder.record().then(data => {
+    fs.writeFileSync("output.mp4", output);
+    recorder.destroy();
+});
+```
 
 
 ## ⭐️ Show Your Support

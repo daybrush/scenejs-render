@@ -34,11 +34,11 @@ export function createTimer() {
     return {
         startTime,
         getCurrentInfo(ratio: number) {
-            const currentTime = Date.now() - startTime;
+            const currentTime = (Date.now() - startTime) / 1000;
 
             return {
                 currentTime,
-                expectedTime: currentTime / ratio,
+                expectedTime: (currentTime / ratio),
             };
         }
     }
