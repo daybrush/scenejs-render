@@ -56,7 +56,7 @@
         "test4": "rollup -c && node ./index.js -i ./test.html -S 0 -d 1 -f 25 -o",
         "test:multi": "rollup -c && node ./index.js -i test.html --fps 60 --multi 4",
         "test:start": "rollup -c && node ./index.js -i test.html -S 1 --fps 60 --multi 4",
-        "test:examples": "rollup -c && node ./index.js -i ./examples/index.html --fps 60 --multi 8 --c 1",
+        "test:examples": "rollup -c && node --experimental-wasm-threads ./index.js -i ./examples/index.html --fps 60 --multi 8 --c 1 --imageType jpeg",
         "help": "node ./index.js --help",
         "demo:deploy-init": "gh-pages -d demo/ --remote origin"
     },

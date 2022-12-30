@@ -1,19 +1,68 @@
-import { IterationCountType } from "scenejs";
 
 /**
  * @typedef
+ * @memberof Render
  */
 export interface RenderOptions {
-    fps?: number;
-    output?: string;
-    startTime?: number;
-    cache?: number | undefined | "";
-    cacheFolder?: string;
-    multi?: number;
+    /**
+     * File URL to Rendering
+     * @default "./index.html"
+     */
     input?: string;
+    /**
+     * fps
+     * @default 60
+     */
+    fps?: number;
+    /**
+     * Output file name
+     * @default "output.mp4"
+     */
+    output?: string;
+    /**
+     * Input for start time
+     * @default 0
+     */
+    startTime?: number;
+    /**
+     * Whether to use buffer instead of saving frame image file in capturing (cache is disabled.)
+     * @default false
+     */
+    buffer?: boolean | number | undefined | "";
+    /**
+     * If there are frames in the cache folder, the capture process is passed.
+     * @default false
+     */
+    cache?: boolean | number | undefined | "";
+    /**
+     * Cache folder name to save frame image
+     * @default ".scene_cache"
+     */
+    cacheFolder?: string;
+    /**
+     * Number of browsers to be used for capturing
+     * @default 1
+     */
+    multi?: number;
+    /**
+     * Input how many seconds to play
+     * @default 0
+     */
     duration?: number | undefined | "";
+    /**
+     * Input iterationCount of the Scene set by the user himself.
+     * @default 0
+     */
     iteration?: number | undefined | "";
+    /**
+     * Bitrate of video (the higher the bit rate, the clearer the video quality)
+     * @default "4096k"
+     */
     bitrate?: string;
+    /**
+     * Codec to encode video If you don't set it up, it's the default
+     * @default "mp4: libx264, webm:libvpx-vp9"
+     */
     codec?: string;
     /**
      * Image type to record video (png or jpeg)
@@ -112,8 +161,12 @@ export interface OpenPageOptions {
 
 export interface ChildOptions extends OpenPageOptions {
     /**
+     * Whether to use buffer instead of saving frame image file in capturing (cache is disabled.)
+     */
+    buffer: boolean;
+    /**
      * whether to apply alpha
-     * @default true
+     * @default false
      */
     alpha: boolean;
     /**
@@ -156,16 +209,6 @@ export interface ChildOptions extends OpenPageOptions {
      */
     skipFrame: number;
 }
-
-export interface SeekOptions {
-    inputStartTime?: number | "";
-    inputDuration?: number | "";
-    inputIteration?: number | "";
-    delay: number;
-    duration: number;
-    iterationCount: IterationCountType;
-}
-
 
 export interface ChildWorker {
     workerIndex: number;

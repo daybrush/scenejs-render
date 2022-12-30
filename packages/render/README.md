@@ -1,21 +1,14 @@
 # @scenejs/render [![npm version](https://badge.fury.io/js/%40scenejs%2Frender.svg)](https://badge.fury.io/js/%40scenejs%2Frender)
 
-
-
 Make a movie of CSS animation through [scenejs](https://github.com/daybrush/scenejs).
 
-In order to be able to use this module, make sure you have [ffmpeg](https://ffmpeg.org/) installed on your system (including all necessary encoding libraries like libmp3lame or libx264).
-
-  * ffmpeg must be installed and available in PATH.
-  * Or if it's in the local folder, set `ffmpegPath`.
-  `$ render --ffmpegPath ./ffmpeg`
 
 ## Installation
 ```bash
 $ npm install @scenejs/render
 ```
 
-## Usage
+## How to use
 
 ```bash
 # basic
@@ -62,46 +55,45 @@ Options:
   -v, --version              Output the version number
   -w, --width <n>            Video width to render (defaults to 1920)
 ```
-## Result
+
+### Programatically
+```js
+import { render } from "@scenejs/render";
+
+render({
+  input: "./index.html",
+  name: "scene",
+  output: "output.mp4",
+});
 ```
-Start Rendering
-Start Capture (startTime: 0, endTime: 2, fps: 60, startFrame: 0, endFrame: 171.42857142857144)
-Capture frame: 0, time: 0
-Capture frame: 1, time: 0.011666666666666665
-Capture frame: 2, time: 0.02333333333333333
-Capture frame: 3, time: 0.034999999999999996
-Capture frame: 4, time: 0.04666666666666666
-Capture frame: 5, time: 0.058333333333333334
-Capture frame: 6, time: 0.06999999999999999
+
+
+### Result
+```
+Start Render
+Start Workers (startTime: 0, endTime: 2, fps: 60, startFrame: 0, endFrame: 120, workers: 4)
+Start Worker 0
+Start Worker 1
+Start Worker 2
+Start Worker 3
+Start Capture (startFame: 0, endFrame: 120, startTime: 0, endTime: 2, fps: 60, duration: 2, imageType: png)
+Capture Progress: 0.826% (1 / 121)
+- Captured Frame: 0
+- Current Capturing Time: 0.192s, Expected Capturing Time: 23.232s
 ...
-frame: 71, time: 0.8283333333333333
-Capture frame: 72, time: 0.84
-Capture frame: 73, time: 0.8516666666666666
-Capture frame: 74, time: 0.8633333333333333
-Capture frame: 75, time: 0.875
-Capture frame: 76, time: 0.8866666666666666
-Capture frame: 77, time: 0.8983333333333333
-Capture frame: 78, time: 0.9099999999999999
-Capture frame: 79, time: 0.9216666666666666
-Capture frame: 80, time: 0.9333333333333333
+Capture Progress: 100% (121 / 121)
+- Captured Frame: 30
+- Current Capturing Time: 5.545s, Expected Capturing Time: 5.545s
+End Capture
+Start Video Process (ext: mp4, fps: 60, duration: 2)
+Video Processing Progress: 0%
+- Current Processing Time: 0.099s, Expected Processing Time: Infinitys
+Video Processing Progress: 9.09%
+- Current Processing Time: 0.665s, Expected Processing Time: 7.315s
 ...
-Capture frame: 101, time: 1.1783333333333332
-Capture frame: 102, time: 1.19
-Capture frame: 103, time: 1.2016666666666667
-Capture frame: 104, time: 1.2133333333333334
-...
-Capture frame: 170, time: 1.9833333333333332
-Capture frame: 171, time: 1.9949999999999999
-Capture frame: 172, time: 2
-Convert Audio ./test.mp3
-Convert Audio ./test2.mp3
-Merge Audios
-Processing start (totalframe: 172, duration: 2.857142857142857, fps: 60)
-Processing: 0% done
-Processing: 0.5780346820809249% done
-Processing: 9.971098265895954% done
-Processing: 21.38728323699422% done
-Processing: 41.47398843930636% done
-Processing finished !
-End Rendering(Rendering Time: 62.248s)
+Video Processing Progress: 100%
+- Current Processing Time: 6.977s, Expected Processing Time: 6.977s
+End Video Process
+Created Video: output.mp4
+End Render (Rendering Time: 15.747s)
 ```

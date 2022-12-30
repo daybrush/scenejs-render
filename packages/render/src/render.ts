@@ -1,15 +1,14 @@
-import puppeteer, { ConsoleMessage, Page } from "puppeteer";
-import { hasProtocol, isLocalFile, openPage, rmdir } from "./utils";
+import puppeteer, { Page } from "puppeteer";
+import { isLocalFile, openPage, rmdir } from "./utils";
 import * as fs from "fs";
-import { Animator, IterationCountType } from "scenejs";
+import { IterationCountType } from "scenejs";
 import { RenderOptions } from "./types";
-import Recorder from "@scenejs/recorder";
+import { createTimer } from "@scenejs/recorder";
 import { MediaSceneInfo } from "@scenejs/media";
 import { ChildOptions, ChildWorker, RecordOptions } from "./types";
 import { createChildWorker, recordChild } from "./child";
 import * as pathModule from "path";
 import * as url from "url";
-import { Blob } from "buffer";
 import { RenderRecorder } from "./RenderRecorder";
 import { fetchFile } from "@ffmpeg/ffmpeg";
 import { isString } from "@daybrush/utils";
@@ -27,28 +26,47 @@ async function getMediaInfo(page: Page, media: string) {
     return;
 }
 
-export default async function render({
-    name = "scene",
-    media = "mediaScene",
-    fps = 60,
-    width = 1920,
-    height = 1080,
-    input: inputPath = "./index.html",
-    output: outputPath = "output.mp4",
-    startTime: inputStartTime = 0,
-    duration: inputDuration = 0,
-    iteration: inputIteration = 0,
-    scale,
-    multi,
-    bitrate = "4096k",
-    codec,
-    referer,
-    imageType = "png",
-    alpha = 0,
-    cache,
-    cacheFolder = ".scene_cache",
-    cpuUsed,
-}: RenderOptions = {}) {
+/**
+ * @namespace Render
+ */
+/**
+ * @memberof Render
+ * @param options
+ * @return {$ts:Promise<void>}
+ * @example
+import { render } from "@scenejs/render";
+
+render({
+  input: "./index.html",
+  name: "scene",
+  output: "output.mp4",
+});
+ */
+async function render(options: RenderOptions = {}) {
+    const {
+        name = "scene",
+        media = "mediaScene",
+        fps = 60,
+        width = 1920,
+        height = 1080,
+        input: inputPath = "./index.html",
+        output: outputPath = "output.mp4",
+        startTime: inputStartTime = 0,
+        duration: inputDuration = 0,
+        iteration: inputIteration = 0,
+        scale,
+        multi,
+        bitrate = "4096k",
+        codec,
+        referer,
+        imageType = "png",
+        alpha = 0,
+        cache,
+        cacheFolder = ".scene_cache",
+        cpuUsed,
+        ffmpegLog,
+        buffer,
+    } = options;
     let path;
 
     if (inputPath.match(/https*:\/\//g)) {
@@ -56,12 +74,16 @@ export default async function render({
     } else {
         path = url.pathToFileURL(pathModule.resolve(process.cwd(), inputPath)).href;
     }
+
+    const timer = createTimer();
+
+    console.log("Start Render");
     const outputs = outputPath.split(",");
     const videoOutputs = outputs.filter(file => file.match(/\.(mp4|webm)$/g));
     const isVideo = videoOutputs.length > 0;
     const audioPath = outputs.find(file => file.match(/\.mp3$/g));
     const recorder = new RenderRecorder({
-        log: true,
+        log: !!ffmpegLog,
     });
 
     recorder.init();
@@ -167,7 +189,7 @@ export default async function render({
     if (cache) {
         try {
             const cacheInfo = fs.readFileSync(`./${cacheFolder}/cache.txt`, "utf8");
-            const temp = JSON.stringify({ startTime, endTime, fps, startFrame, endFrame });
+            const temp = JSON.stringify({ inputPath, startTime, endTime, fps, startFrame, endFrame, imageType });
             if (cacheInfo === temp) {
                 isCache = true;
             }
@@ -194,6 +216,7 @@ export default async function render({
         referer,
         imageType,
         alpha: !!alpha,
+        buffer: !!buffer,
         cacheFolder,
         playSpeed,
         fps,
@@ -219,12 +242,12 @@ export default async function render({
             }
         }
     ];
-    recorder.setRenderRecording(imageType, workers, isCache, cacheFolder);
+    recorder.setRenderCapturing(imageType, workers, isCache, cacheFolder);
 
     if (isCache) {
         console.log(`Use Cache (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);
     } else {
-        console.log(`Start Record (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame}, workers: ${multi})`);
+        console.log(`Start Workers (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame}, workers: ${multi})`);
 
         for (let i = 1; i < multi; ++i) {
             workers.push(createChildWorker(i));
@@ -255,4 +278,8 @@ export default async function render({
 
 
     recorder.destroy();
+    console.log(`End Render (Rendering Time: ${timer.getCurrentInfo(1).currentTime}s)`);
 }
+
+
+export default render;
