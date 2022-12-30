@@ -2,7 +2,7 @@
 <p align="middle"><img src="https://daybrush.com/scenejs/images/clapperboard.png" width="250"/></p>
 <h2 align="middle">Scene.js Recorder</h2>
 <p align="middle">
-<a href="https://www.npmjs.com/package/@scenejs/render" target="_blank"><img src="https://img.shields.io/npm/v/@scenejs/render.svg?style=flat-square&color=007acc&label=version" alt="npm version" /></a>
+<a href="https://www.npmjs.com/package/@scenejs/recorder" target="_blank"><img src="https://img.shields.io/npm/v/@scenejs/recorder.svg?style=flat-square&color=007acc&label=version" alt="npm version" /></a>
 <img src="https://img.shields.io/badge/language-typescript-blue.svg?style=flat-square"/>
 <a href="https://github.com/daybrush/scenejs/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/daybrush/scenejs.svg?style=flat-square&label=license&color=08CE5D"/></a>
 </p>
