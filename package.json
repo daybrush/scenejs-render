@@ -32,6 +32,7 @@
         "packages:publish": "lerna-helper publish --commit 'chore: publish packages'",
         "changelog": "lerna-helper changelog --type all --base @scenejs/render",
         "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
+        "deploy": "lerna-helper deploy --base @scenejs/render",
         "release": "lerna-helper release --base @scenejs/render"
     },
     "devDependencies": {
