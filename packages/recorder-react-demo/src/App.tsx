@@ -81,6 +81,7 @@ function App() {
   const recorder = useMemo(() => {
     const recorder = new HTMLRecorder();
 
+    recorder.setAnimator(scene);
     return {
       init() {
         recorder.on("capture", e => {
