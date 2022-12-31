@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>packages/render/src/types.ts - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/daybrush.css">
+    <link type="text/css" rel="stylesheet" href="styles/custom.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="description" content="packages/render/src/types.ts - Documentation"/>
+
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h2 class="custom"><a href="https://github.com/daybrush/scenejs-render" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h2 class="custom"><a href="https://daybrush.com/scenejs/features.html" target="_blank" class="menu-item" id="features" >Features</a></h2><div class="search"><div class="input-area"><input type="text"/></div><button></button></div><ul class="classes"><li file="recorder" class="parent"><a href="Recorder.html">Recorder</a><h4><a href="Recorder.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="Recorder.html#setFetchFile">setFetchFile</a></li><li data-type='method'><a href="Recorder.html#setCapturing">setCapturing</a></li><li data-type='method'><a href="Recorder.html#setAnimator">setAnimator</a></li><li data-type='method'><a href="Recorder.html#recordMedia">recordMedia</a></li><li data-type='method'><a href="Recorder.html#record">record</a></li><li data-type='method'><a href="Recorder.html#getRecordInfo">getRecordInfo</a></li><li data-type='method'><a href="Recorder.html#getAudioFile">getAudioFile</a></li><li data-type='method'><a href="Recorder.html#exit">exit</a></li><li data-type='method'><a href="Recorder.html#destroy">destroy</a></li><li data-type='method'><a href="Recorder.html#trigger">trigger</a></li><li data-type='method'><a href="Recorder.html#once">once</a></li><li data-type='method'><a href="Recorder.html#on">on</a></li><li data-type='method'><a href="Recorder.html#off">off</a></li><li data-type='method'><a href="Recorder.html#emit">emit</a></li></ul><h4><a href="Recorder.html#events">Events</a></h4><ul class='events'><li data-type='event'><a href="Recorder.html#.event:processVideoStart">processVideoStart</a></li><li data-type='event'><a href="Recorder.html#.event:processVideoEnd">processVideoEnd</a></li><li data-type='event'><a href="Recorder.html#.event:processVideo">processVideo</a></li><li data-type='event'><a href="Recorder.html#.event:processAudioStart">processAudioStart</a></li><li data-type='event'><a href="Recorder.html#.event:processAudioEnd">processAudioEnd</a></li><li data-type='event'><a href="Recorder.html#.event:processAudio">processAudio</a></li><li data-type='event'><a href="Recorder.html#.event:captureStart">captureStart</a></li><li data-type='event'><a href="Recorder.html#.event:captureEnd">captureEnd</a></li><li data-type='event'><a href="Recorder.html#.event:capture">capture</a></li></ul><h4><a href="Recorder.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="Recorder.html#.RenderVideoOptions">RenderVideoOptions</a></li><li data-type='typddef'><a href="Recorder.html#.RenderMediaInfoOptions">RenderMediaInfoOptions</a></li><li data-type='typddef'><a href="Recorder.html#.RecordInfoOptions">RecordInfoOptions</a></li><li data-type='typddef'><a href="Recorder.html#.RecorderOptions">RecorderOptions</a></li><li data-type='typddef'><a href="Recorder.html#.OnRequestCapture">OnRequestCapture</a></li><li data-type='typddef'><a href="Recorder.html#.OnProcessAudioStart">OnProcessAudioStart</a></li><li data-type='typddef'><a href="Recorder.html#.OnProcess">OnProcess</a></li><li data-type='typddef'><a href="Recorder.html#.OnCaptureStart">OnCaptureStart</a></li><li data-type='typddef'><a href="Recorder.html#.OnCapture">OnCapture</a></li><li data-type='typddef'><a href="Recorder.html#.FileType">FileType</a></li></ul></li><li file="eventemitter" class="parent"><a href="EventEmitter.html">EventEmitter</a><h4><a href="EventEmitter.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="EventEmitter.html#trigger">trigger</a></li><li data-type='method'><a href="EventEmitter.html#trigger">trigger</a></li><li data-type='method'><a href="EventEmitter.html#once">once</a></li><li data-type='method'><a href="EventEmitter.html#on">on</a></li><li data-type='method'><a href="EventEmitter.html#off">off</a></li><li data-type='method'><a href="EventEmitter.html#emit">emit</a></li></ul><h4><a href="EventEmitter.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="EventEmitter.html#.TargetParam">TargetParam</a></li><li data-type='typddef'><a href="EventEmitter.html#.OnEvent">OnEvent</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventOptions">EventOptions</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventListener">EventListener</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventInfo">EventInfo</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventHash">EventHash</a></li><li data-type='typddef'><a href="EventEmitter.html#.EmitterParam">EmitterParam</a></li></ul></li></ul><ul class="namespaces"><li file="render" class="parent"><a href="Render.html">Render</a><h4><a href="Render.html#static methods">Static Methods</a></h4><ul class='static methods'><li data-type='method'><a href="Render.html#.render">render</a></li></ul><h4><a href="Render.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="Render.html#.RenderOptions">RenderOptions</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">packages/render/src/types.ts</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+/**
+ * @typedef
+ * @memberof Render
+ */
+export interface RenderOptions {
+    /**
+     * File URL to Rendering
+     * @default "./index.html"
+     */
+    input?: string;
+    /**
+     * fps
+     * @default 60
+     */
+    fps?: number;
+    /**
+     * Output file name
+     * @default "output.mp4"
+     */
+    output?: string;
+    /**
+     * Input for start time
+     * @default 0
+     */
+    startTime?: number;
+    /**
+     * Whether to use buffer instead of saving frame image file in capturing (cache is disabled.)
+     * @default false
+     */
+    buffer?: boolean | number | undefined | "";
+    /**
+     * If there are frames in the cache folder, the capture process is passed.
+     * @default false
+     */
+    cache?: boolean | number | undefined | "";
+    /**
+     * Cache folder name to save frame image
+     * @default ".scene_cache"
+     */
+    cacheFolder?: string;
+    /**
+     * Number of browsers to be used for capturing
+     * @default 1
+     */
+    multi?: number;
+    /**
+     * Input how many seconds to play
+     * @default 0
+     */
+    duration?: number | undefined | "";
+    /**
+     * Input iterationCount of the Scene set by the user himself.
+     * @default 0
+     */
+    iteration?: number | undefined | "";
+    /**
+     * Bitrate of video (the higher the bit rate, the clearer the video quality)
+     * @default "4096k"
+     */
+    bitrate?: string;
+    /**
+     * Codec to encode video If you don't set it up, it's the default
+     * @default "mp4: libx264, webm:libvpx-vp9"
+     */
+    codec?: string;
+    /**
+     * Image type to record video (png or jpeg)
+     * If png is selected, webm and alpha are available.
+     * @default "png"
+     */
+    imageType?: "png" | "jpeg";
+    /**
+     * If you use the png image type, you can create a video with a transparent background. (The video extension must be webm.)
+     * @default false
+     */
+    alpha?: boolean | number | undefined | "";
+    /**
+     * Number of cpus to use for ffmpeg video or audio processing
+     * @default 8
+     */
+    cpuUsed?: number;
+    /**
+     * page width
+     */
+    width?: number;
+    /**
+     * page height
+     */
+    height?: number;
+    /**
+     * scene's name in window
+     */
+    name?: string;
+    /**
+     * scene's media name in window
+     */
+    media?: string;
+    /**
+     * file path or url
+     */
+    path?: string;
+    /**
+     * page scale
+     */
+    scale?: number;
+    /**
+     * browser's referer
+     */
+    referer?: string;
+    /**
+     * Whether to show ffmpeg's logs
+     * @default false
+     */
+    ffmpegLog?: boolean;
+}
+
+
+export type ChildMessage = {
+    type: "startChild";
+    data: ChildOptions;
+} | {
+    type: "record";
+    data: RecordOptions;
+}
+
+export interface RecordOptions {
+    frame: number;
+}
+
+export interface OpenPageOptions {
+    /**
+     * page width
+     */
+    width: number;
+    /**
+     * page height
+     */
+    height: number;
+    /**
+     * scene's name in window
+     */
+    name: string;
+    /**
+     * scene's media name in window
+     */
+    media: string;
+    /**
+     * file path or url
+     */
+    path: string;
+    /**
+     * page scale
+     */
+    scale: number;
+    /**
+     * browser's referer
+     */
+    referer: string;
+}
+
+export interface ChildOptions extends OpenPageOptions {
+    /**
+     * Whether to use buffer instead of saving frame image file in capturing (cache is disabled.)
+     */
+    buffer: boolean;
+    /**
+     * whether to apply alpha
+     * @default false
+     */
+    alpha: boolean;
+    /**
+     * Image type for recording
+     * alpha can be used.
+     * @default "png"
+     */
+    imageType: "png" | "jpeg";
+    /**
+     * Whether only MediaScene exists
+     */
+    hasOnlyMedia: boolean;
+    /**
+     * scene's start delay
+     */
+    delay: number;
+    /**
+     * Whether MediaScene exists
+     */
+    hasMedia: boolean;
+    /**
+     * cache folder name
+     * @default ".scene_cache"
+     */
+    cacheFolder: string;
+    /**
+     * scene's play spedd
+     */
+    playSpeed: number;
+    /**
+     * fps to capture screen
+     */
+    fps: number;
+    /**
+     * the time the scene ends
+     */
+    endTime: number;
+    /**
+     * Skip frame number to capture
+     */
+    skipFrame: number;
+}
+
+export interface ChildWorker {
+    workerIndex: number;
+    disconnect(): Promise&lt;void>;
+    start(options: ChildOptions): Promise&lt;void>;
+    record(options: RecordOptions): Promise&lt;string | Buffer>;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+<style>
+
+
+nav li[file="packages/render/src/types"]:after {
+    display: none;
+}
+nav li[file="packages/render/src/types"] h4, nav li[file="packages/render/src/types"] ul {
+    display: block;
+}
+</style>
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/daybrush/jsdoc">JSDoc 0.4.4</a> on Sat Dec 31 2022 16:06:20 GMT+0900 (대한민국 표준시) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/utils.min.js"></script>
+<script src="scripts/search.js"></script>
+<script src="scripts/custom.js"></script>
+</body>
+</html>

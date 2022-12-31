@@ -1,0 +1,5815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Recorder - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/daybrush.css">
+    <link type="text/css" rel="stylesheet" href="styles/custom.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="description" content="Recorder - Documentation"/>
+
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h2 class="custom"><a href="https://github.com/daybrush/scenejs-render" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h2 class="custom"><a href="https://daybrush.com/scenejs/features.html" target="_blank" class="menu-item" id="features" >Features</a></h2><div class="search"><div class="input-area"><input type="text"/></div><button></button></div><ul class="classes"><li file="recorder" class="parent"><a href="Recorder.html">Recorder</a><h4><a href="Recorder.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="Recorder.html#setFetchFile">setFetchFile</a></li><li data-type='method'><a href="Recorder.html#setCapturing">setCapturing</a></li><li data-type='method'><a href="Recorder.html#setAnimator">setAnimator</a></li><li data-type='method'><a href="Recorder.html#recordMedia">recordMedia</a></li><li data-type='method'><a href="Recorder.html#record">record</a></li><li data-type='method'><a href="Recorder.html#getRecordInfo">getRecordInfo</a></li><li data-type='method'><a href="Recorder.html#getAudioFile">getAudioFile</a></li><li data-type='method'><a href="Recorder.html#exit">exit</a></li><li data-type='method'><a href="Recorder.html#destroy">destroy</a></li><li data-type='method'><a href="Recorder.html#trigger">trigger</a></li><li data-type='method'><a href="Recorder.html#once">once</a></li><li data-type='method'><a href="Recorder.html#on">on</a></li><li data-type='method'><a href="Recorder.html#off">off</a></li><li data-type='method'><a href="Recorder.html#emit">emit</a></li></ul><h4><a href="Recorder.html#events">Events</a></h4><ul class='events'><li data-type='event'><a href="Recorder.html#.event:processVideoStart">processVideoStart</a></li><li data-type='event'><a href="Recorder.html#.event:processVideoEnd">processVideoEnd</a></li><li data-type='event'><a href="Recorder.html#.event:processVideo">processVideo</a></li><li data-type='event'><a href="Recorder.html#.event:processAudioStart">processAudioStart</a></li><li data-type='event'><a href="Recorder.html#.event:processAudioEnd">processAudioEnd</a></li><li data-type='event'><a href="Recorder.html#.event:processAudio">processAudio</a></li><li data-type='event'><a href="Recorder.html#.event:captureStart">captureStart</a></li><li data-type='event'><a href="Recorder.html#.event:captureEnd">captureEnd</a></li><li data-type='event'><a href="Recorder.html#.event:capture">capture</a></li></ul><h4><a href="Recorder.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="Recorder.html#.RenderVideoOptions">RenderVideoOptions</a></li><li data-type='typddef'><a href="Recorder.html#.RenderMediaInfoOptions">RenderMediaInfoOptions</a></li><li data-type='typddef'><a href="Recorder.html#.RecordInfoOptions">RecordInfoOptions</a></li><li data-type='typddef'><a href="Recorder.html#.RecorderOptions">RecorderOptions</a></li><li data-type='typddef'><a href="Recorder.html#.OnRequestCapture">OnRequestCapture</a></li><li data-type='typddef'><a href="Recorder.html#.OnProcessAudioStart">OnProcessAudioStart</a></li><li data-type='typddef'><a href="Recorder.html#.OnProcess">OnProcess</a></li><li data-type='typddef'><a href="Recorder.html#.OnCaptureStart">OnCaptureStart</a></li><li data-type='typddef'><a href="Recorder.html#.OnCapture">OnCapture</a></li><li data-type='typddef'><a href="Recorder.html#.FileType">FileType</a></li></ul></li><li file="eventemitter" class="parent"><a href="EventEmitter.html">EventEmitter</a><h4><a href="EventEmitter.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="EventEmitter.html#trigger">trigger</a></li><li data-type='method'><a href="EventEmitter.html#trigger">trigger</a></li><li data-type='method'><a href="EventEmitter.html#once">once</a></li><li data-type='method'><a href="EventEmitter.html#on">on</a></li><li data-type='method'><a href="EventEmitter.html#off">off</a></li><li data-type='method'><a href="EventEmitter.html#emit">emit</a></li></ul><h4><a href="EventEmitter.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="EventEmitter.html#.TargetParam">TargetParam</a></li><li data-type='typddef'><a href="EventEmitter.html#.OnEvent">OnEvent</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventOptions">EventOptions</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventListener">EventListener</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventInfo">EventInfo</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventHash">EventHash</a></li><li data-type='typddef'><a href="EventEmitter.html#.EmitterParam">EmitterParam</a></li></ul></li></ul><ul class="namespaces"><li file="render" class="parent"><a href="Render.html">Render</a><h4><a href="Render.html#static methods">Static Methods</a></h4><ul class='static methods'><li data-type='method'><a href="Render.html#.render">render</a></li></ul><h4><a href="Render.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="Render.html#.RenderOptions">RenderOptions</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Recorder</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        Recorder
+        </h2>
+        
+            <div class="class-description">A recorder that captures the screen and creates a video or audio file</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="Recorder"><span class="type-signature"></span>new Recorder<span class="signature">(_options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line40">line 40</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>_options</code>?</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Recorder.html#.RecorderOptions">RecorderOptions</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    <code>{}</code>
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import Recorder, { OnRequestCapture } from "@scenjs/recorder";
+import Scene from "scenejs";
+
+const scene = new Scene();
+const recorder = new Recorder();
+
+recorder.setAnimator(scene);
+recorder.setCapturing("png", (e: OnRequestCapture) => {
+    scene.setTime(e.time, true);
+    // html to image
+    return htmlToImage(element);
+});
+
+recorder.record().then(data => {
+  const url = URL.createObjectURL(new Blob(
+    [data.buffer],
+    { type: 'video/mp4' },
+  ));
+
+  video.setAttribute("src", url);
+  recorder.destroy();
+});</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title" id="methods">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="setFetchFile"><span class="type-signature"></span>setFetchFile<span class="signature">(fetchFile)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Set up a function to import files. Defaults to fetchData from `@ffmpeg/ffmpeg`
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fetchFile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">(data: <a href="Recorder.html#.FileType">FileType</a>) => Promise&lt;Uint8Array | null></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="setCapturing"><span class="type-signature"></span>setCapturing<span class="signature">(imageType, capturing)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line77">line 77</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Set the function to get the image to be captured per frame.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>imageType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">"jpeg" | "png"</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">image extension of the file</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>capturing</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">(e: <a href="Recorder.html#.OnRequestCapture">OnRequestCapture</a>) => Promise&lt;<a href="Recorder.html#.FileType">FileType</a>> | <a href="Recorder.html#.FileType">FileType</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A function that returns the image to be captured per frame.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="setAnimator"><span class="type-signature"></span>setAnimator<span class="signature">(animator)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Set the animator to record.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>animator</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://daybrush.com/scenejs/release/latest/doc/Animator.html" target="_blank">Animator</a> | Partial&lt;<a href="https://daybrush.com/scenejs/release/latest/doc/global.html#AnimatorOptions" target="_blank">AnimatorOptions</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="recordMedia"><span class="type-signature">(async) </span>recordMedia<span class="signature">(mediaInfo, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise&lt;Uint8Array>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line108">line 108</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Start audio processing.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mediaInfo</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">MediaSceneInfo</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">media info</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code>?</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Recorder.html#.RenderMediaInfoOptions">RenderMediaInfoOptions</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">media info options</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise&lt;Uint8Array></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="record"><span class="type-signature">(async) </span>record<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise&lt;Uint8Array>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line208">line 208</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Start capturing and video processing.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code>?</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Recorder.html#.RenderVideoOptions">RenderVideoOptions</a> &amp; <a href="Recorder.html#.RecordInfoOptions">RecordInfoOptions</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    <code>{}</code>
+                
+                </td>
+            
+
+            <td class="description last">record options</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise&lt;Uint8Array></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getRecordInfo"><span class="type-signature"></span>getRecordInfo<span class="signature">(options)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line298">line 298</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get the information to be recorded through options.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Recorder.html#.RecordInfoOptions">RecordInfoOptions</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getAudioFile"><span class="type-signature"></span>getAudioFile<span class="signature">()</span><span class="type-signature"> &rarr; {Uint8Array}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line98">line 98</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get the result of audio processing.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Uint8Array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="exit"><span class="type-signature"></span>exit<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line471">line 471</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Quit ffmpeg.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="destroy"><span class="type-signature"></span>destroy<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line483">line 483</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Remove the recorder and ffmpeg instance.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="trigger"><span class="type-signature"></span>trigger&lt;Name extends keyof Events&gt;<span class="signature">(eventName, param<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node_modules_@scena_event-emitter_src_EventEmitter.ts.html">node_modules/@scena/event-emitter/src/EventEmitter.ts</a>, <a href="node_modules_@scena_event-emitter_src_EventEmitter.ts.html#line199">line 199</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="EventEmitter.html#trigger">EventEmitter#trigger</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Fires an event to call listeners.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Name</span>
+|
+
+<span class="param-type">...</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Event name</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>param</code>?</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="EventEmitter.html#.TargetParam">TargetParam</a>&lt;any></span>
+|
+
+<span class="param-type">...</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    <code>{}</code>
+                
+                </td>
+            
+
+            <td class="description last">Event parameter</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+    <h4 class="name typescript" id="trigger">
+        trigger&lt;Name extends keyof Events, Param = Events[Name]&gt;<span class="signature">(eventName)</span>
+        <span class="type-signature"> → {boolean}</span>
+    </h4>
+    <div class="ts-params typescript">
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"> extends <a href="EventEmitter.html#.TargetParam">TargetParam</a>&lt;Param> ? Name : never</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+    <h4 class="name typescript" id="trigger">
+        trigger&lt;Name extends keyof Events, Param = Events[Name]&gt;<span class="signature">(eventName, param)</span>
+        <span class="type-signature"> → {boolean}</span>
+    </h4>
+    <div class="ts-params typescript">
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Name</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>param</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="EventEmitter.html#.TargetParam">TargetParam</a>&lt;Param></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import EventEmitter from "@scena/event-emitter";
+
+
+const emitter = new EventEmitter();
+
+emitter.on("a", e => {
+});
+
+
+emitter.emit("a", {
+  a: 1,
+});
+     </code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    If false, stop the event.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="once"><span class="type-signature"></span>once&lt;Name extends keyof Events &amp; string, Param = Events[Name]&gt;<span class="signature">(eventName, listener<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise&lt;<a href="EventEmitter.html#.OnEvent">OnEvent</a>&lt;Param, this>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node_modules_@scena_event-emitter_src_EventEmitter.ts.html">node_modules/@scena/event-emitter/src/EventEmitter.ts</a>, <a href="node_modules_@scena_event-emitter_src_EventEmitter.ts.html#line101">line 101</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="EventEmitter.html#once">EventEmitter#once</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Add a disposable listener and Use promise to the registered event.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Name</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Name of the event to be added</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>listener</code>?</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="EventEmitter.html#.EventListener">EventListener</a>&lt;Param, this></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">disposable listener function of the event to be added</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import EventEmitter from "@scena/event-emitter";
+cosnt emitter = new EventEmitter();
+
+// Add a disposable listener in "a" event
+emitter.once("a", () => {
+});
+
+// Use Promise
+emitter.once("a").then(e => {
+});</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise&lt;<a href="EventEmitter.html#.OnEvent">OnEvent</a>&lt;Param, this>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="on"><span class="type-signature"></span>on<span class="signature">(eventName, listener<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {this}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node_modules_@scena_event-emitter_src_EventEmitter.ts.html">node_modules/@scena/event-emitter/src/EventEmitter.ts</a>, <a href="node_modules_@scena_event-emitter_src_EventEmitter.ts.html#line32">line 32</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="EventEmitter.html#on">EventEmitter#on</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Add a listener to the registered event.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string | object</span>
+|
+
+<span class="param-type">...</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Name of the event to be added</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>listener</code>?</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="EventEmitter.html#.EventListener">EventListener</a>&lt;Events[any], this></span>
+|
+
+<span class="param-type">...</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">listener function of the event to be added</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+    <h4 class="name typescript" id="on">
+        on&lt;Name extends keyof Events, Param = Events[Name]&gt;<span class="signature">(eventName, listener)</span>
+        <span class="type-signature"> → {this}</span>
+    </h4>
+    <div class="ts-params typescript">
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Name</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>listener</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="EventEmitter.html#.EventListener">EventListener</a>&lt;Param, this></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+    <h4 class="name typescript" id="on">
+        on<span class="signature">(events)</span>
+        <span class="type-signature"> → {this}</span>
+    </h4>
+    <div class="ts-params typescript">
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>events</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="EventEmitter.html#.EventHash">EventHash</a>&lt;Events, this></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import EventEmitter from "@scena/event-emitter";
+cosnt emitter = new EventEmitter();
+
+// Add listener in "a" event
+emitter.on("a", () => {
+});
+// Add listeners
+emitter.on({
+ a: () => {},
+ b: () => {},
+});</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">this</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="off"><span class="type-signature"></span>off<span class="signature">(eventName<span class="signature-attributes">opt</span>, listener<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {this}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node_modules_@scena_event-emitter_src_EventEmitter.ts.html">node_modules/@scena/event-emitter/src/EventEmitter.ts</a>, <a href="node_modules_@scena_event-emitter_src_EventEmitter.ts.html#line63">line 63</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="EventEmitter.html#off">EventEmitter#off</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Remove listeners registered in the event target.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code>?</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string | object</span>
+|
+
+<span class="param-type">...</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Name of the event to be removed</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>listener</code>?</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="EventEmitter.html#.EventListener">EventListener</a>&lt;Events[any], this></span>
+|
+
+<span class="param-type">...</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">listener function of the event to be removed</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+    <h4 class="name typescript" id="off">
+        off&lt;Name extends keyof Events, Param = Events[Name]&gt;<span class="signature">(eventName, listener)</span>
+        <span class="type-signature"> → {this}</span>
+    </h4>
+    <div class="ts-params typescript">
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code>?</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Name</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>listener</code>?</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="EventEmitter.html#.EventListener">EventListener</a>&lt;Param, this></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+    <h4 class="name typescript" id="off">
+        off<span class="signature">(events)</span>
+        <span class="type-signature"> → {this}</span>
+    </h4>
+    <div class="ts-params typescript">
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>events</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="EventEmitter.html#.EventHash">EventHash</a>&lt;Events, this></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import EventEmitter from "@scena/event-emitter";
+cosnt emitter = new EventEmitter();
+
+// Remove all listeners.
+emitter.off();
+
+// Remove all listeners in "A" event.
+emitter.off("a");
+
+
+// Remove "listener" listener in "a" event.
+emitter.off("a", listener);</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">this</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="emit"><span class="type-signature"></span>emit<span class="signature">(eventName, param<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node_modules_@scena_event-emitter_src_EventEmitter.ts.html">node_modules/@scena/event-emitter/src/EventEmitter.ts</a>, <a href="node_modules_@scena_event-emitter_src_EventEmitter.ts.html#line134">line 134</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="EventEmitter.html#emit">EventEmitter#emit</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Fires an event to call listeners.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">...</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Event name</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>param</code>?</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="EventEmitter.html#.TargetParam">TargetParam</a>&lt;any></span>
+|
+
+<span class="param-type">...</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    <code>{}</code>
+                
+                </td>
+            
+
+            <td class="description last">Event parameter</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+    <h4 class="name typescript" id="emit">
+        emit&lt;Name extends keyof Events, Param = Events[Name]&gt;<span class="signature">(eventName)</span>
+        <span class="type-signature"> → {boolean}</span>
+    </h4>
+    <div class="ts-params typescript">
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"> extends Param ? Name : never</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+    <h4 class="name typescript" id="emit">
+        emit&lt;Name extends keyof Events, Param = Events[Name]&gt;<span class="signature">(eventName, param)</span>
+        <span class="type-signature"> → {boolean}</span>
+    </h4>
+    <div class="ts-params typescript">
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Name</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>param</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="EventEmitter.html#.TargetParam">TargetParam</a>&lt;Param></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import EventEmitter from "@scena/event-emitter";
+
+
+const emitter = new EventEmitter();
+
+emitter.on("a", e => {
+});
+
+
+emitter.emit("a", {
+  a: 1,
+});</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    If false, stop the event.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+<h4 class="name" id=".FileType">FileType</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_types.ts.html">packages/recorder/src/types.ts</a>, <a href="packages_recorder_src_types.ts.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string | Buffer | File | Blob | null</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".OnCapture">OnCapture</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_types.ts.html">packages/recorder/src/types.ts</a>, <a href="packages_recorder_src_types.ts.html#line169">line 169</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+
+    <div id=".OnCapture-ratio" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnCapture-ratio">ratio</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                ratio: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Progress rate captured
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnCapture-frameCount" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnCapture-frameCount">frameCount</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                frameCount: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Number of frames captured
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnCapture-totalFrame" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnCapture-totalFrame">totalFrame</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                totalFrame: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Total number of frames to capture
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnCapture-currentCapturingTime" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnCapture-currentCapturingTime">currentCapturingTime</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                currentCapturingTime: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Current capturing progress time
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnCapture-expectedCapturingTime" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnCapture-expectedCapturingTime">expectedCapturingTime</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                expectedCapturingTime: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Expected time for all capturing.
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnCapture-frameInfo" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnCapture-frameInfo">frameInfo</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                frameInfo: 
+<span class="param-type">{frame: number, time: number}</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Frame Information Captured Now
+     
+        </div>
+        
+    </div>
+
+
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">TSInterface</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".OnCaptureStart">OnCaptureStart</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_types.ts.html">packages/recorder/src/types.ts</a>, <a href="packages_recorder_src_types.ts.html#line130">line 130</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+
+    <div id=".OnCaptureStart-startFame" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnCaptureStart-startFame">startFame</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                startFame: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            The starting frame of the animator to capture.
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnCaptureStart-endFrame" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnCaptureStart-endFrame">endFrame</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                endFrame: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            The end frame of the animator to capture.
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnCaptureStart-startTime" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnCaptureStart-startTime">startTime</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                startTime: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            The starting time of the animator to capture.
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnCaptureStart-endTime" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnCaptureStart-endTime">endTime</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                endTime: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            The end time of the animator to capture.
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnCaptureStart-duration" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnCaptureStart-duration">duration</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                duration: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Length of time of the animator to capture
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnCaptureStart-multi" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnCaptureStart-multi">multi</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                multi: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            The number of split captures.
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnCaptureStart-fps" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnCaptureStart-fps">fps</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                fps: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            fps
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnCaptureStart-imageType" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnCaptureStart-imageType">imageType</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                imageType: 
+<span class="param-type">"png" | "jpeg"</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Image type (or extension) to capture
+     
+        </div>
+        
+    </div>
+
+
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">TSInterface</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".OnProcess">OnProcess</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_types.ts.html">packages/recorder/src/types.ts</a>, <a href="packages_recorder_src_types.ts.html#line200">line 200</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+
+    <div id=".OnProcess-ratio" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnProcess-ratio">ratio</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                ratio: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Current progress percentage
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnProcess-currentProcessingTime" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnProcess-currentProcessingTime">currentProcessingTime</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                currentProcessingTime: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Current processing progress time
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnProcess-expectedProcessingTime" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnProcess-expectedProcessingTime">expectedProcessingTime</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                expectedProcessingTime: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Expected time for all processing.
+     
+        </div>
+        
+    </div>
+
+
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">TSInterface</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".OnProcessAudioStart">OnProcessAudioStart</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_types.ts.html">packages/recorder/src/types.ts</a>, <a href="packages_recorder_src_types.ts.html#line119">line 119</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+
+    <div id=".OnProcessAudioStart-audiosLength" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnProcessAudioStart-audiosLength">audiosLength</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                audiosLength: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Number of audios included in mediaInfo
+     
+        </div>
+        
+    </div>
+
+
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">TSInterface</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".OnRequestCapture">OnRequestCapture</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_types.ts.html">packages/recorder/src/types.ts</a>, <a href="packages_recorder_src_types.ts.html#line100">line 100</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+
+    <div id=".OnRequestCapture-frame" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnRequestCapture-frame">frame</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                frame: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            caputring frame
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnRequestCapture-time" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnRequestCapture-time">time</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                time: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            capturing time
+     
+        </div>
+        
+    </div>
+
+    <div id=".OnRequestCapture-workerIndex" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.OnRequestCapture-workerIndex">workerIndex</a>
+                
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                workerIndex: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            worker index
+     
+        </div>
+        
+    </div>
+
+
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">TSInterface</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".RecorderOptions">RecorderOptions</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_types.ts.html">packages/recorder/src/types.ts</a>, <a href="packages_recorder_src_types.ts.html#line23">line 23</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+
+    <div id=".RecorderOptions-log" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RecorderOptions-log">log</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                log?: 
+<span class="param-type">boolean</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Whether to show ffmpeg's log
+     
+        </div>
+        
+    </div>
+
+
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">TSInterface</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".RecordInfoOptions">RecordInfoOptions</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_types.ts.html">packages/recorder/src/types.ts</a>, <a href="packages_recorder_src_types.ts.html#line71">line 71</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+
+    <div id=".RecordInfoOptions-iteration" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RecordInfoOptions-iteration">iteration</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: 0
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                iteration?: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Input iterationCount of the Scene set by the user himself
+
+        </div>
+        
+    </div>
+
+    <div id=".RecordInfoOptions-duration" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RecordInfoOptions-duration">duration</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                duration?: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            input how many seconds to play
+     
+        </div>
+        
+    </div>
+
+    <div id=".RecordInfoOptions-startTime" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RecordInfoOptions-startTime">startTime</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: 0
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                startTime?: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Input for start time
+
+        </div>
+        
+    </div>
+
+    <div id=".RecordInfoOptions-fps" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RecordInfoOptions-fps">fps</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: 60
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                fps?: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            
+        </div>
+        
+    </div>
+
+    <div id=".RecordInfoOptions-multi" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RecordInfoOptions-multi">multi</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: 1
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                multi?: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            
+        </div>
+        
+    </div>
+
+
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">TSInterface</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".RenderMediaInfoOptions">RenderMediaInfoOptions</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_types.ts.html">packages/recorder/src/types.ts</a>, <a href="packages_recorder_src_types.ts.html#line12">line 12</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+
+    <div id=".RenderMediaInfoOptions-inputPath" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderMediaInfoOptions-inputPath">inputPath</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                inputPath?: 
+<span class="param-type">string</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            
+        </div>
+        
+    </div>
+
+
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">TSInterface</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id=".RenderVideoOptions">RenderVideoOptions</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_types.ts.html">packages/recorder/src/types.ts</a>, <a href="packages_recorder_src_types.ts.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+
+    <div id=".RenderVideoOptions-duration" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderVideoOptions-duration">duration</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: scene's duration
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                duration?: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            custom scene's duration
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderVideoOptions-fps" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderVideoOptions-fps">fps</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: 60
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                fps?: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            fps
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderVideoOptions-codec" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderVideoOptions-codec">codec</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: "libx264"
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                codec?: 
+<span class="param-type">string</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Codec to encode video If you don't set it up, it's the default (mp4: libx264, webm: libvpx-vp9)
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderVideoOptions-bitrate" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderVideoOptions-bitrate">bitrate</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: "4096k"
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                bitrate?: 
+<span class="param-type">string</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Bitrate of video (the higher the bit rate, the clearer the video quality)
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderVideoOptions-ext" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderVideoOptions-ext">ext</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: "mp4"
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                ext?: 
+<span class="param-type">"mp4" | "webm"</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            file extension
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderVideoOptions-cpuUsed" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderVideoOptions-cpuUsed">cpuUsed</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: 8
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                cpuUsed?: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Number of cpus to use for ffmpeg video or audio processing
+
+        </div>
+        
+    </div>
+
+
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">TSInterface</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+    
+
+    
+        <h3 class="subsection-title" id="events">Events</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".event:capture">capture</h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line259">line 259</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    The event is fired when frame capturing is in progress.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Recorder.html#.OnCapture">Recorder.OnCapture</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Parameters for the `capture` event</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".event:captureEnd">captureEnd</h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line283">line 283</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    The event is fired when capture ends.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".event:captureStart">captureStart</h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line220">line 220</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    The event is fired when capture starts.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Recorder.html#.OnCaptureStart">Recorder.OnCaptureStart</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Parameters for the `captureStart` event</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".event:processAudio">processAudio</h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line173">line 173</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    The event is fired when audio processing is in progress.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Recorder.html#.OnProcess">Recorder.OnProcess</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Parameters for the `processAudio` event</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".event:processAudioEnd">processAudioEnd</h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line190">line 190</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    The event is fired when audio process ends.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".event:processAudioStart">processAudioStart</h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line155">line 155</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    The event is fired when audio process starts.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Recorder.html#.OnProcessAudioStart">Recorder.OnProcessAudioStart</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Parameters for the `processAudioStart` event</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".event:processVideo">processVideo</h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line434">line 434</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    The event is fired when frame video processing is in progress.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Recorder.html#.OnProcess">Recorder.OnProcess</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Parameters for the `processVideo` event</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".event:processVideoEnd">processVideoEnd</h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line459">line 459</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    The event is fired when process video ends
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".event:processVideoStart">processVideoStart</h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_recorder_src_Recorder.ts.html">packages/recorder/src/Recorder.ts</a>, <a href="packages_recorder_src_Recorder.ts.html#line414">line 414</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    The event is fired when process video starts.
+</div>
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Recorder.OnProcessVideoStart</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Parameters for the `processVideoStart` event</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+</article>
+
+</section>
+
+
+
+
+
+<style>
+
+
+nav li[file="recorder"]:after {
+    display: none;
+}
+nav li[file="recorder"] h4, nav li[file="recorder"] ul {
+    display: block;
+}
+</style>
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/daybrush/jsdoc">JSDoc 0.4.4</a> on Sat Dec 31 2022 16:06:20 GMT+0900 (대한민국 표준시) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/utils.min.js"></script>
+<script src="scripts/search.js"></script>
+<script src="scripts/custom.js"></script>
+</body>
+</html>

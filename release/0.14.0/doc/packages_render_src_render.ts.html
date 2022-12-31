@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>packages/render/src/render.ts - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/daybrush.css">
+    <link type="text/css" rel="stylesheet" href="styles/custom.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="description" content="packages/render/src/render.ts - Documentation"/>
+
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h2 class="custom"><a href="https://github.com/daybrush/scenejs-render" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h2 class="custom"><a href="https://daybrush.com/scenejs/features.html" target="_blank" class="menu-item" id="features" >Features</a></h2><div class="search"><div class="input-area"><input type="text"/></div><button></button></div><ul class="classes"><li file="recorder" class="parent"><a href="Recorder.html">Recorder</a><h4><a href="Recorder.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="Recorder.html#setFetchFile">setFetchFile</a></li><li data-type='method'><a href="Recorder.html#setCapturing">setCapturing</a></li><li data-type='method'><a href="Recorder.html#setAnimator">setAnimator</a></li><li data-type='method'><a href="Recorder.html#recordMedia">recordMedia</a></li><li data-type='method'><a href="Recorder.html#record">record</a></li><li data-type='method'><a href="Recorder.html#getRecordInfo">getRecordInfo</a></li><li data-type='method'><a href="Recorder.html#getAudioFile">getAudioFile</a></li><li data-type='method'><a href="Recorder.html#exit">exit</a></li><li data-type='method'><a href="Recorder.html#destroy">destroy</a></li><li data-type='method'><a href="Recorder.html#trigger">trigger</a></li><li data-type='method'><a href="Recorder.html#once">once</a></li><li data-type='method'><a href="Recorder.html#on">on</a></li><li data-type='method'><a href="Recorder.html#off">off</a></li><li data-type='method'><a href="Recorder.html#emit">emit</a></li></ul><h4><a href="Recorder.html#events">Events</a></h4><ul class='events'><li data-type='event'><a href="Recorder.html#.event:processVideoStart">processVideoStart</a></li><li data-type='event'><a href="Recorder.html#.event:processVideoEnd">processVideoEnd</a></li><li data-type='event'><a href="Recorder.html#.event:processVideo">processVideo</a></li><li data-type='event'><a href="Recorder.html#.event:processAudioStart">processAudioStart</a></li><li data-type='event'><a href="Recorder.html#.event:processAudioEnd">processAudioEnd</a></li><li data-type='event'><a href="Recorder.html#.event:processAudio">processAudio</a></li><li data-type='event'><a href="Recorder.html#.event:captureStart">captureStart</a></li><li data-type='event'><a href="Recorder.html#.event:captureEnd">captureEnd</a></li><li data-type='event'><a href="Recorder.html#.event:capture">capture</a></li></ul><h4><a href="Recorder.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="Recorder.html#.RenderVideoOptions">RenderVideoOptions</a></li><li data-type='typddef'><a href="Recorder.html#.RenderMediaInfoOptions">RenderMediaInfoOptions</a></li><li data-type='typddef'><a href="Recorder.html#.RecordInfoOptions">RecordInfoOptions</a></li><li data-type='typddef'><a href="Recorder.html#.RecorderOptions">RecorderOptions</a></li><li data-type='typddef'><a href="Recorder.html#.OnRequestCapture">OnRequestCapture</a></li><li data-type='typddef'><a href="Recorder.html#.OnProcessAudioStart">OnProcessAudioStart</a></li><li data-type='typddef'><a href="Recorder.html#.OnProcess">OnProcess</a></li><li data-type='typddef'><a href="Recorder.html#.OnCaptureStart">OnCaptureStart</a></li><li data-type='typddef'><a href="Recorder.html#.OnCapture">OnCapture</a></li><li data-type='typddef'><a href="Recorder.html#.FileType">FileType</a></li></ul></li><li file="eventemitter" class="parent"><a href="EventEmitter.html">EventEmitter</a><h4><a href="EventEmitter.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="EventEmitter.html#trigger">trigger</a></li><li data-type='method'><a href="EventEmitter.html#trigger">trigger</a></li><li data-type='method'><a href="EventEmitter.html#once">once</a></li><li data-type='method'><a href="EventEmitter.html#on">on</a></li><li data-type='method'><a href="EventEmitter.html#off">off</a></li><li data-type='method'><a href="EventEmitter.html#emit">emit</a></li></ul><h4><a href="EventEmitter.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="EventEmitter.html#.TargetParam">TargetParam</a></li><li data-type='typddef'><a href="EventEmitter.html#.OnEvent">OnEvent</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventOptions">EventOptions</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventListener">EventListener</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventInfo">EventInfo</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventHash">EventHash</a></li><li data-type='typddef'><a href="EventEmitter.html#.EmitterParam">EmitterParam</a></li></ul></li></ul><ul class="namespaces"><li file="render" class="parent"><a href="Render.html">Render</a><h4><a href="Render.html#static methods">Static Methods</a></h4><ul class='static methods'><li data-type='method'><a href="Render.html#.render">render</a></li></ul><h4><a href="Render.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="Render.html#.RenderOptions">RenderOptions</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">packages/render/src/render.ts</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import puppeteer, { Page } from "puppeteer";
+import { isLocalFile, openPage, rmdir } from "./utils";
+import * as fs from "fs";
+import { IterationCountType } from "scenejs";
+import { RenderOptions } from "./types";
+import { createTimer } from "@scenejs/recorder";
+import { MediaSceneInfo } from "@scenejs/media";
+import { ChildOptions, ChildWorker, RecordOptions } from "./types";
+import { createChildWorker, recordChild } from "./child";
+import * as pathModule from "path";
+import * as url from "url";
+import { RenderRecorder } from "./RenderRecorder";
+import { fetchFile } from "@ffmpeg/ffmpeg";
+import { isString } from "@daybrush/utils";
+
+async function getMediaInfo(page: Page, media: string) {
+    if (!media) {
+        return;
+    }
+    try {
+        return await page.evaluate(`${media}.finish().getInfo()`) as MediaSceneInfo;
+    } catch (e) {
+        //
+    }
+
+    return;
+}
+
+/**
+ * @namespace Render
+ */
+/**
+ * @memberof Render
+ * @param options
+ * @return {$ts:Promise&lt;void>}
+ * @example
+import { render } from "@scenejs/render";
+
+render({
+  input: "./index.html",
+  name: "scene",
+  output: "output.mp4",
+});
+ */
+async function render(options: RenderOptions = {}) {
+    const {
+        name = "scene",
+        media = "mediaScene",
+        fps = 60,
+        width = 1920,
+        height = 1080,
+        input: inputPath = "./index.html",
+        output: outputPath = "output.mp4",
+        startTime: inputStartTime = 0,
+        duration: inputDuration = 0,
+        iteration: inputIteration = 0,
+        scale,
+        multi,
+        bitrate = "4096k",
+        codec,
+        referer,
+        imageType = "png",
+        alpha = 0,
+        cache,
+        cacheFolder = ".scene_cache",
+        cpuUsed,
+        ffmpegLog,
+        buffer,
+    } = options;
+    let path;
+
+    if (inputPath.match(/https*:\/\//g)) {
+        path = inputPath;
+    } else {
+        path = url.pathToFileURL(pathModule.resolve(process.cwd(), inputPath)).href;
+    }
+
+    const timer = createTimer();
+
+    console.log("Start Render");
+    const outputs = outputPath.split(",");
+    const videoOutputs = outputs.filter(file => file.match(/\.(mp4|webm)$/g));
+    const isVideo = videoOutputs.length > 0;
+    const audioPath = outputs.find(file => file.match(/\.mp3$/g));
+    const recorder = new RenderRecorder({
+        log: !!ffmpegLog,
+    });
+
+    recorder.init();
+
+    const browser = await puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        headless: true,
+    });
+
+    const page = await openPage(browser, {
+        name,
+        media,
+        width,
+        height,
+        path,
+        scale,
+        referer,
+    });
+
+    const mediaInfo = await getMediaInfo(page, media);
+    const hasMedia = !!mediaInfo;
+
+    if (hasMedia) {
+        recorder.setFetchFile(data => {
+            if (isString(data) &amp;&amp; isLocalFile(data)) {
+                let fileName = data;
+                try {
+                    fileName = new URL(data).pathname;
+                } catch (e) { }
+
+                return Promise.resolve().then(() => {
+                    return fs.readFileSync(fileName);
+                });
+            }
+            return fetchFile(data);
+        });
+
+        await recorder.recordMedia(mediaInfo, {
+            inputPath,
+        });
+    }
+
+    if (!isVideo) {
+        console.log("No Video");
+
+        if (audioPath &amp;&amp; hasMedia) {
+            console.log("Audio File is created")
+            fs.writeFileSync(audioPath, recorder.getAudioFile());
+        } else {
+            throw new Error("Add Audio Input");
+        }
+        return;
+
+    }
+
+    let hasOnlyMedia = false;
+    let iterationCount: IterationCountType;
+    let delay: number;
+    let playSpeed: number;
+    let duration: number;
+
+
+    try {
+        iterationCount = inputIteration || await page.evaluate(`${name}.getIterationCount()`) as IterationCountType;
+        delay = await page.evaluate(`${name}.getDelay()`) as number;
+        playSpeed = await page.evaluate(`${name}.getPlaySpeed()`) as number;
+        duration = await page.evaluate(`${name}.getDuration()`) as number;
+    } catch (e) {
+        if (hasMedia) {
+            console.log("Only Media Scene");
+            hasOnlyMedia = true;
+            iterationCount = 1;
+            delay = 0;
+            playSpeed = 1;
+            duration = mediaInfo.duration;
+        } else {
+            throw e;
+        }
+    }
+
+    recorder.setAnimator({
+        delay,
+        duration,
+        iterationCount,
+        playSpeed,
+    });
+
+    const {
+        startFrame,
+        startTime,
+        endFrame,
+        endTime,
+    } = recorder.getRecordInfo({
+        fps,
+        startTime: inputStartTime || 0,
+        iteration: inputIteration || 0,
+        duration: inputDuration || 0,
+        multi,
+    });
+
+    let isCache = false;
+
+    if (cache) {
+        try {
+            const cacheInfo = fs.readFileSync(`./${cacheFolder}/cache.txt`, "utf8");
+            const temp = JSON.stringify({ inputPath, startTime, endTime, fps, startFrame, endFrame, imageType });
+            if (cacheInfo === temp) {
+                isCache = true;
+            }
+        } catch (e) {
+            isCache = false;
+        }
+    }
+    !isCache &amp;&amp; rmdir(`./${cacheFolder}`);
+    !fs.existsSync(`./${cacheFolder}`) &amp;&amp; fs.mkdirSync(`./${cacheFolder}`);
+
+    if (hasMedia) {
+        fs.writeFileSync(`./${cacheFolder}/merge.mp3`, recorder.getAudioFile());
+    }
+    const childOptions: ChildOptions = {
+        hasOnlyMedia,
+        name,
+        media,
+        path,
+        width,
+        height,
+        scale,
+        delay,
+        hasMedia,
+        referer,
+        imageType,
+        alpha: !!alpha,
+        buffer: !!buffer,
+        cacheFolder,
+        playSpeed,
+        fps,
+        endTime,
+        skipFrame: startFrame,
+    };
+    const workers: ChildWorker[] = [
+        {
+            workerIndex: 0,
+            start() {
+                console.log("Start Worker 0");
+                return Promise.resolve();
+            },
+            record(recordOptions: RecordOptions) {
+                return recordChild(
+                    page,
+                    childOptions,
+                    recordOptions,
+                );
+            },
+            disconnect() {
+                return browser.close();
+            }
+        }
+    ];
+    recorder.setRenderCapturing(imageType, workers, isCache, cacheFolder);
+
+    if (isCache) {
+        console.log(`Use Cache (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);
+    } else {
+        console.log(`Start Workers (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame}, workers: ${multi})`);
+
+        for (let i = 1; i &lt; multi; ++i) {
+            workers.push(createChildWorker(i));
+        }
+
+        await Promise.all(workers.map(worker => worker.start(childOptions)));
+    }
+    const ext = pathModule.parse(videoOutputs[0]).ext.replace(/^\./g, "") as "mp4" | "webm";
+    const data = await recorder.record({
+        ext,
+        fps,
+        startTime: inputStartTime || 0,
+        iteration: inputIteration || 0,
+        duration: inputDuration || 0,
+        multi,
+        codec,
+        bitrate,
+        cpuUsed,
+    });
+
+    console.log(`Created Video: ${outputPath}`);
+    fs.writeFileSync(outputPath, data);
+
+    cache &amp;&amp; fs.writeFileSync(`./${cacheFolder}/cache.txt`, JSON.stringify({ startTime, endTime, fps, startFrame, endFrame }));
+    !cache &amp;&amp; rmdir(cacheFolder);
+
+    await Promise.all(workers.map(worker => worker.disconnect()));
+
+
+    recorder.destroy();
+    console.log(`End Render (Rendering Time: ${timer.getCurrentInfo(1).currentTime}s)`);
+}
+
+
+export default render;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+<style>
+
+
+nav li[file="packages/render/src/render"]:after {
+    display: none;
+}
+nav li[file="packages/render/src/render"] h4, nav li[file="packages/render/src/render"] ul {
+    display: block;
+}
+</style>
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/daybrush/jsdoc">JSDoc 0.4.4</a> on Sat Dec 31 2022 16:06:20 GMT+0900 (대한민국 표준시) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/utils.min.js"></script>
+<script src="scripts/search.js"></script>
+<script src="scripts/custom.js"></script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>packages/recorder/src/types.ts - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/daybrush.css">
+    <link type="text/css" rel="stylesheet" href="styles/custom.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="description" content="packages/recorder/src/types.ts - Documentation"/>
+
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h2 class="custom"><a href="https://github.com/daybrush/scenejs-render" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h2 class="custom"><a href="https://daybrush.com/scenejs/features.html" target="_blank" class="menu-item" id="features" >Features</a></h2><div class="search"><div class="input-area"><input type="text"/></div><button></button></div><ul class="classes"><li file="recorder" class="parent"><a href="Recorder.html">Recorder</a><h4><a href="Recorder.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="Recorder.html#setFetchFile">setFetchFile</a></li><li data-type='method'><a href="Recorder.html#setCapturing">setCapturing</a></li><li data-type='method'><a href="Recorder.html#setAnimator">setAnimator</a></li><li data-type='method'><a href="Recorder.html#recordMedia">recordMedia</a></li><li data-type='method'><a href="Recorder.html#record">record</a></li><li data-type='method'><a href="Recorder.html#getRecordInfo">getRecordInfo</a></li><li data-type='method'><a href="Recorder.html#getAudioFile">getAudioFile</a></li><li data-type='method'><a href="Recorder.html#exit">exit</a></li><li data-type='method'><a href="Recorder.html#destroy">destroy</a></li><li data-type='method'><a href="Recorder.html#trigger">trigger</a></li><li data-type='method'><a href="Recorder.html#once">once</a></li><li data-type='method'><a href="Recorder.html#on">on</a></li><li data-type='method'><a href="Recorder.html#off">off</a></li><li data-type='method'><a href="Recorder.html#emit">emit</a></li></ul><h4><a href="Recorder.html#events">Events</a></h4><ul class='events'><li data-type='event'><a href="Recorder.html#.event:processVideoStart">processVideoStart</a></li><li data-type='event'><a href="Recorder.html#.event:processVideoEnd">processVideoEnd</a></li><li data-type='event'><a href="Recorder.html#.event:processVideo">processVideo</a></li><li data-type='event'><a href="Recorder.html#.event:processAudioStart">processAudioStart</a></li><li data-type='event'><a href="Recorder.html#.event:processAudioEnd">processAudioEnd</a></li><li data-type='event'><a href="Recorder.html#.event:processAudio">processAudio</a></li><li data-type='event'><a href="Recorder.html#.event:captureStart">captureStart</a></li><li data-type='event'><a href="Recorder.html#.event:captureEnd">captureEnd</a></li><li data-type='event'><a href="Recorder.html#.event:capture">capture</a></li></ul><h4><a href="Recorder.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="Recorder.html#.RenderVideoOptions">RenderVideoOptions</a></li><li data-type='typddef'><a href="Recorder.html#.RenderMediaInfoOptions">RenderMediaInfoOptions</a></li><li data-type='typddef'><a href="Recorder.html#.RecordInfoOptions">RecordInfoOptions</a></li><li data-type='typddef'><a href="Recorder.html#.RecorderOptions">RecorderOptions</a></li><li data-type='typddef'><a href="Recorder.html#.OnRequestCapture">OnRequestCapture</a></li><li data-type='typddef'><a href="Recorder.html#.OnProcessAudioStart">OnProcessAudioStart</a></li><li data-type='typddef'><a href="Recorder.html#.OnProcess">OnProcess</a></li><li data-type='typddef'><a href="Recorder.html#.OnCaptureStart">OnCaptureStart</a></li><li data-type='typddef'><a href="Recorder.html#.OnCapture">OnCapture</a></li><li data-type='typddef'><a href="Recorder.html#.FileType">FileType</a></li></ul></li><li file="eventemitter" class="parent"><a href="EventEmitter.html">EventEmitter</a><h4><a href="EventEmitter.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="EventEmitter.html#trigger">trigger</a></li><li data-type='method'><a href="EventEmitter.html#trigger">trigger</a></li><li data-type='method'><a href="EventEmitter.html#once">once</a></li><li data-type='method'><a href="EventEmitter.html#on">on</a></li><li data-type='method'><a href="EventEmitter.html#off">off</a></li><li data-type='method'><a href="EventEmitter.html#emit">emit</a></li></ul><h4><a href="EventEmitter.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="EventEmitter.html#.TargetParam">TargetParam</a></li><li data-type='typddef'><a href="EventEmitter.html#.OnEvent">OnEvent</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventOptions">EventOptions</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventListener">EventListener</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventInfo">EventInfo</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventHash">EventHash</a></li><li data-type='typddef'><a href="EventEmitter.html#.EmitterParam">EmitterParam</a></li></ul></li></ul><ul class="namespaces"><li file="render" class="parent"><a href="Render.html">Render</a><h4><a href="Render.html#static methods">Static Methods</a></h4><ul class='static methods'><li data-type='method'><a href="Render.html#.render">render</a></li></ul><h4><a href="Render.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="Render.html#.RenderOptions">RenderOptions</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">packages/recorder/src/types.ts</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+/**
+ * @memberof Recorder
+ * @typedef
+ */
+export type FileType = string | Buffer | File | Blob | null;
+
+/**
+ * @memberof Recorder
+ * @typedef
+ */
+export interface RenderMediaInfoOptions {
+    /**
+     *
+     */
+    inputPath?: string;
+}
+
+/**
+ * @memberof Recorder
+ * @typedef
+ */
+export interface RecorderOptions {
+    /**
+     * Whether to show ffmpeg's log
+     */
+    log?: boolean;
+}
+
+/**
+ * @memberof Recorder
+ * @typedef
+ */
+export interface RenderVideoOptions {
+    /**
+     * custom scene's duration
+     * @default scene's duration
+     */
+    duration?: number;
+    /**
+     * fps
+     * @default 60
+     */
+    fps?: number;
+    /**
+     * Codec to encode video If you don't set it up, it's the default (mp4: libx264, webm: libvpx-vp9)
+     * @default "libx264"
+     */
+    codec?: string;
+    /**
+     * Bitrate of video (the higher the bit rate, the clearer the video quality)
+     * @default "4096k"
+     */
+    bitrate?: string;
+    /**
+     * file extension
+     * @default "mp4"
+     */
+    ext?: "mp4" | "webm";
+    /**
+     * Number of cpus to use for ffmpeg video or audio processing
+     * @default 8
+     */
+    cpuUsed?: number;
+}
+
+/**
+ * @memberof Recorder
+ * @typedef
+ */
+export interface RecordInfoOptions {
+    /**
+     * Input iterationCount of the Scene set by the user himself
+     * @default 0
+     */
+    iteration?: number;
+    /**
+     * input how many seconds to play
+     */
+    duration?: number;
+    /**
+     * Input for start time
+     * @default 0
+     */
+    startTime?: number;
+    /**
+     * @default 60
+     */
+    fps?: number;
+    /**
+     * @default 1
+     */
+    multi?: number;
+}
+
+/**
+ * @memberof Recorder
+ * @typedef
+ */
+export interface OnRequestCapture {
+    /**
+     * caputring frame
+     */
+    frame: number;
+    /**
+     * capturing time
+     */
+    time: number;
+    /**
+     * worker index
+     */
+    workerIndex: number;
+}
+
+/**
+ * @memberof Recorder
+ * @typedef
+ */
+export interface OnProcessAudioStart {
+    /**
+     * Number of audios included in mediaInfo
+     */
+    audiosLength: number;
+}
+
+/**
+ * @memberof Recorder
+ * @typedef
+ */
+export interface OnCaptureStart {
+    /**
+     * The starting frame of the animator to capture.
+     */
+    startFame: number;
+    /**
+     * The end frame of the animator to capture.
+     */
+    endFrame: number;
+    /**
+     * The starting time of the animator to capture.
+     */
+    startTime: number;
+    /**
+     * The end time of the animator to capture.
+     */
+    endTime: number;
+    /**
+     * Length of time of the animator to capture
+     */
+    duration: number;
+    /**
+     * The number of split captures.
+     */
+    multi: number;
+    /**
+     * fps
+     */
+    fps: number;
+    /**
+     * Image type (or extension) to capture
+     */
+    imageType: "png" | "jpeg";
+}
+
+/**
+ * @memberof Recorder
+ * @typedef
+ */
+export interface OnCapture {
+    /**
+     * Progress rate captured
+     */
+    ratio: number;
+    /**
+     * Number of frames captured
+     */
+    frameCount: number;
+    /**
+     * Total number of frames to capture
+     */
+    totalFrame: number;
+    /**
+     * Current capturing progress time
+     */
+    currentCapturingTime: number;
+    /**
+     * Expected time for all capturing.
+     */
+    expectedCapturingTime: number;
+    /**
+     * Frame Information Captured Now
+     */
+    frameInfo: { frame: number; time: number; };
+}
+
+/**
+ * @memberof Recorder
+ * @typedef
+ */
+export interface OnProcess {
+    /**
+     * Current progress percentage
+     */
+    ratio: number;
+    /**
+     * Current processing progress time
+     */
+    currentProcessingTime: number;
+    /**
+     * Expected time for all processing.
+     */
+    expectedProcessingTime: number;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+<style>
+
+
+nav li[file="packages/recorder/src/types"]:after {
+    display: none;
+}
+nav li[file="packages/recorder/src/types"] h4, nav li[file="packages/recorder/src/types"] ul {
+    display: block;
+}
+</style>
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/daybrush/jsdoc">JSDoc 0.4.4</a> on Sat Dec 31 2022 16:06:20 GMT+0900 (대한민국 표준시) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/utils.min.js"></script>
+<script src="scripts/search.js"></script>
+<script src="scripts/custom.js"></script>
+</body>
+</html>
