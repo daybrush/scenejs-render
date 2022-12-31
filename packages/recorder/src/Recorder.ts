@@ -48,14 +48,13 @@ export class Recorder extends EventEmitter<{
     processAudio: OnProcess;
     processAudioEnd: {};
 }> {
-    private _animator!: Animator;
-    private _imageType!: "jpeg" | "png";
-    private _ffmpeg!: FFmpeg;
-    private _ready!: Promise<void>;
-    private _hasMedia!: boolean;
-    private _fetchFile: (data: FileType) => Promise<Uint8Array | null> = fetchFile;
-
-    private _capturing!: (e: OnRequestCapture) => Promise<FileType> | FileType;
+    protected _animator!: Animator;
+    protected _imageType!: "jpeg" | "png";
+    protected _ffmpeg!: FFmpeg;
+    protected _ready!: Promise<void>;
+    protected _hasMedia!: boolean;
+    protected _fetchFile: (data: FileType) => Promise<Uint8Array | null> = fetchFile;
+    protected _capturing!: (e: OnRequestCapture) => Promise<FileType> | FileType;
     /**
      *
      */
@@ -466,16 +465,23 @@ export class Recorder extends EventEmitter<{
         return ffmpeg!.FS('readFile', `output.${ext}`);
     }
     /**
-     * Remove the recorder and ffmpeg instance.
+     * Quit ffmpeg.
      * @sort 1
      */
-    public destroy() {
-        this.off();
+    public exit() {
         try {
             this._ffmpeg?.exit();
         } catch (e) {
 
         }
         this._ffmpeg = null;
+    }
+    /**
+     * Remove the recorder and ffmpeg instance.
+     * @sort 1
+     */
+    public destroy() {
+        this.off();
+        this.exit();
     }
 }
