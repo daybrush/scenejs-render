@@ -13,11 +13,15 @@
 <p align="middle"><a href="https://daybrush.com/scenejs-render"><strong>Official Site</strong></a> &nbsp;/&nbsp; <a href="https://daybrush.com/scenejs-render/release/latest/doc"><strong>API</strong></a> &nbsp;/&nbsp; <a href="https://github.com/daybrush/scenejs"><strong>Scene.js</strong></a> &nbsp;/&nbsp; <a href="https://github.com/daybrush/scena"><strong>Main Project</strong></a></p>
 <br/>
 
-
+<p align="center">
+<img src="https://raw.githubusercontent.com/daybrush/scenejs-render/master/demo/images/screenshot.png" alt="screenshot" />
+</p>
 
 
 ## 🎬 How to use
 #### Node
+It reads a file from Node through a command and records (capture and video process) to create a video (or audio) file.
+
 
 See [**`@scenejs/render` page**](https://github.com/daybrush/scenejs-render/tree/master/packages/render)
 
@@ -31,6 +35,8 @@ $ npx @scenejs/render -i index.html
 
 
 #### Browser
+Through the module, you can record by specifying the capture method manually and create a file manually through the data.
+
 
 See [**`@scenejs/recorder` page**](https://github.com/daybrush/scenejs-render/tree/master/packages/recorder)
 

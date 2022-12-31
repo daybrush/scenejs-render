@@ -13,6 +13,7 @@
 <p align="middle"><a href="https://daybrush.com/scenejs-render"><strong>Official Site</strong></a> &nbsp;/&nbsp; <a href="https://daybrush.com/scenejs-render/release/latest/doc"><strong>API</strong></a> &nbsp;/&nbsp; <a href="https://github.com/daybrush/scenejs"><strong>Scene.js</strong></a> &nbsp;/&nbsp; <a href="https://github.com/daybrush/scena"><strong>Main Project</strong></a></p>
 <br/>
 
+It reads a file from Node through a command and records (capture and video process) to create a video (or audio) file.
 
 ## ⚙️ Installation
 

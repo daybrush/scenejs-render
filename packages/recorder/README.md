@@ -10,9 +10,11 @@
 
 <p align="middle">🎬 Make a movie of CSS animation through <a href="https://github.com/daybrush/scenejs">Scene.js</a></p>
 
+
 <p align="middle"><a href="https://daybrush.com/scenejs-render"><strong>Official Site</strong></a> &nbsp;/&nbsp; <a href="https://daybrush.com/scenejs-render/release/latest/doc"><strong>API</strong></a> &nbsp;/&nbsp; <a href="https://github.com/daybrush/scenejs"><strong>Scene.js</strong></a> &nbsp;/&nbsp; <a href="https://github.com/daybrush/scena"><strong>Main Project</strong></a></p>
 <br/>
 
+Through the module, you can record by specifying the capture method manually and create a file manually through the data.
 
 ## ⚙️ Installation
 ```bash
