@@ -1,0 +1,22 @@
+{
+    "npmClient": "yarn",
+    "useWorkspaces": true,
+    "packages": [
+        "packages/*"
+    ],
+    "version": "independent",
+    "lernaHelperOptions": {
+        "deployFileMap": [
+            {
+                "basePath": "doc",
+                "dists": [
+                    "demo/release/{{version}}/doc",
+                    "demo/release/latest/doc"
+                ]
+            }
+        ],
+        "beforeReleaseScripts": [
+            "npm run deploy"
+        ]
+    }
+}

@@ -1,0 +1,73 @@
+{
+    "name": "@scenejs/render",
+    "version": "0.14.0",
+    "description": "Make a movie of CSS animation through Scene.js",
+    "main": "./dist/render.cjs.js",
+    "module": "./dist/render.esm.js",
+    "types": "declaration/index.d.ts",
+    "dependencies": {
+        "@daybrush/utils": "^1.10.2",
+        "@ffmpeg/core": "^0.11.0",
+        "@ffmpeg/ffmpeg": "^0.11.6",
+        "@scena/event-emitter": "^1.0.5",
+        "@scenejs/recorder": "~0.14.0",
+        "@types/puppeteer": "^5.4.5",
+        "args": "^5.0.1",
+        "puppeteer": "^19.4.0",
+        "scenejs": "^1.4.3"
+    },
+    "keywords": [
+        "scene",
+        "scenejs",
+        "scene.js",
+        "animate",
+        "animation",
+        "css",
+        "requestAnimationFrame",
+        "motion",
+        "media",
+        "render",
+        "fps",
+        "puppeteer",
+        "ffmpeg"
+    ],
+    "devDependencies": {
+        "@daybrush/builder": "^0.2.0",
+        "@scenejs/media": "^0.2.1",
+        "@scenejs/timeline": "^0.2.1",
+        "@types/jest": "^24.0.13",
+        "get-video-duration": "^4.1.0",
+        "jest": "^24.8.0",
+        "scenejs": "^1.9.1",
+        "ts-jest": "^24.0.2",
+        "typescript": "^4.5.0 <4.6.0"
+    },
+    "scripts": {
+        "build": "rollup -c && rm -rf declaration && tsc -p tsconfig.declaration.json",
+        "test": "jest --watchAll",
+        "test1": "rollup -c && node ./index.js -i test.html -S 0 --fps 60",
+        "test:cache": "rollup -c && node ./index.js -i test.html -S 0 --fps 60 -c 1 --cacheFolder .scene_ch",
+        "test:alpha": "rollup -c && node ./index.js -i test.html -S 0 --fps 60 -c 1 --alpha 1 --output output.webm",
+        "test2": "rollup -c && node ./index.js -i test2.html --fps 30",
+        "test3": "rollup -c && node ./index.js -i ./index/index.html  --fps 30 --duration 12 --width 678 --height 508 --output output.webm ",
+        "test4": "rollup -c && node ./index.js -i ./test.html -S 0 -d 1 -f 25 -o",
+        "test:multi": "rollup -c && node ./index.js -i test.html --fps 60 --multi 4",
+        "test:start": "rollup -c && node ./index.js -i test.html -S 1 --fps 60 --multi 4",
+        "test:examples": "rollup -c && node --experimental-wasm-threads ./index.js -i ./examples/index.html --fps 60 --multi 8 --c 1 --imageType jpeg",
+        "help": "node ./index.js --help",
+        "demo:deploy-init": "gh-pages -d demo/ --remote origin"
+    },
+    "bin": {
+        "render": "./index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/daybrush/scenejs-render.git"
+    },
+    "author": "Daybrush",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/daybrush/scenejs-render/issues"
+    },
+    "homepage": "https://github.com/daybrush/scenejs-render#readme"
+}

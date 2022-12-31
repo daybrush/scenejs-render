@@ -17,7 +17,6 @@ build/
 rollup-plugin-visualizer/
 statistics/
 .scene_cache
-.scene_ch
 *.mp4
 *.webm
 ffmpeg
