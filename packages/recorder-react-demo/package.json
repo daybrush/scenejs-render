@@ -3,21 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@daybrush/utils": "^1.10.2",
+    "@scena/react-store": "^0.2.1",
+    "@scenejs/effects": "^1.0.1",
     "@scenejs/recorder": "~0.14.1",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.9",
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.9",
+    "dom-to-image-more": "^2.13.1",
     "html-to-image": "^1.11.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "scenejs": "^1.7.1",
-    "typescript": "^4.9.4",
-    "web-vitals": "^2.1.4"
+    "react-scenejs": "^2.0.0-beta.10",
+    "react-shape-svg": "^0.1.4",
+    "scenejs": "^1.9.4",
+    "shape-svg": "^0.3.3"
   },
   "scripts": {
     "start": "rm -rf ./node_modules/.cache && react-scripts start",
@@ -44,6 +39,19 @@
     ]
   },
   "devDependencies": {
-    "@ffmpeg/core": "^0.11.0"
+    "@ffmpeg/core": "^0.11.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/dom-to-image": "^2.6.4",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.9",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.9.4",
+    "web-vitals": "^2.1.4"
   }
 }

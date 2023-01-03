@@ -1,5 +1,7 @@
 import Recorder, { RecorderOptions } from "@scenejs/recorder";
 import { toBlob } from "html-to-image";
+// import domtoimage from "dom-to-image-more";
+import { Animator } from "scenejs";
 
 
 export class HTMLRecorder extends Recorder {
@@ -10,8 +12,10 @@ export class HTMLRecorder extends Recorder {
         this.setCapturing("png", e => {
             this._animator.setTime(e.time, true);
             return toBlob(this._el, {
-                pixelRatio: 4,
+                pixelRatio: 2,
+                // bgcolor: "#fff",
                 backgroundColor: "#fff",
+                skipFonts: true,
                 style: {
                     position: "relative",
                     left: "0px",
@@ -20,10 +24,28 @@ export class HTMLRecorder extends Recorder {
                     bottom: "auto",
                     margin: "0",
                 },
+                filter(node: HTMLElement) {
+                    // console.log(node);
+                    return true;
+                }
             });
         });
     }
     public setElement(el: HTMLElement) {
         this._el = el;
+    }
+    public async recordElement(animator: Animator, el: HTMLElement) {
+        try {
+            this.setAnimator(animator);
+            this.setElement(el);
+
+            const data = await this.record();
+            const url = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
+
+            return url;
+        } catch (e) {
+            console.error(e);
+        }
+        return "";
     }
 }

@@ -50,5 +50,10 @@
             "**/@ffmpeg/*",
             "**/@ffmpeg/*/**"
         ]
+    },
+    "resolutions": {
+        "@daybrush/utils": "^1.10.0",
+        "typescript": "^4.5.0 <4.6.0",
+        "scenejs": "^1.9.4"
     }
 }
