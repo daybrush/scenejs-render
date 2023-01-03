@@ -1,9 +1,9 @@
 import Scene, { Animator, AnimatorOptions } from "scenejs";
 import { MediaSceneInfo } from "@scenejs/media";
-import { FileType, OnCapture, OnRequestCapture, OnProcess, RecordInfoOptions, RenderVideoOptions, RenderMediaInfoOptions, RecorderOptions, OnCaptureStart, OnProcessAudioStart } from "./types";
+import { FileType, OnCapture, OnRequestCapture, OnProcess, RecordInfoOptions, RenderVideoOptions, RenderMediaInfoOptions, RecorderOptions, OnCaptureStart, OnProcessAudioStart, AnimatorLike } from "./types";
 import { createFFmpeg, fetchFile, FFmpeg } from "@ffmpeg/ffmpeg";
 import EventEmitter from "@scena/event-emitter";
-import { createTimer, hasProtocol, isAnimator, resolvePath } from "./utils";
+import { createTimer, hasProtocol, isAnimatorLike, resolvePath } from "./utils";
 
 
 export const DEFAULT_CODECS = {
@@ -48,13 +48,15 @@ export class Recorder extends EventEmitter<{
     processAudio: OnProcess;
     processAudioEnd: {};
 }> {
-    protected _animator!: Animator;
+    protected _animator!: AnimatorLike;
     protected _imageType!: "jpeg" | "png";
     protected _ffmpeg!: FFmpeg;
     protected _ready!: Promise<void>;
     protected _hasMedia!: boolean;
     protected _fetchFile: (data: FileType) => Promise<Uint8Array | null> = fetchFile;
     protected _capturing!: (e: OnRequestCapture) => Promise<FileType> | FileType;
+    public recordState: "initial" | "loading" | "capture" | "process" = "initial";
+
     /**
      *
      */
@@ -85,9 +87,9 @@ export class Recorder extends EventEmitter<{
      * Set the animator to record.
      * @sort 1
      */
-    public setAnimator(animator: Animator | Partial<AnimatorOptions>) {
+    public setAnimator(animator: AnimatorLike | Partial<AnimatorOptions>) {
         this._animator
-            = isAnimator(animator)
+            = isAnimatorLike(animator)
                 ? animator
                 : new Animator(animator);
     }
@@ -206,6 +208,7 @@ export class Recorder extends EventEmitter<{
      * @returns {$ts:Promise<Uint8Array>}
      */
     public async record(options: RenderVideoOptions & RecordInfoOptions = {}) {
+
         const recordInfo = this.getRecordInfo(options);
 
         const rootStartFrame = recordInfo.startFrame;
@@ -214,6 +217,8 @@ export class Recorder extends EventEmitter<{
         const totalFrame = rootEndFrame - rootStartFrame + 1;
         const fps = options.fps || 60;
         let frameCount = 0;
+
+        this.recordState = "loading";
         await this.init();
 
         const timer = createTimer();
@@ -233,6 +238,8 @@ export class Recorder extends EventEmitter<{
             imageType,
             fps,
         });
+
+        this.recordState = "capture";
         await Promise.all(recordInfo.loops.map((loop, workerIndex) => {
             let pipe = Promise.resolve();
             const startFrame = loop.startFrame;
@@ -410,6 +417,7 @@ export class Recorder extends EventEmitter<{
         const ffmpeg = await this.init();
 
 
+        this.recordState = "process";
         const timer = createTimer();
         /**
          * The event is fired when process video starts.
@@ -462,6 +470,7 @@ export class Recorder extends EventEmitter<{
          * @event processVideoEnd
          */
         this.emit("processVideoEnd");
+        this.recordState = "initial";
         return ffmpeg!.FS('readFile', `output.${ext}`);
     }
     /**
@@ -470,6 +479,8 @@ export class Recorder extends EventEmitter<{
      */
     public exit() {
         try {
+            this.recordState = "initial";
+            this._ready = null;
             this._ffmpeg?.exit();
         } catch (e) {
 

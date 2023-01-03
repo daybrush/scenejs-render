@@ -1,3 +1,4 @@
+import { IterationCountType } from "scenejs";
 
 /**
  * @memberof Recorder
@@ -210,4 +211,12 @@ export interface OnProcess {
      * Expected time for all processing.
      */
     expectedProcessingTime: number;
+}
+
+export interface AnimatorLike {
+    getIterationCount(): IterationCountType;
+    getDelay(): number;
+    getDuration(): number;
+    getPlaySpeed(): number;
+    setTime(time: number | string, isTick?: boolean): any;
 }
