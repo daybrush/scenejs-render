@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from "react";
-import { atom, useStoreRoot, useStoreState, useStoreStateSetValue, useStoreStateValue, useStoreValue } from "@scena/react-store";
+import { atom, useStoreState, useStoreStateValue, useStoreValue } from "@scena/react-store";
 import { useEffect, useState } from "react";
 import { ReactSceneResult } from "react-scenejs";
 import { HTMLRecorder } from "./HTMLRecorder";

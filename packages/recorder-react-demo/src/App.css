@@ -101,7 +101,7 @@ li {
   ;
 }
 
-.gallery-item .record {
+.gallery-item .record, .gallery-item .capture {
   position: absolute;
   width: 30px;
   height: 30px;
@@ -113,13 +113,19 @@ li {
   top: 40px;
   transition: border-width ease 0.2s;
 }
+.gallery-item .capture {
+  border-color: #ee5;
+  right: 100px;
+  display: none;
+}
 
-.gallery-item .record:hover {
+.gallery-item .record:hover, .gallery-item .capture:hover {
   border-width: 15px;
 }
 
 
-.gallery-item .record::before {
+.gallery-item .record::before, .gallery-item .capture::before {
+  pointer-events: none;
   content: "Record";
   position: absolute;
   left: 50%;
@@ -128,6 +134,9 @@ li {
   padding: 1px 2px;
   font-weight: bold;
   font-size: 14px;
+}
+.gallery-item .capture::before {
+  content: "Capture";
 }
 
 .example {
@@ -481,8 +490,7 @@ li {
   width: 45px;
 }
 
-.page1 .logo1 .circle,
-.page1 .logo1 .center {
+.page1 .logo1 .circle  {
   position: absolute;
   left: 0;
   right: 0;
@@ -490,6 +498,13 @@ li {
   bottom: 0;
   margin: auto;
   z-index: -1;
+}
+.page1 .logo1 .center {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .page1 .logo1 .circle {
@@ -818,7 +833,7 @@ li {
   color: #dd0;
 }
 
-.shadow {
+.card .shadow {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -830,13 +845,13 @@ li {
   background: #ccc;
 }
 
-.crown {
+.card .crown {
   width: 70px;
   height: 80px;
   margin: 0px auto;
 }
 
-.crown:after {
+.card .crown:after {
   content: "";
   position: absolute;
   height: 10px;
@@ -879,4 +894,76 @@ li {
   transform: rotate(10deg);
   border-left: 80px solid transparent;
   right: 0;
+}
+
+
+/* Square Transition*/
+.square-transition-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-size: 0;
+}
+.square-transition {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+}
+.square-transition-container .scene, .smoke-transition-container .scene {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.square-transition-container .scene span, .smoke-transition-container .scene span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.square-transition .squares {
+  position: relative;
+  white-space: nowrap;
+}
+.square-transition .square {
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  background: #333;
+}
+
+
+/* Smoke Transition Circle */
+.smoke-transition-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-size: 0;
+}
+.smoke-transition {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.smoke-transition .circle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+.smoke-transition .circles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.smoke-transition .circles1 .circle {
+  background-color: #920733;
+}
+.smoke-transition .circles2 .circle {
+  background-color: #BDD4CC;
 }

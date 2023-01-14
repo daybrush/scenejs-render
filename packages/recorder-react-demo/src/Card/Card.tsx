@@ -1,9 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from "react";
-import { EASE_IN_OUT, selectorAll } from "scenejs";
 import { ReactSceneResult, useScene } from "react-scenejs";
-import { zoomIn } from "@scenejs/effects";
-import { Poly } from "react-shape-svg";
 
 export const Card = React.forwardRef<ReactSceneResult>((_, ref) => {
     const scene = useScene({
@@ -11,6 +8,13 @@ export const Card = React.forwardRef<ReactSceneResult>((_, ref) => {
             0: {
                 transform: "rotateY(0deg)",
             },
+            0.5: "opacity: 1",
+            "0.5>": "opacity: 0",
+            1: {
+                transform: "rotateY(180deg)",
+            },
+            1.5: "opacity: 0",
+            "1.5>": "opacity: 1",
             2: {
                 transform: "rotateY(360deg)"
             },
@@ -19,6 +23,13 @@ export const Card = React.forwardRef<ReactSceneResult>((_, ref) => {
             0: {
                 transform: "rotateY(180deg)",
             },
+            0.5: "opacity: 0",
+            "0.5>": "opacity: 1",
+            1: {
+                transform: "rotateY(360deg)",
+            },
+            1.5: "opacity: 1",
+            "1.5>": "opacity: 0",
             2: {
                 transform: "rotateY(540deg)"
             },
@@ -41,7 +52,7 @@ export const Card = React.forwardRef<ReactSceneResult>((_, ref) => {
         }
     }, {
         selector: true,
-        iterationCount: 4,
+        iterationCount: 2,
     });
 
     React.useImperativeHandle(ref, () => scene, []);
