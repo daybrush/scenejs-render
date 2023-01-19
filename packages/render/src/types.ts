@@ -109,6 +109,10 @@ export interface RenderOptions {
      */
     referer?: string;
     /**
+     * If you want to use native ffmpeg for faster speed, write the path of ffmpeg.
+     */
+    ffmpegPath?: string;
+    /**
      * Whether to show ffmpeg's logs
      * @default false
      */

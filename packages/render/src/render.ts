@@ -9,9 +9,10 @@ import { ChildOptions, ChildWorker, RecordOptions } from "./types";
 import { createChildWorker, recordChild } from "./child";
 import * as pathModule from "path";
 import * as url from "url";
-import { RenderRecorder } from "./RenderRecorder";
 import { fetchFile } from "@ffmpeg/ffmpeg";
 import { isString } from "@daybrush/utils";
+import { BinaryRecorder } from "./BinaryRecorder";
+import { RenderRecorder } from "./RenderRecorder";
 
 async function getMediaInfo(page: Page, media: string) {
     if (!media) {
@@ -66,6 +67,7 @@ async function render(options: RenderOptions = {}) {
         cpuUsed,
         ffmpegLog,
         buffer,
+        ffmpegPath,
     } = options;
     let path;
 
@@ -82,9 +84,14 @@ async function render(options: RenderOptions = {}) {
     const videoOutputs = outputs.filter(file => file.match(/\.(mp4|webm)$/g));
     const isVideo = videoOutputs.length > 0;
     const audioPath = outputs.find(file => file.match(/\.mp3$/g));
-    const recorder = new RenderRecorder({
+    const recorder = ffmpegPath ? new BinaryRecorder({
+        ffmpegPath,
+        cacheFolder,
+        log: !!ffmpegLog,
+    }) : new RenderRecorder({
         log: !!ffmpegLog,
     });
+
 
     recorder.init();
 
@@ -106,45 +113,11 @@ async function render(options: RenderOptions = {}) {
     const mediaInfo = await getMediaInfo(page, media);
     const hasMedia = !!mediaInfo;
 
-    if (hasMedia) {
-        recorder.setFetchFile(data => {
-            if (isString(data) && isLocalFile(data)) {
-                let fileName = data;
-                try {
-                    fileName = new URL(data).pathname;
-                } catch (e) { }
-
-                return Promise.resolve().then(() => {
-                    return fs.readFileSync(fileName);
-                });
-            }
-            return fetchFile(data);
-        });
-
-        await recorder.recordMedia(mediaInfo, {
-            inputPath,
-        });
-    }
-
-    if (!isVideo) {
-        console.log("No Video");
-
-        if (audioPath && hasMedia) {
-            console.log("Audio File is created")
-            fs.writeFileSync(audioPath, recorder.getAudioFile());
-        } else {
-            throw new Error("Add Audio Input");
-        }
-        return;
-
-    }
-
     let hasOnlyMedia = false;
     let iterationCount: IterationCountType;
     let delay: number;
     let playSpeed: number;
     let duration: number;
-
 
     try {
         iterationCount = inputIteration || await page.evaluate(`${name}.getIterationCount()`) as IterationCountType;
@@ -184,25 +157,64 @@ async function render(options: RenderOptions = {}) {
         multi,
     });
 
+    // Process Cache: Pass Capturing
     let isCache = false;
+    const nextInfo = JSON.stringify({ inputPath, startTime, endTime, fps, startFrame, endFrame, imageType });
 
     if (cache) {
         try {
             const cacheInfo = fs.readFileSync(`./${cacheFolder}/cache.txt`, "utf8");
-            const temp = JSON.stringify({ inputPath, startTime, endTime, fps, startFrame, endFrame, imageType });
-            if (cacheInfo === temp) {
+
+            if (cacheInfo === nextInfo) {
                 isCache = true;
             }
         } catch (e) {
             isCache = false;
         }
     }
+
     !isCache && rmdir(`./${cacheFolder}`);
     !fs.existsSync(`./${cacheFolder}`) && fs.mkdirSync(`./${cacheFolder}`);
+
+
+    if (hasMedia) {
+        recorder.setFetchFile(data => {
+            if (isString(data) && isLocalFile(data)) {
+                let fileName = data;
+                try {
+                    fileName = new URL(data).pathname;
+                } catch (e) { }
+
+                return Promise.resolve().then(() => {
+                    return fs.readFileSync(fileName);
+                });
+            }
+            return fetchFile(data);
+        });
+
+        await recorder.recordMedia(mediaInfo, {
+            inputPath,
+        });
+    }
+
+    if (!isVideo) {
+        console.log("No Video");
+
+        if (audioPath && hasMedia) {
+            console.log("Audio File is created")
+            fs.writeFileSync(audioPath, recorder.getAudioFile());
+        } else {
+            throw new Error("Add Audio Input");
+        }
+        return;
+    }
+
 
     if (hasMedia) {
         fs.writeFileSync(`./${cacheFolder}/merge.mp3`, recorder.getAudioFile());
     }
+
+
     const childOptions: ChildOptions = {
         hasOnlyMedia,
         name,
@@ -256,6 +268,10 @@ async function render(options: RenderOptions = {}) {
         await Promise.all(workers.map(worker => worker.start(childOptions)));
     }
     const ext = pathModule.parse(videoOutputs[0]).ext.replace(/^\./g, "") as "mp4" | "webm";
+
+    recorder.once("captureEnd", () => {
+        cache && fs.writeFileSync(`./${cacheFolder}/cache.txt`, nextInfo);
+    });
     const data = await recorder.record({
         ext,
         fps,
@@ -271,7 +287,6 @@ async function render(options: RenderOptions = {}) {
     console.log(`Created Video: ${outputPath}`);
     fs.writeFileSync(outputPath, data);
 
-    cache && fs.writeFileSync(`./${cacheFolder}/cache.txt`, JSON.stringify({ startTime, endTime, fps, startFrame, endFrame }));
     !cache && rmdir(cacheFolder);
 
     await Promise.all(workers.map(worker => worker.disconnect()));

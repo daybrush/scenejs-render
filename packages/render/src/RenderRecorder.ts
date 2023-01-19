@@ -6,7 +6,7 @@ function toFixed(num: number) {
 }
 
 export class RenderRecorder extends Recorder {
-    constructor(options?: RecorderOptions) {
+    constructor(options: RecorderOptions) {
         super(options);
 
         this.on("processVideoStart", e => {
