@@ -41,6 +41,9 @@ $ render -i index.html --name scene -o output.mp3
 
 # export mp3 file and mp4 file
 $ render -i index.html --name scene -o output.mp3,output.mp4
+
+# If you want to use native ffmpeg for faster speed, input the path of ffmpeg.
+$ render -i index.html --ffmpegPath ./ffmpeg
 ```
 
 ```
@@ -60,6 +63,7 @@ Options:
   -C, --cpuUsed <n>          Number of cpus to use for ffmpeg video or audio processing (defaults to 8)
   -d, --duration <n>         Input how many seconds to play (defaults to 0)
   -F, --ffmpegLog <n>        Whether to show ffmpeg's logs (defaults to 0)
+  -F, --ffmpegPath           If you want to use native ffmpeg for faster speed, input the path of ffmpeg. (defaults to "")
   -f, --fps <n>              fps (defaults to 60)
   -h, --height <n>           Video height to render (defaults to 1080)
   -H, --help                 Output usage information

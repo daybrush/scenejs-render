@@ -25,7 +25,7 @@ args
     .option("referer", "The Referer request header contains the address of the previous web page from which a link to the currently requested page was followed.", "")
     .option("imageType", "Image type to record video (png or jpeg)", "png")
     .option("alpha", "If you use the png image type, you can create a video with a transparent background. (The video extension must be webm.)", 0)
-    .option("ffmpegPath", "If you want to use native ffmpeg for faster speed, write the path of ffmpeg.", "")
+    .option("ffmpegPath", "If you want to use native ffmpeg for faster speed, input the path of ffmpeg.", "")
     .option("ffmpegLog", "Whether to show ffmpeg's logs", 0);
 
 
