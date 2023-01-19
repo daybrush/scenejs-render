@@ -1295,27 +1295,7 @@
     npmlog "6.0.2"
     sync-exec "^0.6.2"
 
-"@daybrush/utils@^0.10.0":
-  version "0.10.5"
-  resolved "https://registry.npmjs.org/@daybrush/utils/-/utils-0.10.5.tgz#96427101f5de99ceb13bce1f09916374e62c84f1"
-  integrity sha512-VCPbgJgImkUmGHX33drZJh/5FYBhfSM+EFqlBY7fzKIahBGEemjYfninVSp9BdzqF9P2MyCh7R3hgxmySXLEzg==
-
-"@daybrush/utils@^0.11.0":
-  version "0.11.0"
-  resolved "https://registry.npmjs.org/@daybrush/utils/-/utils-0.11.0.tgz#3fd113fcedaab29d8c80773ca5f4d32551bdc9d8"
-  integrity sha512-PnrY1NDjXqXKASoREcjHokQt0WWHiUBClMJ0l9APx42QkeOCQ5nXB7k4VdmkaU23BndeSmNNYJDNL6eEsRitaA==
-
-"@daybrush/utils@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.npmjs.org/@daybrush/utils/-/utils-0.5.2.tgz#cc7876e2690895b6b4e5e048795271d5ddb2fedd"
-  integrity sha512-WD23IKwqFW8E8Y/gRUmoKpkkCAzedSGiU7kpOKvbqB+PRkg9rTq20SWMIlNxAU0Y+6zYGOVFguNPlL0W1lz1vQ==
-
-"@daybrush/utils@^0.7.0", "@daybrush/utils@^0.7.1":
-  version "0.7.1"
-  resolved "https://registry.npmjs.org/@daybrush/utils/-/utils-0.7.1.tgz#be259ce794d7bdda6195b24da1e9666bd845d25f"
-  integrity sha512-n4timHtzzOS9w6fQJ0SfynfNFNqqJeSoXoeFw2CS1PPD3GfWJZliSklFWMBJ5taDcNovyCWlZV7D4bdeGY0nPA==
-
-"@daybrush/utils@^1.0.0", "@daybrush/utils@^1.1.1", "@daybrush/utils@^1.10.2", "@daybrush/utils@^1.4.0", "@daybrush/utils@^1.6.0":
+"@daybrush/utils@^0.10.0", "@daybrush/utils@^0.11.0", "@daybrush/utils@^0.5.2", "@daybrush/utils@^0.7.0", "@daybrush/utils@^0.7.1", "@daybrush/utils@^1.0.0", "@daybrush/utils@^1.1.1", "@daybrush/utils@^1.10.0", "@daybrush/utils@^1.10.2", "@daybrush/utils@^1.4.0", "@daybrush/utils@^1.6.0":
   version "1.10.2"
   resolved "https://registry.npmjs.org/@daybrush/utils/-/utils-1.10.2.tgz#fb10bab437d1bb3d052fa49ca01f23c86a2ad1f1"
   integrity sha512-fNMWeGUDokdIpebU8oIBUXkyGYITCwwodBfgx277p8d+kvI+k9wdFtKtdY4mvbWxhbAwuWprtVDq8My3KQ24Dg==
@@ -14657,15 +14637,10 @@ typedarray@^0.0.6:
   resolved "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
-"typescript@^4.5.0 <4.6.0":
+"typescript@^4.5.0 <4.6.0", typescript@^4.9.4:
   version "4.5.5"
   resolved "https://registry.npmjs.org/typescript/-/typescript-4.5.5.tgz#d8c953832d28924a9e3d37c73d729c846c5896f3"
   integrity sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==
-
-typescript@^4.9.4:
-  version "4.9.4"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-4.9.4.tgz#a2a3d2756c079abda241d75f149df9d561091e78"
-  integrity sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==
 
 uc.micro@^1.0.1, uc.micro@^1.0.3:
   version "1.0.6"
