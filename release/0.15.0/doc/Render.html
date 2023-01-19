@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Render - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/daybrush.css">
+    <link type="text/css" rel="stylesheet" href="styles/custom.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="description" content="Render - Documentation"/>
+
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h2 class="custom"><a href="https://github.com/daybrush/scenejs-render" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h2 class="custom"><a href="https://daybrush.com/scenejs/features.html" target="_blank" class="menu-item" id="features" >Features</a></h2><div class="search"><div class="input-area"><input type="text"/></div><button></button></div><ul class="classes"><li file="recorder" class="parent"><a href="Recorder.html">Recorder</a><h4><a href="Recorder.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="Recorder.html#setFetchFile">setFetchFile</a></li><li data-type='method'><a href="Recorder.html#setCapturing">setCapturing</a></li><li data-type='method'><a href="Recorder.html#setAnimator">setAnimator</a></li><li data-type='method'><a href="Recorder.html#recordMedia">recordMedia</a></li><li data-type='method'><a href="Recorder.html#record">record</a></li><li data-type='method'><a href="Recorder.html#getRecordInfo">getRecordInfo</a></li><li data-type='method'><a href="Recorder.html#getAudioFile">getAudioFile</a></li><li data-type='method'><a href="Recorder.html#exit">exit</a></li><li data-type='method'><a href="Recorder.html#destroy">destroy</a></li><li data-type='method'><a href="Recorder.html#trigger">trigger</a></li><li data-type='method'><a href="Recorder.html#once">once</a></li><li data-type='method'><a href="Recorder.html#on">on</a></li><li data-type='method'><a href="Recorder.html#off">off</a></li><li data-type='method'><a href="Recorder.html#emit">emit</a></li></ul><h4><a href="Recorder.html#events">Events</a></h4><ul class='events'><li data-type='event'><a href="Recorder.html#.event:processVideoStart">processVideoStart</a></li><li data-type='event'><a href="Recorder.html#.event:processVideoEnd">processVideoEnd</a></li><li data-type='event'><a href="Recorder.html#.event:processVideo">processVideo</a></li><li data-type='event'><a href="Recorder.html#.event:processAudioStart">processAudioStart</a></li><li data-type='event'><a href="Recorder.html#.event:processAudioEnd">processAudioEnd</a></li><li data-type='event'><a href="Recorder.html#.event:processAudio">processAudio</a></li><li data-type='event'><a href="Recorder.html#.event:captureStart">captureStart</a></li><li data-type='event'><a href="Recorder.html#.event:captureEnd">captureEnd</a></li><li data-type='event'><a href="Recorder.html#.event:capture">capture</a></li></ul><h4><a href="Recorder.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="Recorder.html#.RenderVideoOptions">RenderVideoOptions</a></li><li data-type='typddef'><a href="Recorder.html#.RenderMediaInfoOptions">RenderMediaInfoOptions</a></li><li data-type='typddef'><a href="Recorder.html#.RecordInfoOptions">RecordInfoOptions</a></li><li data-type='typddef'><a href="Recorder.html#.RecorderOptions">RecorderOptions</a></li><li data-type='typddef'><a href="Recorder.html#.OnRequestCapture">OnRequestCapture</a></li><li data-type='typddef'><a href="Recorder.html#.OnProcessAudioStart">OnProcessAudioStart</a></li><li data-type='typddef'><a href="Recorder.html#.OnProcess">OnProcess</a></li><li data-type='typddef'><a href="Recorder.html#.OnCaptureStart">OnCaptureStart</a></li><li data-type='typddef'><a href="Recorder.html#.OnCapture">OnCapture</a></li><li data-type='typddef'><a href="Recorder.html#.FileType">FileType</a></li></ul></li><li file="eventemitter" class="parent"><a href="EventEmitter.html">EventEmitter</a><h4><a href="EventEmitter.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="EventEmitter.html#trigger">trigger</a></li><li data-type='method'><a href="EventEmitter.html#trigger">trigger</a></li><li data-type='method'><a href="EventEmitter.html#once">once</a></li><li data-type='method'><a href="EventEmitter.html#on">on</a></li><li data-type='method'><a href="EventEmitter.html#off">off</a></li><li data-type='method'><a href="EventEmitter.html#emit">emit</a></li></ul><h4><a href="EventEmitter.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="EventEmitter.html#.TargetParam">TargetParam</a></li><li data-type='typddef'><a href="EventEmitter.html#.OnEvent">OnEvent</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventOptions">EventOptions</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventListener">EventListener</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventInfo">EventInfo</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventHash">EventHash</a></li><li data-type='typddef'><a href="EventEmitter.html#.EmitterParam">EmitterParam</a></li></ul></li></ul><ul class="namespaces"><li file="render" class="parent"><a href="Render.html">Render</a><h4><a href="Render.html#static methods">Static Methods</a></h4><ul class='static methods'><li data-type='method'><a href="Render.html#.render">render</a></li></ul><h4><a href="Render.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="Render.html#.RenderOptions">RenderOptions</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Render</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        Render
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_render_src_render.ts.html">packages/render/src/render.ts</a>, <a href="packages_render_src_render.ts.html#line29">line 29</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title" id="methods">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".render"><span class="type-signature">(async, static) </span>render<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise&lt;void>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_render_src_render.ts.html">packages/render/src/render.ts</a>, <a href="packages_render_src_render.ts.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code>?</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Render.html#.RenderOptions">RenderOptions</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    <code>{}</code>
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import { render } from "@scenejs/render";
+
+render({
+  input: "./index.html",
+  name: "scene",
+  output: "output.mp4",
+});</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise&lt;void></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+<h4 class="name" id=".RenderOptions">RenderOptions</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_render_src_types.ts.html">packages/render/src/types.ts</a>, <a href="packages_render_src_types.ts.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+
+    <div id=".RenderOptions-input" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-input">input</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: "./index.html"
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                input?: 
+<span class="param-type">string</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            File URL to Rendering
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-fps" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-fps">fps</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: 60
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                fps?: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            fps
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-output" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-output">output</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: "output.mp4"
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                output?: 
+<span class="param-type">string</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Output file name
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-startTime" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-startTime">startTime</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: 0
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                startTime?: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Input for start time
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-buffer" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-buffer">buffer</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: false
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                buffer?: 
+<span class="param-type">boolean | number | undefined | ""</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Whether to use buffer instead of saving frame image file in capturing (cache is disabled.)
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-cache" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-cache">cache</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: false
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                cache?: 
+<span class="param-type">boolean | number | undefined | ""</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            If there are frames in the cache folder, the capture process is passed.
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-cacheFolder" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-cacheFolder">cacheFolder</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: ".scene_cache"
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                cacheFolder?: 
+<span class="param-type">string</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Cache folder name to save frame image
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-multi" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-multi">multi</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: 1
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                multi?: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Number of browsers to be used for capturing
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-duration" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-duration">duration</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: 0
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                duration?: 
+<span class="param-type">number | undefined | ""</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Input how many seconds to play
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-iteration" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-iteration">iteration</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: 0
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                iteration?: 
+<span class="param-type">number | undefined | ""</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Input iterationCount of the Scene set by the user himself.
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-bitrate" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-bitrate">bitrate</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: "4096k"
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                bitrate?: 
+<span class="param-type">string</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Bitrate of video (the higher the bit rate, the clearer the video quality)
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-codec" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-codec">codec</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: "mp4: libx264, webm:libvpx-vp9"
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                codec?: 
+<span class="param-type">string</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Codec to encode video If you don't set it up, it's the default
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-imageType" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-imageType">imageType</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: "png"
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                imageType?: 
+<span class="param-type">"png" | "jpeg"</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Image type to record video (png or jpeg)
+If png is selected, webm and alpha are available.
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-alpha" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-alpha">alpha</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: false
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                alpha?: 
+<span class="param-type">boolean | number | undefined | ""</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            If you use the png image type, you can create a video with a transparent background. (The video extension must be webm.)
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-cpuUsed" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-cpuUsed">cpuUsed</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: 8
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                cpuUsed?: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Number of cpus to use for ffmpeg video or audio processing
+
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-width" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-width">width</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                width?: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            page width
+     
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-height" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-height">height</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                height?: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            page height
+     
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-name" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-name">name</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                name?: 
+<span class="param-type">string</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            scene's name in window
+     
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-media" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-media">media</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                media?: 
+<span class="param-type">string</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            scene's media name in window
+     
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-path" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-path">path</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                path?: 
+<span class="param-type">string</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            file path or url
+     
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-scale" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-scale">scale</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                scale?: 
+<span class="param-type">number</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            page scale
+     
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-referer" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-referer">referer</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+
+        <div class="db-div db-type">
+            
+                referer?: 
+<span class="param-type">string</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            browser's referer
+     
+        </div>
+        
+    </div>
+
+    <div id=".RenderOptions-ffmpegLog" class="db-prop">
+        
+            <div class="db-div db-name">
+                <a href="#.RenderOptions-ffmpegLog">ffmpegLog</a>
+                <span class="db-optional">optional</span>
+                
+            </div>
+        
+        
+            <div class="db-div db-default">
+                Default Value: false
+     
+            </div>
+        
+
+        <div class="db-div db-type">
+            
+                ffmpegLog?: 
+<span class="param-type">boolean</span>
+
+
+            
+        </div>
+
+
+        <div class="db-div db-description">
+            Whether to show ffmpeg's logs
+
+        </div>
+        
+    </div>
+
+
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">TSInterface</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+<style>
+
+
+nav li[file="render"]:after {
+    display: none;
+}
+nav li[file="render"] h4, nav li[file="render"] ul {
+    display: block;
+}
+</style>
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/daybrush/jsdoc">JSDoc 0.4.4</a> on Sat Dec 31 2022 16:06:20 GMT+0900 (대한민국 표준시) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/utils.min.js"></script>
+<script src="scripts/search.js"></script>
+<script src="scripts/custom.js"></script>
+</body>
+</html>
