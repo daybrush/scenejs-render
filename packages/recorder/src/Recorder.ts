@@ -60,7 +60,7 @@ export class Recorder extends EventEmitter<{
     /**
      *
      */
-    constructor(private _options: RecorderOptions = {}) {
+    constructor(protected _options: RecorderOptions = {}) {
         super();
     }
     /**
@@ -186,7 +186,7 @@ export class Recorder extends EventEmitter<{
         });
         await ffmpeg.run(
             ...inputOption,
-            "-filter_complex", `amix=inputs=${audiosLength}:duration=longest`,
+            "-filter_complex", `amix=inputs=${audiosLength}:duration=longest:dropout_transition=1000,volume=${audiosLength}`,
             "merge.mp3",
         );
         /**
