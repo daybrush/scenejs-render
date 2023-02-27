@@ -45,10 +45,10 @@ export function Gallery() {
             sceneComponent={SquareTransition}
             width={720}
             height={360} />
-        <GalleryItem
+        {/* <GalleryItem
             title="Smoke Transition"
             sceneComponent={SmokeTransition}
             width={800}
-            height={400} />
+            height={400} /> */}
     </div>;
 }
