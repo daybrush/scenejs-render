@@ -30,6 +30,7 @@
         "packages:update": "lerna-helper version",
         "packages:build": "lerna run build --ignore recorder-react-demo",
         "packages:publish": "lerna-helper publish --commit 'chore: publish packages'",
+        "demo:build": "npm run build --prefix ./packages/recorder-react-demo",
         "changelog": "lerna-helper changelog --type all --base @scenejs/render",
         "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
         "deploy": "lerna-helper deploy --base @scenejs/render",
