@@ -11,17 +11,21 @@ export async function openPage(browser: Browser, {
     media,
     referer,
 }: OpenPageOptions): Promise<Page> {
-    const page = await browser.newPage();
-
-    page.setUserAgent(browser.userAgent() + " Scene.js");
-    page.setViewport({
-        width: width / scale,
-        height: height / scale,
-        deviceScaleFactor: scale,
-    });
-    await page.goto(path, {
-        referer,
-    });
+    let page = null;
+      try {
+            page = await browser.newPage();
+            page.setUserAgent(browser.userAgent() + " Scene.js");
+            page.setViewport({
+                width: width / scale,
+                height: height / scale,
+                deviceScaleFactor: scale,
+            });
+            await page.goto(path, {
+                referer,
+            });
+    } catch (e) {
+       throw new Error("Puppeteer Error in opening page"); 
+    }
 
     const result = await page.evaluate(`(async () => {
         const timeout = Date.now() + 10000;
