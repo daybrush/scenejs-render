@@ -19,6 +19,7 @@ rollup-plugin-visualizer/
 outjs/
 statistics/
 .scene_cache
+.scene_ch
 *.mp3
 *.mp4
 *.webm
