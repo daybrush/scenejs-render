@@ -24,7 +24,7 @@ export async function openPage(browser: Browser, {
                 referer,
             });
     } catch (e) {
-       throw new Error("Puppeteer Error in opening page"); 
+       throw new Error(`Puppeteer Error in opening page.\npath: ${path}, width: ${width}, height: ${height}, scale: ${scale}, referer: ${referer}\n${e.message}`);
     }
 
     const result = await page.evaluate(`(async () => {
