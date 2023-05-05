@@ -98,7 +98,6 @@ export function createChildWorker(workerIndex: number): ChildWorker {
             ready = new Promise<void>(async resolve => {
                 browser = await puppeteer.launch({
                     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                    headless: true,
                 });
                 page = await openPage(browser, options);
                 resolve();

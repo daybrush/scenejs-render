@@ -15,6 +15,11 @@
 
 It reads a file from Node through a command and records (capture and video process) to create a video (or audio) file.
 
+> On `Node 18`, the following error occurs. (`TypeError: Failed to parse URL from .../@ffmpeg/core/dist/ffmpeg-core.wasm. Build with -s ASSERTIONS=1 for more info.`) 
+>
+> Use a version below `Node 18` or `--ffmpegPath`.
+
+
 ## ⚙️ Installation
 
 ```bash
