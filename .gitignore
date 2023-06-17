@@ -21,3 +21,4 @@ statistics/
 *.mp4
 *.webm
 ffmpeg
+scene.js
