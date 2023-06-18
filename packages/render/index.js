@@ -26,7 +26,8 @@ args
     .option("imageType", "Image type to record video (png or jpeg)", "png")
     .option("alpha", "If you use the png image type, you can create a video with a transparent background. (The video extension must be webm.)", 0)
     .option("ffmpegPath", "If you want to use native ffmpeg for faster speed, input the path of ffmpeg.", "")
-    .option("ffmpegLog", "Whether to show ffmpeg's logs", 0);
+    .option("ffmpegLog", "Whether to show ffmpeg's logs", false)
+    .option("noLog", "Whether to Scene.js Render's logs", false);
 
 
 const flags = args.parse(process.argv);

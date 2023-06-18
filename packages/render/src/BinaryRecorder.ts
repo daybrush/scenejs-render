@@ -4,6 +4,8 @@ import * as path from "path";
 import { RecorderOptions, RecordInfoOptions, RenderVideoOptions } from "@scenejs/recorder";
 import { FFmpeg, FSMethodArgs, FSMethodNames, LogCallback, ProgressCallback } from "@ffmpeg/ffmpeg";
 import { RenderRecorder } from "./RenderRecorder";
+import { Logger } from "./Logger";
+import { RenderRecorderOptions } from "./types";
 
 // Binary
 // [
@@ -44,12 +46,17 @@ import { RenderRecorder } from "./RenderRecorder";
 //     "-ac", "2",
 // );
 
-interface BinaryRecorderOptions extends RecorderOptions {
+interface BinaryRecorderOptions extends RenderRecorderOptions {
     ffmpegPath: string;
     cacheFolder: string;
 }
 
-function initBinaryFFMpeg(ffmpegPath: string, cacheFolder: string, totalCountRef: { current: number }): FFmpeg {
+function initBinaryFFMpeg(
+    ffmpegPath: string,
+    cacheFolder: string,
+    totalCountRef: { current: number },
+    logger: Logger,
+): FFmpeg {
 
     let fluentFfmpeg: FfmpegCommand | null = null;
     function initFfmpeg() {
@@ -194,7 +201,7 @@ function initBinaryFFMpeg(ffmpegPath: string, cacheFolder: string, totalCountRef
                     fluentFfmpeg = null;
                     resolve();
                 }).on("error", e => {
-                    console.log(`Error: ${target}`, e.message);
+                    logger.log(`Error: ${target}`, e.message);
                     fluentFfmpeg = null;
                     resolve();
                 });
@@ -237,7 +244,7 @@ export class BinaryRecorder extends RenderRecorder {
     public async init() {
         if (!this._ready) {
             const options = this.options;
-            this._ffmpeg = initBinaryFFMpeg(options.ffmpegPath, options.cacheFolder, this._totalCountRef);
+            this._ffmpeg = initBinaryFFMpeg(options.ffmpegPath, options.cacheFolder, this._totalCountRef, options.logger);
             this._ready = Promise.resolve();
         }
         return this._ffmpeg;

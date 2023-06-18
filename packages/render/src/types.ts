@@ -1,4 +1,10 @@
+import Recorder, { RecorderOptions } from "@scenejs/recorder";
+import { Logger } from "./Logger";
 
+
+export interface RenderRecorderOptions extends RecorderOptions {
+    logger: Logger;
+}
 /**
  * @typedef
  * @memberof Render
@@ -117,6 +123,19 @@ export interface RenderOptions {
      * @default false
      */
     ffmpegLog?: boolean;
+    /**
+     * Whether to show Scene.js's Render logs
+     * @default true
+     */
+    noLog?: boolean;
+    /**
+     * instance가 생성됐을 때 호출되는 hook 함수
+     */
+    created?: (inst: Recorder) => void;
+    /**
+     * Scene.js Render에서 출력되는 메시지들을 함수를 통해 외부에서 받아올 수 있다.
+     */
+    logger?: (...messages) => void;
 }
 
 

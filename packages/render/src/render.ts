@@ -13,6 +13,7 @@ import { fetchFile } from "@ffmpeg/ffmpeg";
 import { isString } from "@daybrush/utils";
 import { BinaryRecorder } from "./BinaryRecorder";
 import { RenderRecorder } from "./RenderRecorder";
+import { Logger } from "./Logger";
 
 async function getMediaInfo(page: Page, media: string) {
     if (!media) {
@@ -68,6 +69,9 @@ async function render(options: RenderOptions = {}) {
         ffmpegLog,
         buffer,
         ffmpegPath,
+        noLog,
+        created,
+        logger: externalLogger,
     } = options;
     let path;
 
@@ -76,10 +80,10 @@ async function render(options: RenderOptions = {}) {
     } else {
         path = url.pathToFileURL(pathModule.resolve(process.cwd(), inputPath)).href;
     }
-
+    const logger = new Logger(externalLogger, !noLog);
     const timer = createTimer();
 
-    console.log("Start Render");
+    logger.log("Start Render");
     const outputs = outputPath.split(",");
     const videoOutputs = outputs.filter(file => file.match(/\.(mp4|webm)$/g));
     const isVideo = videoOutputs.length > 0;
@@ -88,11 +92,15 @@ async function render(options: RenderOptions = {}) {
         ffmpegPath,
         cacheFolder,
         log: !!ffmpegLog,
+        logger,
     }) : new RenderRecorder({
         log: !!ffmpegLog,
+        logger,
     });
 
 
+    // create a Recorder instance and call `created` hook function.
+    created?.(recorder);
     recorder.init();
 
     const browser = await puppeteer.launch({
@@ -125,7 +133,7 @@ async function render(options: RenderOptions = {}) {
         duration = await page.evaluate(`${name}.getDuration()`) as number;
     } catch (e) {
         if (hasMedia) {
-            console.log("Only Media Scene");
+            logger.log("Only Media Scene");
             hasOnlyMedia = true;
             iterationCount = 1;
             delay = 0;
@@ -197,10 +205,10 @@ async function render(options: RenderOptions = {}) {
     }
 
     if (!isVideo) {
-        console.log("No Video");
+        logger.log("No Video");
 
         if (audioPath && hasMedia) {
-            console.log("Audio File is created")
+            logger.log("Audio File is created")
             fs.writeFileSync(audioPath, recorder.getAudioFile());
         } else {
             throw new Error("Add Audio Input");
@@ -238,7 +246,7 @@ async function render(options: RenderOptions = {}) {
         {
             workerIndex: 0,
             start() {
-                console.log("Start Worker 0");
+                logger.log("Start Worker 0");
                 return Promise.resolve();
             },
             record(recordOptions: RecordOptions) {
@@ -256,9 +264,9 @@ async function render(options: RenderOptions = {}) {
     recorder.setRenderCapturing(imageType, workers, isCache, cacheFolder);
 
     if (isCache) {
-        console.log(`Use Cache (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);
+        logger.log(`Use Cache (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame})`);
     } else {
-        console.log(`Start Workers (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame}, workers: ${multi})`);
+        logger.log(`Start Workers (startTime: ${startTime}, endTime: ${endTime}, fps: ${fps}, startFrame: ${startFrame}, endFrame: ${endFrame}, workers: ${multi})`);
 
         for (let i = 1; i < multi; ++i) {
             workers.push(createChildWorker(i));
@@ -283,7 +291,7 @@ async function render(options: RenderOptions = {}) {
         cpuUsed,
     });
 
-    console.log(`Created Video: ${outputPath}`);
+    logger.log(`Created Video: ${outputPath}`);
     fs.writeFileSync(outputPath, data);
 
     !cache && rmdir(cacheFolder);
@@ -292,7 +300,9 @@ async function render(options: RenderOptions = {}) {
 
 
     recorder.destroy();
-    console.log(`End Render (Rendering Time: ${timer.getCurrentInfo(1).currentTime}s)`);
+    logger.log(`End Render (Rendering Time: ${timer.getCurrentInfo(1).currentTime}s)`);
+
+    return recorder;
 }
 
 
