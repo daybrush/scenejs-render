@@ -33,6 +33,31 @@ $ npm install @scenejs/render
 $ npx @scenejs/render -i index.html
 ```
 
+```nodejs
+ const  render = require("@scenejs/render");
+ const options = {
+	 input: <URL of the file containing the scene>,
+	 name: "scene",
+	 mediaScene: "mediaScene",
+	 output: <Output file name>,
+	 ffmpegPath: "/usr/bin/ffmpeg",
+	 width: width,
+	 height:height,
+	 fps:30,
+	 imageType : "jpeg",
+	 multi:2,
+         buffer:true,
+	 scale:scale,
+	 cacheFolder: "cacheFolderPath"
+    };
+    await render.render(options);    
+```
+Make sure that the scene variable is declared and accessible in the global(window) scope or else a timeout will occur. If scene variable is declared using another name, make sure to update the "name" parameter in the option with the name of your scene variable
+
+If you are running multiple instances of the render function simultaneously, make sure to specify unique cachefolder paths or the frames will get mixed up.
+
+
+
 
 #### Browser
 Through the module, you can record by specifying the capture method manually and create a file manually through the data.
