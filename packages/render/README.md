@@ -67,7 +67,7 @@ Options:
   -C, --codec                Codec to encode video If you don't set it up, it's the default(mp4: libx264, webm:libvpx-vp9) (defaults to "")
   -C, --cpuUsed <n>          Number of cpus to use for ffmpeg video or audio processing (defaults to 8)
   -d, --duration <n>         Input how many seconds to play (defaults to 0)
-  -F, --ffmpegLog <n>        Whether to show ffmpeg's logs (defaults to 0)
+  -F, --ffmpegLog            Whether to show ffmpeg's logs (disabled by default)
   -F, --ffmpegPath           If you want to use native ffmpeg for faster speed, input the path of ffmpeg. (defaults to "")
   -f, --fps <n>              fps (defaults to 60)
   -h, --height <n>           Video height to render (defaults to 1080)
@@ -78,6 +78,7 @@ Options:
   -m, --media [value]        Name of mediaScene to render (defaults to "mediaScene")
   -M, --multi <n>            Number of browsers to be used for capturing (defaults to 1)
   -n, --name [value]         the global variable name of the Scene, SceneItem, and Animator instance that will play the animation. (defaults to "scene")
+  -N, --noLog                Whether to Scene.js Render's logs (disabled by default)
   -o, --output [value]       Output file name (defaults to "output.mp4")
   -r, --referer              The Referer request header contains the address of the previous web page from which a link to the currently requested page was followed. (defaults to "")
   -s, --scale <n>            Scale of screen size (defaults to 1)
@@ -88,7 +89,7 @@ Options:
 
 ### Programatically
 ```js
-import { render } from "@scenejs/render";
+const { render } = require("@scenejs/render");
 
 render({
   input: "./index.html",
@@ -97,6 +98,25 @@ render({
 });
 ```
 
+If you want to access the recorder instance, use the `created` function
+
+```js
+render({
+  input: "./test/test.html",
+  fps: 60,
+  ffmpegPath: "./ffmpeg",
+  cache: true,
+  noLog: true,
+  logger: (...messages) => {
+    console.log(messages);
+  },
+  created: inst => {
+    inst.on("capture", e => {
+      console.log(e.ratio);
+    });
+  },
+});
+```
 
 ### Result
 ```
