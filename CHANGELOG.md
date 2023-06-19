@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.0](https://github.com/daybrush/scenejs-render/compare/0.15.0...0.16.0) (2023-06-19)
+### :sparkles: Packages
+* `@scenejs/recorder` 0.15.0
+* `@scenejs/render` 0.16.0
+
+
+### :rocket: New Features
+
+* `@scenejs/render`
+    * add logger, noLog, created options #30 ([fd7f5cb](https://github.com/daybrush/scenejs-render/commit/fd7f5cb5948d025193676f44a62b72dca7ab41bd))
+
+
+### :bug: Bug Fix
+
+* `@scenejs/render`
+    * fix default value #27 ([96b42f7](https://github.com/daybrush/scenejs-render/commit/96b42f70d9bc72195491080c4c5ae3e8000e1a7d))
+* Other
+    * fix build script ([d6559d1](https://github.com/daybrush/scenejs-render/commit/d6559d1dc18934244ac5d467903e46b67376ba14))
+    * fix netlify config ([9054170](https://github.com/daybrush/scenejs-render/commit/9054170375c8dfa4c93c77a6784747463f723b50))
+
+
+### :memo: Documentation
+
+* `@scenejs/render`
+    * fix README ([287bdda](https://github.com/daybrush/scenejs-render/commit/287bddabc010854c9ad5f3d8fbe294a70f11b2e3))
+    * fix README ([be8c291](https://github.com/daybrush/scenejs-render/commit/be8c291f5d0de37d3975afad79ea85679cc0c17d))
+    * fix README for node 18 #29 ([ee14b58](https://github.com/daybrush/scenejs-render/commit/ee14b581d940fe98e921f41eb9d41cd55d746c21))
+    * fix types ([ebc4f62](https://github.com/daybrush/scenejs-render/commit/ebc4f627253916779ed33357f2aa763473bea469))
+
+
+### :mega: Other
+
+* `@scenejs/render`
+    * bump render version ([d5bf670](https://github.com/daybrush/scenejs-render/commit/d5bf6702d4508a80f2c67a3d87bad8fdc7a874ae))
+    * update version ([d1e5d49](https://github.com/daybrush/scenejs-render/commit/d1e5d49e204757f8a35e1c092c92962dc59402ff))
+
+
+
 ## 0.15.0 (2023-01-19)
 ### :sparkles: Packages
 * `@scenejs/recorder` 0.15.0
