@@ -129,11 +129,11 @@ export interface RenderOptions {
      */
     noLog?: boolean;
     /**
-     * instance가 생성됐을 때 호출되는 hook 함수
+     * A hook function called when an instance is created
      */
     created?: (inst: Recorder) => void;
     /**
-     * Scene.js Render에서 출력되는 메시지들을 함수를 통해 외부에서 받아올 수 있다.
+     * Messages output from Scene.js Render can be received from the outside through a function.
      */
     logger?: (...messages) => void;
 }
