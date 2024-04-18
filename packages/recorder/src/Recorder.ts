@@ -302,7 +302,7 @@ export class Recorder extends EventEmitter<{
      * Get the information to be recorded through options.
      * @sort 1
      */
-    public getRecordInfo(options: RecordInfoOptions) {
+    public getRecordInfo(options: RecordInfoOptions = {}) {
         const animator = this._animator;
         const inputIteration = options.iteration;
         const inputDuration = options.duration || 0;

@@ -6,7 +6,7 @@
     "@daybrush/utils": "^1.10.2",
     "@scena/react-store": "^0.2.1",
     "@scenejs/effects": "^1.0.1",
-    "@scenejs/recorder": "~0.15.0",
+    "@scenejs/recorder": "~0.16.0",
     "dom-to-image-more": "^2.13.1",
     "html-to-image": "^1.11.2",
     "react-scenejs": "^2.0.0-beta.10",

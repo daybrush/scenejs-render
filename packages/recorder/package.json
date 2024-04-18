@@ -1,6 +1,6 @@
 {
     "name": "@scenejs/recorder",
-    "version": "0.15.0",
+    "version": "0.16.0",
     "description": "Make a movie of CSS animation through Scene.js for browser",
     "main": "./dist/recorder.cjs.js",
     "module": "./dist/recorder.esm.js",
