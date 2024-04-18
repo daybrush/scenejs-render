@@ -75,7 +75,7 @@ async function render(options: RenderOptions = {}) {
     } = options;
     let path;
 
-    if (inputPath.match(/https*:\/\//g)) {
+    if (inputPath.match(/^https?:\/\//)) {
         path = inputPath;
     } else {
         path = url.pathToFileURL(pathModule.resolve(process.cwd(), inputPath)).href;
